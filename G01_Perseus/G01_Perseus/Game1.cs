@@ -8,6 +8,9 @@ namespace G01_Perseus
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
+        private Color backgroundColor;
+
+        private Player player;
 
         public Game1()
         {
@@ -53,11 +56,11 @@ namespace G01_Perseus
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            _spriteBatch.Begin();
+            spriteBatch.Begin();
 
-            player.Draw(_spriteBatch);
+            player.Draw(spriteBatch);
 
-            _spriteBatch.End();       
+            spriteBatch.End();       
 
             base.Draw(gameTime);
         }

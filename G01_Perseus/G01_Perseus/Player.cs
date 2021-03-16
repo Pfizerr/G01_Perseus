@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 
-namespace perseus_demo_1
+namespace G01_Perseus
 {
     public class Player
     {
