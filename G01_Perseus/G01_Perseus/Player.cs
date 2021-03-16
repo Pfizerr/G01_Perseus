@@ -15,17 +15,20 @@ namespace G01_Perseus
         private float angle;
         private Vector2 center;
         private Vector2 velocity;
-        private Vector2 direction;
+        private Rectangle hitBox;
+        private Vector2 offset;
 
         public Player(Vector2 position, float speed, Color color, Point size)
         {
             this.position = position;
             this.speed = speed;
             this.color = color;
-            this.size = size; 
+            this.size = size;
 
+            offset = new Vector2(size.X / 2, size.Y / 2);
             texture = Util.CreateTexture(color, size.X, size.Y);
             center = new Vector2(position.X - size.X, position.Y - size.Y);
+            hitBox = new Rectangle((position - offset).ToPoint(), size);
 
             Console.WriteLine("Texture Created!");
             Console.WriteLine(texture.ToString());
@@ -37,13 +40,11 @@ namespace G01_Perseus
             HandleInput();
 
             position += velocity;
+            hitBox.Location = (position + offset).ToPoint();
             velocity = Vector2.Zero;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-            spriteBatch.Draw(texture, new Vector2(position.X - size.X / 2, position.Y - size.Y / 2), null, Color.White, angle, new Vector2(texture.Width / 2f, texture.Height / 2f), Vector2.One, SpriteEffects.None, 0);
-        }
+        public void Draw(SpriteBatch spriteBatch) => spriteBatch.Draw(texture, hitBox, null, Color.White, angle, offset, SpriteEffects.None, 0f);
 
         public void HandleInput()
         {
@@ -68,7 +69,6 @@ namespace G01_Perseus
             {
                 velocity.X = speed;
             }   
-            velocity.Normalize();
         }
 
         public void AdjustAngleTowardsMousePosition()
@@ -76,7 +76,6 @@ namespace G01_Perseus
             Vector2 mousePosition = Mouse.GetState().Position.ToVector2();
             Vector2 direction = mousePosition - new Vector2(position.X - size.X / 2, position.Y - size.Y / 2);
             angle = (float)Math.Atan2(direction.Y, direction.X);
-            position = mousePosition;
         }
     }
 }
