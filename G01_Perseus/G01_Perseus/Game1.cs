@@ -30,7 +30,7 @@ namespace G01_Perseus
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            player = new Player(new Vector2(250 ,250), 3, Color.Blue, new Point(32, 32));
+            player = new Player(new Vector2(250 ,250), 3, Color.Blue, new Point(50, 50));
 
             backgroundColor = Color.Black;
         }

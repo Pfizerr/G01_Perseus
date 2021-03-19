@@ -5,20 +5,24 @@ using System;
 
 namespace G01_Perseus
 {
-    public class Player
+    public class Player : Entity
     {
         private Vector2 position;
         private float speed;
         private Color color;
         private Texture2D texture;
         private Point size;
-        private float angle;
-        private Vector2 center;
-        private Vector2 velocity;
+        private float rotation;
         private Rectangle hitBox;
         private Vector2 offset;
 
-        public Player(Vector2 position, float speed, Color color, Point size)
+        
+        // remove speed and reimplement maxVelocity and acceleration
+        //private float maxVelocity;
+        private Vector2 velocity;
+        
+
+        public Player(Vector2 position, float speed, Color color, Point size) : base()
         {
             this.position = position;
             this.speed = speed;
@@ -27,27 +31,30 @@ namespace G01_Perseus
 
             offset = new Vector2(size.X / 2, size.Y / 2);
             texture = Util.CreateTexture(color, size.X, size.Y);
-            center = new Vector2(position.X - size.X, position.Y - size.Y);
-            hitBox = new Rectangle((position - offset).ToPoint(), size);
+            hitBox = new Rectangle(GetCenter.ToPoint(), size);
 
             Console.WriteLine("Texture Created!");
             Console.WriteLine(texture.ToString());
         }
 
-        public void Update(GameTime gameTime)
+        public override void Update(GameTime gameTime)
         {
             AdjustAngleTowardsMousePosition();
             HandleInput();
 
             position += velocity;
-            hitBox.Location = (position + offset).ToPoint();
+            hitBox.Location = GetCenter.ToPoint();
             velocity = Vector2.Zero;
         }
 
-        public void Draw(SpriteBatch spriteBatch) => spriteBatch.Draw(texture, hitBox, null, Color.White, angle, offset, SpriteEffects.None, 0f);
+        public override void Draw(SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, size.ToVector2() / 2, SpriteEffects.None, 0f);
+        }
 
         public void HandleInput()
         {
+            
             KeyboardState state = Keyboard.GetState();
 
             if(state.IsKeyDown(Keys.W))
@@ -73,9 +80,18 @@ namespace G01_Perseus
 
         public void AdjustAngleTowardsMousePosition()
         {
-            Vector2 mousePosition = Mouse.GetState().Position.ToVector2();
-            Vector2 direction = mousePosition - new Vector2(position.X - size.X / 2, position.Y - size.Y / 2);
-            angle = (float)Math.Atan2(direction.Y, direction.X);
+            MouseState mouseState = Mouse.GetState();
+            Vector2 mousePosition = new Vector2(mouseState.X, mouseState.Y);
+            Vector2 dPos = (position + offset) - mousePosition;
+
+            rotation = (float)Math.Atan2(dPos.Y, dPos.X);
+        }
+
+        public Vector2 GetCenter { get => position + offset; private set => position = value - size.ToVector2() / 2; }
+
+        protected override void Destroy()
+        {
+            throw new NotImplementedException();
         }
     }
 }
