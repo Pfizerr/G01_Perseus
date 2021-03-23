@@ -19,8 +19,7 @@ namespace G01_Perseus
         
         // remove speed and reimplement maxVelocity and acceleration
         //private float maxVelocity;
-        private Vector2 velocity;
-        
+        private Vector2 velocity;        
 
         public Player(Vector2 position, float speed, Color color, Point size) : base()
         {
@@ -37,7 +36,7 @@ namespace G01_Perseus
             Console.WriteLine(texture.ToString());
         }
 
-        public Vector2 Position => this.position;
+        //public Vector2 Position => this.position;
 
         public override void Update(GameTime gameTime)
         {
@@ -86,7 +85,7 @@ namespace G01_Perseus
             Vector2 mousePosition = new Vector2(mouseState.X, mouseState.Y);
             Vector3 cameraTranslation = Game1.camera.Translation.Translation;
             Vector2 cameraOffset = new Vector2(-cameraTranslation.X, -cameraTranslation.Y);
-            Vector2 dPos = (position + offset) - (mousePosition + cameraOffset);
+            Vector2 dPos = (Position + offset) - (mousePosition + cameraOffset);
 
             rotation = (float)Math.Atan2(dPos.Y, dPos.X);
         }
