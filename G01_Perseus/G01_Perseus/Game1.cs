@@ -48,7 +48,6 @@ namespace G01_Perseus
                 Exit();
 
             player.Update(gameTime);
-
             base.Update(gameTime);
         }
 

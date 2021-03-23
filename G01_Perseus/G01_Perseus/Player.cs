@@ -7,7 +7,7 @@ namespace G01_Perseus
 {
     public class Player : Entity
     {
-        private Vector2 position;
+        public static Vector2 Position { get; private set; }
         private float speed;
         private Color color;
         private Texture2D texture;
@@ -24,7 +24,7 @@ namespace G01_Perseus
 
         public Player(Vector2 position, float speed, Color color, Point size) : base()
         {
-            this.position = position;
+            Position = position;
             this.speed = speed;
             this.color = color;
             this.size = size;
@@ -42,7 +42,7 @@ namespace G01_Perseus
             AdjustAngleTowardsMousePosition();
             HandleInput();
 
-            position += velocity;
+            Position += velocity;
             hitBox.Location = GetCenter.ToPoint();
             velocity = Vector2.Zero;
         }
@@ -82,12 +82,12 @@ namespace G01_Perseus
         {
             MouseState mouseState = Mouse.GetState();
             Vector2 mousePosition = new Vector2(mouseState.X, mouseState.Y);
-            Vector2 dPos = (position + offset) - mousePosition;
+            Vector2 dPos = (Position + offset) - mousePosition;
 
             rotation = (float)Math.Atan2(dPos.Y, dPos.X);
         }
 
-        public Vector2 GetCenter { get => position + offset; private set => position = value - size.ToVector2() / 2; }
+        public Vector2 GetCenter { get => Position + offset; private set => Position = value - size.ToVector2() / 2; }
 
         protected override void Destroy()
         {
