@@ -37,6 +37,8 @@ namespace G01_Perseus
             Console.WriteLine(texture.ToString());
         }
 
+        public Vector2 Position => this.position;
+
         public override void Update(GameTime gameTime)
         {
             AdjustAngleTowardsMousePosition();
@@ -82,7 +84,9 @@ namespace G01_Perseus
         {
             MouseState mouseState = Mouse.GetState();
             Vector2 mousePosition = new Vector2(mouseState.X, mouseState.Y);
-            Vector2 dPos = (position + offset) - mousePosition;
+            Vector3 cameraTranslation = Game1.camera.Translation.Translation;
+            Vector2 cameraOffset = new Vector2(-cameraTranslation.X, -cameraTranslation.Y);
+            Vector2 dPos = (position + offset) - (mousePosition + cameraOffset);
 
             rotation = (float)Math.Atan2(dPos.Y, dPos.X);
         }
