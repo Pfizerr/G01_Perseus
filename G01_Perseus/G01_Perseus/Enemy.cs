@@ -11,11 +11,9 @@ namespace G01_Perseus
 {
     public class Enemy : Entity
     {
-        private Vector2 position;
         private float speed;
         private Color color;
         private Texture2D texture;
-        private Point size;
         private float rotation;
         private Rectangle hitBox;
         private Vector2 offset;
@@ -26,7 +24,7 @@ namespace G01_Perseus
         //private float maxVelocity;
         private Vector2 direction;
 
-        public Enemy(Vector2 position, float speed, Color color, Point size, Player player) : base()
+        public Enemy(Vector2 position, float speed, Color color, Vector2 size, Player player) : base()
         {
             this.position = position;
             this.speed = speed;
@@ -34,16 +32,17 @@ namespace G01_Perseus
             this.size = size;
 
             offset = new Vector2(size.X / 2, size.Y / 2);
-            texture = Util.CreateTexture(color, size.X, size.Y);
-            hitBox = new Rectangle(GetCenter.ToPoint(), size);
+            texture = Util.CreateFilledRectangleTexture(color, (int)size.X, (int)size.Y);
+            hitBox = new Rectangle((int)GetCenter.X, (int)GetCenter.Y, (int)size.X, (int)size.Y);
 
             Console.WriteLine("Texture Created!");
             Console.WriteLine(texture.ToString());
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, size.ToVector2() / 2, SpriteEffects.None, 0f);
+            Vector2 drawPosition = new Vector2((tileX * tileWidth) + position.X - (ix * tileWidth), (tileY * tileWidth) + position.Y - (iy * tileHeight));
+            spriteBatch.Draw(texture, drawPosition, null, Color.White, rotation, size / 2, Vector2.One, SpriteEffects.None, 0.5f);
         }
 
         public override void Update(GameTime gameTime)
@@ -83,6 +82,6 @@ namespace G01_Perseus
             direction = vectorResult;
         }
 
-        public Vector2 GetCenter { get => position + offset; private set => position = value - size.ToVector2() / 2; }
+        public Vector2 GetCenter { get => position + offset; private set => position = value - size / 2; }
     }
 }

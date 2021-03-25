@@ -12,9 +12,11 @@ namespace G01_Perseus
         SpriteBatch spriteBatch;
         Color backgroundColor;
         Player player;
+        Level level;
+        Enemy enemy;
         public static Camera camera;
 
-        Random random;
+       public static Random random;
         List<SpaceObject> spaceObjects;
 
         public Game1()
@@ -22,6 +24,9 @@ namespace G01_Perseus
             graphics = new GraphicsDeviceManager(this);
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
+
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 920;
         }
 
 
@@ -42,16 +47,27 @@ namespace G01_Perseus
             camera.Viewport = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
 
             random = new Random(1);
-            Texture2D spaceObjectTexture = Util.CreateTexture(Color.White, 10, 10);
+
+            int tileWidth = 50;
+            int tileHeight = 50;
+            level = new Level(10, 10, tileWidth, tileHeight);
+
+            Texture2D spaceObjectTexture = Util.CreateFilledRectangleTexture(Color.White, 10, 10);
             spaceObjects = new List<SpaceObject>();
-            Rectangle spawnArea = new Rectangle(-Window.ClientBounds.Width, Window.ClientBounds.Width, -Window.ClientBounds.Height, Window.ClientBounds.Height);
-            for(int i = 0; i < 100; i++)
+            Rectangle spawnArea = new Rectangle(0, 10, 0, 10);
+            for(int i = 0; i < 1000; i++)
             {
-                Vector2 position = new Vector2(random.Next(spawnArea.X, spawnArea.Y), random.Next(spawnArea.Width, spawnArea.Height));
-                Vector2 size = new Vector2(10);
-                spaceObjects.Add(new SpaceObject(spaceObjectTexture, position, size));
+
+                Point size = new Point(random.Next(1, 5));
+                Vector2 position = new Vector2(random.Next(spawnArea.X, spawnArea.Y) * tileWidth + random.Next(size.X, tileWidth - size.X), random.Next(spawnArea.Width, spawnArea.Height) * tileHeight + random.Next(size.Y, tileHeight - size.Y));
+                //Vector2 position = new Vector2((i % 10) * 50 + 25, (i / 10) * 50 + 25);
+                spaceObjects.Add(new SpaceObject(spaceObjectTexture, position, size.ToVector2()));
+                level.AddEntity(new Enemy(position, 0.0f, Color.White, size.ToVector2(), player));
             }
-        
+
+            
+            enemy = new Enemy(new Vector2(25, 25), 0.0f, Color.Cyan, new Vector2(50, 50), player);
+            level.AddEntity(enemy);
 
 
             backgroundColor = Color.Black;
@@ -80,14 +96,16 @@ namespace G01_Perseus
         {
             GraphicsDevice.Clear(backgroundColor);
 
-            spriteBatch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, camera.Translation);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, null, null, null, null, camera.Translation);
+            level.Draw(spriteBatch, camera);
 
             foreach(SpaceObject spaceObject in spaceObjects)
             {
-                spaceObject.Draw(spriteBatch);
+                //spaceObject.Draw(spriteBatch);
             }
 
-            player.Draw(spriteBatch);
+            player.Draw(spriteBatch, 0, 0, 0, 0, 0, 0);
+            //enemy.Draw(spriteBatch);
 
             spriteBatch.End();       
 
