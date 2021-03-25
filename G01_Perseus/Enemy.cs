@@ -74,12 +74,23 @@ namespace G01_Perseus
             rotation = (float)Math.Atan2(dPos.Y, dPos.X);
         }
 
-        public void Pursue()
+        public void Pursue() // Moves toward the player
         {
             direction = Vector2.Zero;
             Vector2 vectorResult = Player.Position - position;
             vectorResult.Normalize();
             direction = vectorResult;
+        }
+
+        public void Roam() // Moves following a set / random path
+        {
+
+
+        }
+
+        public void Strafe() // Moves horizontally in relation to the facing direction
+        {
+
         }
 
         public Vector2 GetCenter { get => position + offset; private set => position = value - size / 2; }
