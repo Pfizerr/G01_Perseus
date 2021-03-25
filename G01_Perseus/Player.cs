@@ -35,7 +35,7 @@ namespace G01_Perseus
 
             offset = new Vector2(size.X / 2, size.Y / 2);
             texture = Util.CreateFilledRectangleTexture(color, size.X, size.Y);
-            hitBox = new Rectangle(GetCenter.ToPoint(), size);
+            hitBox = new Rectangle(Position.ToPoint(), size);
 
             Console.WriteLine("Texture Created!");
             Console.WriteLine(texture.ToString());
@@ -56,7 +56,7 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, size.ToVector2() / 2, SpriteEffects.None, 1.0f);
+            spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, offset, SpriteEffects.None, 1.0f);
         }
 
         public void Movement(float deltaTime)
@@ -64,16 +64,14 @@ namespace G01_Perseus
             if (velocity.Length() < 0.5f && velocity.Length() > -0.5f)
                 velocity = Vector2.Zero;
 
-            velocity *= friction;
             velocity += direction * acceleration;
+            velocity *= friction;
             velocity.X = velocity.X > maxVelocity.X ? maxVelocity.X : velocity.X;
             velocity.X = velocity.X < -maxVelocity.X ? -maxVelocity.X : velocity.X;
             velocity.Y = velocity.Y > maxVelocity.Y ? maxVelocity.Y : velocity.Y;
             velocity.Y = velocity.Y < -maxVelocity.Y ? -maxVelocity.Y : velocity.Y;
-
-            //Console.WriteLine("Velocity: " + velocity + "      Direction: " + direction);
             Position += velocity * deltaTime;
-            hitBox.Location = GetCenter.ToPoint();
+            hitBox.Location = Center.ToPoint();
         }
 
         public void HandleInput()
@@ -87,14 +85,13 @@ namespace G01_Perseus
 
             if(Input.IsLeftMouseButtonClicked)
             {
-                EntityManager.AddBullet(new Bullet(hitBox.Center.ToVector2(), Input.mouseState.Position.ToVector2(), 7f, Color.Red, new Point(4, 4), 10));
+                EntityManager.AddBullet(new Bullet(Center, Input.MouseWorldPosition, 7f, Color.Red, new Point(20, 20), 10));
             }
         }
 
         public void AdjustAngleTowardsMousePosition()
         {
-            MouseState mouseState = Mouse.GetState();
-            Vector2 mousePosition = new Vector2(mouseState.X, mouseState.Y);
+            Vector2 mousePosition = new Vector2(Input.mouseState.X, Input.mouseState.Y);
             Vector3 cameraTranslation = Game1.camera.Translation.Translation;
             Vector2 cameraOffset = new Vector2(-cameraTranslation.X, -cameraTranslation.Y);
             Vector2 dPos = (Position + offset) - (mousePosition + cameraOffset);
@@ -104,7 +101,7 @@ namespace G01_Perseus
 
         public void AdjustAngleTowardsVelocity() => rotation = (float)Math.Atan(velocity.Y / velocity.X);
 
-        public Vector2 GetCenter { get => Position + offset; private set => Position = value - size.ToVector2() / 2; }
+        public Vector2 Center { get => Position + offset; private set => Position = value - size.ToVector2() / 2; }
 
         protected override void Destroy()
         {

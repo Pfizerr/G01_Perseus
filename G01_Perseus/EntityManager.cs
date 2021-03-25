@@ -11,7 +11,7 @@ namespace G01_Perseus
 
         public static void CreatePlayer()
         {
-            entities.Add(new Player(new Vector2(250, 250), 3, Color.Blue, new Point(15, 15)));
+            entities.Add(new Player(new Vector2(250, 250), 3, Color.Blue, new Point(20, 20)));
         }
 
         public static void CreateEnemy()
