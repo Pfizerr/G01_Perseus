@@ -36,7 +36,7 @@ namespace G01_Perseus
             rotation = 0;
             direction = Vector2.Normalize(targetPosition - position);
 
-            texture = Util.CreateTexture(color, size.X, size.Y);
+            texture = Util.CreateFilledRectangleTexture(color, size.X, size.Y);
             hitBox = new Rectangle(position.ToPoint(), size);
             origin = new Vector2(size.X / 2, size.Y / 2);
         }
@@ -55,7 +55,7 @@ namespace G01_Perseus
             hitBox.Location = position.ToPoint();
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
             spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, origin, SpriteEffects.None, 0f);
         }
