@@ -7,11 +7,11 @@ namespace G01_Perseus
 {
     public static class EntityManager
     {
-        public static List<Entity> entities;
+        public static List<Entity> entities = new List<Entity>();
 
         public static void CreatePlayer()
         {
-            entities.Add(new Player(new Vector2(200, 200), 5f, Color.Blue, new Point(50, 50)));
+            entities.Add(new Player(new Vector2(250, 250), 3, Color.Blue, new Point(15, 15)));
         }
 
         public static void CreateEnemy()
@@ -19,11 +19,13 @@ namespace G01_Perseus
 
         }
 
+        public static void AddBullet(Bullet bullet) => entities.Add(bullet);
+
         public static void Update(GameTime gameTime)
         {
-            foreach(Entity entity in entities)
+            for(int i = 0; i < entities.Count; i++)
             {
-                entity.Update(gameTime);
+                entities[i].Update(gameTime);
             }
         }
 
@@ -34,10 +36,11 @@ namespace G01_Perseus
 
         public static void Draw(SpriteBatch spriteBatch)
         {
-            foreach(Entity entity in entities)
+            for(int i = 0; i < entities.Count; i++)
             {
-                entity.Draw(spriteBatch);
+                entities[i].Draw(spriteBatch);
             }
         }
+
     }
 }

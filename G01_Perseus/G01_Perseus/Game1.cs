@@ -36,7 +36,8 @@ namespace G01_Perseus
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            player = new Player(new Vector2(250 ,250), 3, Color.Blue, new Point(50, 50));
+            Input.Init();
+            EntityManager.CreatePlayer();
             camera = new Camera();
             camera.FollowTarget = player;
             camera.Viewport = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
@@ -69,8 +70,10 @@ namespace G01_Perseus
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            player.Update(gameTime);
+            EntityManager.Update(gameTime);
+            //player.Update(gameTime);
             camera.Update();
+            Input.Update();
 
             base.Update(gameTime);
         }
@@ -87,7 +90,9 @@ namespace G01_Perseus
                 spaceObject.Draw(spriteBatch);
             }
 
-            player.Draw(spriteBatch);
+            EntityManager.Draw(spriteBatch);
+
+            //player.Draw(spriteBatch);
 
             spriteBatch.End();       
 

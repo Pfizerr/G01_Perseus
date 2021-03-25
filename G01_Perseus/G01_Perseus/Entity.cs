@@ -5,7 +5,7 @@ namespace G01_Perseus
 {
     public abstract class Entity
     {
-        private bool isAlive;
+        protected bool isAlive;
         public Entity()
         {
             isAlive = true;
