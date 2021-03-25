@@ -34,12 +34,14 @@ namespace G01_Perseus
             this.size = size;
 
             offset = new Vector2(size.X / 2, size.Y / 2);
-            texture = Util.CreateTexture(color, size.X, size.Y);
+            texture = Util.CreateFilledRectangleTexture(color, size.X, size.Y);
             hitBox = new Rectangle(GetCenter.ToPoint(), size);
 
             Console.WriteLine("Texture Created!");
             Console.WriteLine(texture.ToString());
         }
+
+        public override Vector2 Size => this.size.ToVector2();
 
         //public Vector2 Position => this.position;
 
@@ -52,9 +54,9 @@ namespace G01_Perseus
             timeLastFrame = timeThisFrame;
         }
 
-        public override void Draw(SpriteBatch spriteBatch)
+        public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, size.ToVector2() / 2, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, size.ToVector2() / 2, SpriteEffects.None, 1.0f);
         }
 
         public void Movement(float deltaTime)

@@ -38,7 +38,7 @@ namespace G01_Perseus
         {
             for(int i = 0; i < entities.Count; i++)
             {
-                entities[i].Draw(spriteBatch);
+                entity.Draw(spriteBatch, 0, 0, 0, 0, 0, 0);
             }
         }
 
