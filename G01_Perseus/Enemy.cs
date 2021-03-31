@@ -17,6 +17,7 @@ namespace G01_Perseus
         private float rotation;
         private Rectangle hitBox;
         private Vector2 offset;
+        private Point size;
         public static Vector2 posOutput;
 
 
@@ -24,7 +25,7 @@ namespace G01_Perseus
         //private float maxVelocity;
         private Vector2 direction;
 
-        public Enemy(Vector2 position, float speed, Color color, Vector2 size, Player player) : base()
+        public Enemy(Vector2 position, float speed, Color color, Point size) : base()
         {
             this.position = position;
             this.speed = speed;
@@ -41,8 +42,7 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            Vector2 drawPosition = new Vector2((tileX * tileWidth) + position.X - (ix * tileWidth), (tileY * tileWidth) + position.Y - (iy * tileHeight));
-            spriteBatch.Draw(texture, drawPosition, null, Color.White, rotation, size / 2, Vector2.One, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, size.ToVector2() / 2, SpriteEffects.None, 1.0f);
         }
 
         public override void Update(GameTime gameTime)
@@ -93,6 +93,6 @@ namespace G01_Perseus
 
         }
 
-        public Vector2 GetCenter { get => position + offset; private set => position = value - size / 2; }
+        public Vector2 GetCenter { get => position + offset; private set => position = value - size.ToVector2() / 2; }
     }
 }
