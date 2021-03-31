@@ -16,7 +16,7 @@ namespace G01_Perseus
 
         public static void CreateEnemy()
         {
-
+            entities.Add(new Enemy(new Vector2(200, 200), 3, Color.Red, new Point(15, 15)));
         }
 
         public static void AddBullet(Bullet bullet) => entities.Add(bullet);
