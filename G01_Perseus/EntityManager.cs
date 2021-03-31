@@ -11,7 +11,7 @@ namespace G01_Perseus
 
         public static void CreatePlayer()
         {
-            entities.Add(new Player(position: new Vector2(250, 250), color: Color.Blue, texture: AssetManager.GetTextureByAssetName("player_ship_asset"), scale: new Vector2(0.2f, 0.2f)));
+            entities.Add(new Player(new Vector2(250, 250), 3, Color.Blue, new Point(20, 20)));
         }
 
         public static void CreateEnemy()

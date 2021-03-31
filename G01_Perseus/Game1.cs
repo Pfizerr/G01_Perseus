@@ -42,13 +42,13 @@ namespace G01_Perseus
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            AssetManager.LoadContent(Content);
             Input.Init();
             EntityManager.CreatePlayer();
             EntityManager.CreateEnemy();
             camera = new Camera();
             camera.FollowTarget = player;
             camera.Viewport = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
+
             random = new Random(1);
 
             int tileWidth = 50;
