@@ -44,6 +44,7 @@ namespace G01_Perseus
             spriteBatch = new SpriteBatch(GraphicsDevice);
             Input.Init();
             EntityManager.CreatePlayer();
+            EntityManager.CreateEnemy();
             camera = new Camera();
             camera.FollowTarget = player;
             camera.Viewport = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
@@ -64,11 +65,11 @@ namespace G01_Perseus
                 Vector2 position = new Vector2(random.Next(spawnArea.X, spawnArea.Y) * tileWidth + random.Next(size.X, tileWidth - size.X), random.Next(spawnArea.Width, spawnArea.Height) * tileHeight + random.Next(size.Y, tileHeight - size.Y));
                 //Vector2 position = new Vector2((i % 10) * 50 + 25, (i / 10) * 50 + 25);
                 spaceObjects.Add(new SpaceObject(spaceObjectTexture, position, size.ToVector2()));
-                level.AddEntity(new Enemy(position, 0.0f, Color.White, size.ToVector2(), player));
+                level.AddEntity(new Enemy(position, 0.0f, Color.White, size));
             }
 
             
-            enemy = new Enemy(new Vector2(25, 25), 0.0f, Color.Cyan, new Vector2(50, 50), player);
+            enemy = new Enemy(new Vector2(25, 25), 0.0f, Color.Cyan, new Point(50, 50));
             level.AddEntity(enemy);
 
 
