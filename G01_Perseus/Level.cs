@@ -97,7 +97,7 @@ namespace G01_Perseus
                     int ix = x % width >= 0 ? x % width : (x % width) + width;
                     int iy = y % height >= 0 ? y % height : (y % height) + height;
 
-                    tiles[ix, iy].AddEntity(entity);
+                    //tiles[ix, iy].AddEntity(entity);
                     Console.WriteLine("Added entity: ("+ix+", "+iy+")");
                 }
             }

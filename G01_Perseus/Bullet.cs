@@ -15,29 +15,33 @@ namespace G01_Perseus
         private Texture2D texture;
         private Vector2 direction;
         private float timeToLive;
-        private Rectangle hitBox;
         private float rotation;
         private Vector2 origin;
         private float speed;
         private Color color;
         private Vector2 offset;
+        private Entity parent;
+        private int damage;
 
-        public Bullet(Vector2 position, Vector2 targetPosition, float speed, Color color, Point size, float timeToLive) : base()
+        public Bullet(Entity parent, Vector2 position, Vector2 targetPosition, float speed, Color color, Vector2 size, int damage, float timeToLive) : base()
         {
+            this.parent = parent;
             this.position = position;
             this.targetPosition = targetPosition;
             this.speed = speed;
             this.color = color;
-            this.size = size.ToVector2();
+            this.size = size;
+            this.damage = damage;
             this.timeToLive = timeToLive;
-
             isAlive = true;
+            isCollidable = true;
             rotation = 0;
-            direction = Vector2.Normalize(targetPosition - position);
+            offset = size / 2;
 
-            texture = Util.CreateFilledRectangleTexture(color, size.X, size.Y);
+            direction = Vector2.Normalize(targetPosition - position);
+            texture = Util.CreateFilledRectangleTexture(color, (int)size.X, (int)size.Y);
             origin = new Vector2(size.X / 2, size.Y / 2);
-            hitBox = new Rectangle(position.ToPoint(), size);
+            hitBox = new Rectangle(position.ToPoint(), size.ToPoint());
         }
 
 
@@ -51,7 +55,6 @@ namespace G01_Perseus
             }
 
             position += direction * speed;
-            //hitBox.Location = position.ToPoint();
             hitBox.Location = Center.ToPoint();
         }
 
@@ -65,7 +68,31 @@ namespace G01_Perseus
             return; //to do before instance is destroyed
         }
 
-        public bool IsAlive { get => isAlive; private set => isAlive = value; }
-        public Vector2 Center { get => Position; private set => position = value - size / 2; }
+        public override void HandleCollision(Entity other)
+        {
+            if (other is Enemy)
+            {
+                (other as Enemy).RecieveDamage(damage);
+                isAlive = false;
+            }
+        }
+
+        public Vector2 Center 
+        { 
+            get => Position + offset;
+            private set => position = value - size / 2; 
+        }
+
+        public Entity Parent
+        {
+            get => parent;
+            private set => parent = value;
+        }
+
+        public int Damage
+        {
+            get => damage;
+            private set => damage = value;
+        }
     }
 }

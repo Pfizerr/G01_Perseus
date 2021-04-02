@@ -42,6 +42,9 @@ namespace G01_Perseus
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+
+            AssetManager.LoadAssets(Content);
+
             Input.Init();
             EntityManager.CreatePlayer();
             EntityManager.CreateEnemy();
@@ -61,15 +64,15 @@ namespace G01_Perseus
             for(int i = 0; i < 1000; i++)
             {
 
-                Point size = new Point(random.Next(1, 5));
-                Vector2 position = new Vector2(random.Next(spawnArea.X, spawnArea.Y) * tileWidth + random.Next(size.X, tileWidth - size.X), random.Next(spawnArea.Width, spawnArea.Height) * tileHeight + random.Next(size.Y, tileHeight - size.Y));
+                Vector2 size = new Vector2(random.Next(1, 5));
+                Vector2 position = new Vector2(random.Next(spawnArea.X, spawnArea.Y) * tileWidth + random.Next((int)size.X, tileWidth - (int)size.X), random.Next(spawnArea.Width, spawnArea.Height) * tileHeight + random.Next((int)size.Y, tileHeight - (int)size.Y));
                 //Vector2 position = new Vector2((i % 10) * 50 + 25, (i / 10) * 50 + 25);
-                spaceObjects.Add(new SpaceObject(spaceObjectTexture, position, size.ToVector2()));
-                level.AddEntity(new Enemy(position, 0.0f, Color.White, size));
+                spaceObjects.Add(new SpaceObject(spaceObjectTexture, position, size));
+                level.AddEntity(new Enemy(position, 0.0f, Color.White, size, 100, 0, false));
             }
 
             
-            enemy = new Enemy(new Vector2(25, 25), 0.0f, Color.Cyan, new Point(50, 50));
+            enemy = new Enemy(new Vector2(25, 25), 0.0f, Color.Cyan, new Vector2(50, 50), 100f, 0f, false);
             level.AddEntity(enemy);
 
 

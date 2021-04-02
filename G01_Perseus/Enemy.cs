@@ -11,13 +11,12 @@ namespace G01_Perseus
 {
     public class Enemy : Entity
     {
-        private float speed;
-        private Color color;
         private Texture2D texture;
+        private float speed;
         private float rotation;
-        private Rectangle hitBox;
+        private float damage;
         private Vector2 offset;
-        private Point size;
+        private Color color;
         public static Vector2 posOutput;
 
 
@@ -25,12 +24,15 @@ namespace G01_Perseus
         //private float maxVelocity;
         private Vector2 direction;
 
-        public Enemy(Vector2 position, float speed, Color color, Point size) : base()
+        public Enemy(Vector2 position, float speed, Color color, Vector2 size, float health, float damage, bool isCollidable) : base()
         {
             this.position = position;
             this.speed = speed;
             this.color = color;
             this.size = size;
+            this.health = health;
+            this.damage = damage;
+            this.isCollidable = isCollidable;
 
             offset = new Vector2(size.X / 2, size.Y / 2);
             texture = Util.CreateFilledRectangleTexture(color, (int)size.X, (int)size.Y);
@@ -42,7 +44,7 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, size.ToVector2() / 2, SpriteEffects.None, 1.0f);
+            spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, size / 2, SpriteEffects.None, 0.8f);
         }
 
         public override void Update(GameTime gameTime)
@@ -93,6 +95,31 @@ namespace G01_Perseus
 
         }
 
-        public Vector2 GetCenter { get => position + offset; private set => position = value - size.ToVector2() / 2; }
+        public override void HandleCollision(Entity other)
+        {
+            if (other is Player)
+            {
+                (other as Player).RecieveDamage(damage);
+                isAlive = false;
+            }
+        }
+
+        public void RecieveDamage(float damage)
+        {
+            health -= damage;
+
+            if(health <= 0)
+            {
+                isAlive = false;
+            }
+        }
+
+        public float Damage
+        {
+            get => damage;
+            private set => damage = value;
+        }
+
+        public Vector2 GetCenter { get => position + offset; private set => position = value - size / 2; }
     }
 }
