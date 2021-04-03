@@ -24,7 +24,8 @@ namespace G01_Perseus
         
         //remove speed and reimplement maxVelocity and acceleration
         //private float maxVelocity;
-        private Vector2 velocity;        
+        private Vector2 velocity;
+        private Weapon equippedWeapon;
 
         public Player(Vector2 position, float speed, Color color, Point size) : base()
         {
@@ -39,6 +40,7 @@ namespace G01_Perseus
 
             Console.WriteLine("Texture Created!");
             Console.WriteLine(texture.ToString());
+            equippedWeapon = new Weapon1(1);
         }
 
         public override Vector2 Size => this.size.ToVector2();
@@ -47,6 +49,7 @@ namespace G01_Perseus
 
         public override void Update(GameTime gameTime)
         {
+            equippedWeapon.Update(gameTime);
             float timeThisFrame = (float)gameTime.TotalGameTime.TotalSeconds;
             AdjustAngleTowardsMousePosition();
             HandleInput();
@@ -85,7 +88,7 @@ namespace G01_Perseus
 
             if(Input.IsLeftMouseButtonClicked)
             {
-                EntityManager.AddBullet(new Bullet(Center, Input.MouseWorldPosition, 7f, Color.Red, new Point(20, 20), 10));
+                equippedWeapon.Fire(Center, Input.MouseWorldPosition, rotation);
             }
         }
 
