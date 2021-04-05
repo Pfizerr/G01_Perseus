@@ -68,11 +68,11 @@ namespace G01_Perseus
                 Vector2 position = new Vector2(random.Next(spawnArea.X, spawnArea.Y) * tileWidth + random.Next((int)size.X, tileWidth - (int)size.X), random.Next(spawnArea.Width, spawnArea.Height) * tileHeight + random.Next((int)size.Y, tileHeight - (int)size.Y));
                 //Vector2 position = new Vector2((i % 10) * 50 + 25, (i / 10) * 50 + 25);
                 spaceObjects.Add(new SpaceObject(spaceObjectTexture, position, size));
-                level.AddEntity(new Enemy(position, 0.0f, Color.White, size, 100, 0, false));
+                level.AddEntity(new Enemy(Util.CreateFilledRectangleTexture(Color.White, (int)size.X, (int)size.Y), position, Vector2.Zero, Vector2.One, null, SpriteEffects.None, Color.White, 0, 0.3f, false, 1, 0));
             }
 
-            
-            enemy = new Enemy(new Vector2(25, 25), 0.0f, Color.Cyan, new Vector2(50, 50), 100f, 0f, false);
+
+            enemy = new Enemy(Util.CreateFilledRectangleTexture(Color.Cyan, 50, 50), new Vector2(50, 50), Vector2.Zero, Vector2.One, null, SpriteEffects.None, Color.White, 0, 0.8f, false, 1, 0);
             level.AddEntity(enemy);
 
 

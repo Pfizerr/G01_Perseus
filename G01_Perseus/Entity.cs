@@ -5,64 +5,108 @@ namespace G01_Perseus
 {
     public abstract class Entity
     {
-        protected bool isAlive;
+        protected SpriteEffects spriteEffects;
+        protected Rectangle? source;
+        protected Rectangle hitbox;
+
         protected bool isCollidable;
-
-        protected Vector2 position;
-        protected Vector2 size;
-        protected Rectangle hitBox;
-        
+        protected bool isAlive;
         protected float health;
+        protected float deltaTime;
+        protected float totalTimeLastFrame;
+        protected Vector2 velocity;
+        protected Vector2 origin;
+        protected Vector2 size;
 
-        public Entity()
+        protected Texture2D texture;
+        protected Vector2 position;
+        protected Vector2 maxVelocity;
+        protected Vector2 scale;
+        protected Color color;
+        protected float rotation;
+        protected float layerDepth;
+
+
+        public Entity(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable)
         {
+            this.texture = texture;
+            this.position = position;
+            this.maxVelocity = maxVelocity;
+            this.scale = scale;
+            this.source = source;
+            this.color = color;
+            this.rotation = rotation;
+            this.layerDepth = layerDepth;
+            this.isCollidable = isCollidable;
+            this.spriteEffects = spriteEffects;
+
+            if(this.texture == null)
+            {
+                DefaultTexture();
+            }
+
+            size = this.texture.Bounds.Size.ToVector2() * this.scale;
+            hitbox = new Rectangle(Position.ToPoint(), size.ToPoint()); 
+
             isAlive = true;
         }
-
-        public Vector2 Position => position;
-
-        public virtual Vector2 Size => size;
         
         public virtual void Update(GameTime gameTime)
         {
+            var totalTimeThisFrame = (float)gameTime.TotalGameTime.TotalSeconds;
+            deltaTime = totalTimeThisFrame - totalTimeLastFrame;
+            totalTimeLastFrame = totalTimeThisFrame;
+
             if(health <= 0)
             {
                 isAlive = false;
             }
-
-            if(!isAlive)
-            {
-                Destroy();
-            }
         }
 
+        public abstract void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight);
+
         public abstract void HandleCollision(Entity other);
+
+        public abstract void Destroy();
+
+        /// <summary>
+        /// if a null value was passed at instantiation, then use this texture.
+        /// </summary>
+        protected abstract void DefaultTexture();
 
         public virtual bool IsAlive
         {
             get => isAlive;
-            set => isAlive = value;
+            protected set => isAlive = value;
+        }
+        public virtual Vector2 Size
+        {
+            get => size;
+            protected set => size = value;
+        }
+
+        public virtual Vector2 Position
+        {
+            get => position;
+            protected set => position = value;
         }
 
         public virtual Rectangle HitBox
         {
-            get => hitBox;
-            private set => hitBox = value;
+            get => hitbox;
+            protected set => hitbox = value;
         }
 
         public virtual bool IsCollidable
         {
             get => isCollidable;
-            private set =>isCollidable = value;
+            protected set =>isCollidable = value;
         }
 
-        public virtual float Health
+        public virtual Vector2 Center
         {
-            get => health;
-            private set => health = value;
+            get => position + origin;
+            protected set => position = value - origin; 
         }
-
-        public abstract void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight);
-        protected abstract void Destroy();
     }
 }

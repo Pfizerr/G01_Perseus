@@ -8,15 +8,32 @@ namespace G01_Perseus
     public static class EntityManager
     {
         public static List<Entity> entities = new List<Entity>();
+        public static Player Player;
 
         public static void CreatePlayer()
         {
-            entities.Add(new Player(new Vector2(250, 250), 3, Color.Blue, new Vector2(0.2f, 0.2f), 100));
+            Player = new Player(AssetManager.TextureAsset("player_ship"), new Vector2(250, 250), new Vector2(500, 500), new Vector2(0.2f, 0.2f), null, SpriteEffects.None,  Color.White, 0f, 0.85f, true, 100);
+            entities.Add(Player);
         }
 
         public static void CreateEnemy()
         {
-            entities.Add(new Enemy(new Vector2(200, 200), 3, Color.Red, new Vector2(15, 15), 100, 25, true));
+            entities.Add(new Enemy(AssetManager.TextureAsset("enemy_ship"), new Vector2(200, 200), new Vector2(400, 400), new Vector2(0.2f, 0.2f), null, SpriteEffects.None, Color.White, 0f, 0.8f, true, 100, 25));
+        }
+
+        public static void CreateBullet(Entity parent, Vector2 start, Vector2 target)
+        {
+            #region no good
+            Vector2 maxBulletVelocity = new Vector2(50, 50);
+            Vector2 bulletScale = new Vector2(0.1f, 0.1f);
+            Color bulletColor = Color.White;
+            float bulletRotation = 0f;
+            float bulletLayerDepth = 0.8f;
+            bool bulletIsCollidable = true;
+            float bulletDamage = 50;
+            float bulletTimeToLive = 10;
+            #endregion
+            EntityManager.AddBullet(new Bullet(AssetManager.TextureAsset("projectile_green"), start, maxBulletVelocity, bulletScale, null, SpriteEffects.None, bulletColor, bulletRotation, bulletLayerDepth, bulletIsCollidable, parent, target, bulletDamage, bulletTimeToLive));
         }
 
         public static void AddBullet(Bullet bullet) => entities.Add(bullet);
@@ -27,6 +44,7 @@ namespace G01_Perseus
             {
                 if(!entities[i].IsAlive)
                 {
+                    entities[i].Destroy();
                     entities.RemoveAt(i);
                     continue;
                 }

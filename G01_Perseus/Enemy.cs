@@ -11,40 +11,21 @@ namespace G01_Perseus
 {
     public class Enemy : Entity
     {
-        private Texture2D texture;
-        private float speed;
-        private float rotation;
-        private float damage;
-        private Vector2 offset;
-        private Color color;
         public static Vector2 posOutput;
-
-
-        // remove speed and reimplement maxVelocity and acceleration
-        //private float maxVelocity;
         private Vector2 direction;
+        private float damage;
 
-        public Enemy(Vector2 position, float speed, Color color, Vector2 size, float health, float damage, bool isCollidable) : base()
+        public Enemy(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, float health, float damage) 
+            : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
         {
-            this.position = position;
-            this.speed = speed;
-            this.color = color;
-            this.size = size;
             this.health = health;
             this.damage = damage;
-            this.isCollidable = isCollidable;
-
-            offset = new Vector2(size.X / 2, size.Y / 2);
-            texture = Util.CreateFilledRectangleTexture(color, (int)size.X, (int)size.Y);
-            hitBox = new Rectangle((int)GetCenter.X, (int)GetCenter.Y, (int)size.X, (int)size.Y);
-
-            Console.WriteLine("Texture Created!");
-            Console.WriteLine(texture.ToString());
+            origin = size / 2;
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, size / 2, SpriteEffects.None, 0.8f);
+            spriteBatch.Draw(texture, hitbox, null, Color.White, rotation, size / 2, SpriteEffects.None, 0.8f);
         }
 
         public override void Update(GameTime gameTime)
@@ -53,25 +34,28 @@ namespace G01_Perseus
 
             position += direction;
             posOutput = position;
-            hitBox.Location = GetCenter.ToPoint();
+            hitbox.Location = Center.ToPoint();
 
 
-            if ((Vector2.Distance(position, Player.Position)) < 200)
+            if ((Vector2.Distance(position, EntityManager.Player.Position)) < 200)
             {
                 AdjustAngleTowardsTarget();
             }
             base.Update(gameTime);
         }
 
-        protected override void Destroy()
+        public override void Destroy()
         {
-            throw new NotImplementedException();
+            //Code to execute when destroyed..
+
+            System.Console.WriteLine("{0} has been killed.", this.ToString());
+            return;
         }
 
         public void AdjustAngleTowardsTarget()
         {
 
-            Vector2 dPos = (position + offset) - Player.Position;
+            Vector2 dPos = (position + origin) - EntityManager.Player.Position;
 
             rotation = (float)Math.Atan2(dPos.Y, dPos.X);
         }
@@ -79,7 +63,7 @@ namespace G01_Perseus
         public void Pursue() // Moves toward the player
         {
             direction = Vector2.Zero;
-            Vector2 vectorResult = Player.Position - position;
+            Vector2 vectorResult = EntityManager.Player.Position - position;
             vectorResult.Normalize();
             direction = vectorResult;
         }
@@ -114,12 +98,9 @@ namespace G01_Perseus
             }
         }
 
-        public float Damage
+        protected override void DefaultTexture()
         {
-            get => damage;
-            private set => damage = value;
+            this.texture = AssetManager.TextureAsset("enemy_ship");
         }
-
-        public Vector2 GetCenter { get => position + offset; private set => position = value - size / 2; }
     }
 }

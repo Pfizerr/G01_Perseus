@@ -41,5 +41,13 @@ namespace G01_Perseus
             texture.SetData(data);
             return texture;
         }
+
+        public static void Clamp(Vector2 subject, Vector2 min, Vector2 max)
+        {
+            subject.X = subject.X > max.X ? max.X : subject.X;
+            subject.X = subject.X < -min.X ? -min.X : subject.X;
+            subject.Y = subject.Y > max.Y ? max.Y : subject.Y;
+            subject.Y = subject.Y < -min.Y ? -min.Y : subject.Y;
+        }
     }
 }

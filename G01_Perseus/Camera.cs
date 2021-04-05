@@ -38,14 +38,14 @@ namespace G01_Perseus
         {
             get
             {
-                return Player.Position;
+                return EntityManager.Player.Position;
             }
         }
 
 
         public void Update()
         {
-            this.translationMatrix.Translation = new Vector3(-Player.Position.X+(Viewport.Width * 0.5f)-25, -Player.Position.Y + (Viewport.Height * 0.5f)-25, 0.0f);
+            this.translationMatrix.Translation = new Vector3(-EntityManager.Player.Position.X+(Viewport.Width * 0.5f)-25, -EntityManager.Player.Position.Y + (Viewport.Height * 0.5f)-25, 0.0f);
         }
 
     }

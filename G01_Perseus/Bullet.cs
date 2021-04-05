@@ -1,52 +1,32 @@
 ﻿﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace G01_Perseus
 {
     public class Bullet : Entity
     {
-        private Vector2 targetPosition;
-        private Texture2D texture;
-        private Vector2 direction;
         private float timeToLive;
-        private float rotation;
-        private Vector2 origin;
-        private float speed;
-        private Color color;
-        private Vector2 offset;
+        private float damage;
         private Entity parent;
-        private int damage;
+        private Vector2 direction;
 
-        public Bullet(Entity parent, Vector2 position, Vector2 targetPosition, float speed, Color color, Vector2 size, int damage, float timeToLive) : base()
+        public Bullet(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, Entity parent, Vector2 target, float damage, float timeToLive) 
+            : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
         {
             this.parent = parent;
-            this.position = position;
-            this.targetPosition = targetPosition;
-            this.speed = speed;
-            this.color = color;
-            this.size = size;
             this.damage = damage;
             this.timeToLive = timeToLive;
-            isAlive = true;
-            isCollidable = true;
-            rotation = 0;
-            offset = size / 2;
+            velocity = maxVelocity;
+            Center = position;
+            origin = size / 2;
+            health = 1; 
 
-            direction = Vector2.Normalize(targetPosition - position);
-            texture = Util.CreateFilledRectangleTexture(color, (int)size.X, (int)size.Y);
-            origin = new Vector2(size.X / 2, size.Y / 2);
-            hitBox = new Rectangle(position.ToPoint(), size.ToPoint());
+            direction = Vector2.Normalize(target - position);
         }
-
 
         public override void Update(GameTime gameTime)
         {
+            base.Update(gameTime);
             timeToLive -= (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             if (timeToLive <= 0)
@@ -54,18 +34,21 @@ namespace G01_Perseus
                 isAlive = false;
             }
 
-            position += direction * speed;
-            hitBox.Location = Center.ToPoint();
+            position += direction * velocity;
+            hitbox.Location = Center.ToPoint();
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(texture, hitBox, null, Color.White, rotation, origin, SpriteEffects.None, 1f);
+            spriteBatch.Draw(texture, hitbox, source, color, rotation, origin, spriteEffects, layerDepth);
         }
 
-        protected override void Destroy()
+        public override void Destroy()
         {
-            return; //to do before instance is destroyed
+            //Code to execute when destroyed..
+
+            System.Console.WriteLine("{0} has been killed.", this.ToString());
+            return;
         }
 
         public override void HandleCollision(Entity other)
@@ -77,22 +60,15 @@ namespace G01_Perseus
             }
         }
 
-        public Vector2 Center 
-        { 
-            get => Position + offset;
-            private set => position = value - size / 2; 
+        protected override void DefaultTexture()
+        {
+            texture = AssetManager.TextureAsset("projectile_green");
         }
 
         public Entity Parent
         {
             get => parent;
             private set => parent = value;
-        }
-
-        public int Damage
-        {
-            get => damage;
-            private set => damage = value;
         }
     }
 }
