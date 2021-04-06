@@ -50,6 +50,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="SpaceObject.cs" />
+    <Compile Include="TextureManager.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityManager.cs" />
