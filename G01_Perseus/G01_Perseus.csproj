@@ -56,7 +56,9 @@
     <Compile Include="EntityManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Weapon.cs" />
-    <Compile Include="Weapon1.cs" />
+    <Compile Include="WeaponLaser.cs" />
+    <Compile Include="WeaponSingleShot.cs" />
+    <Compile Include="WeaponTripleShot.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">
