@@ -40,7 +40,7 @@ namespace G01_Perseus
 
             Console.WriteLine("Texture Created!");
             Console.WriteLine(texture.ToString());
-            equippedWeapon = new Weapon1(1);
+            equippedWeapon = new WeaponTripleShot(1,1);
         }
 
         public override Vector2 Size => this.size.ToVector2();
