@@ -21,8 +21,9 @@ namespace G01_Perseus
         private float speed;
         private Color color;
         private Vector2 offset;
+        private Vector2 dPos;
 
-        public Bullet(Vector2 position, Vector2 targetPosition, float speed, Color color, Point size, float timeToLive) : base()
+        public Bullet(Vector2 position, Vector2 targetPosition, float speed, Color color, Point size, float timeToLive, bool isLaser) : base()
         {
             this.position = position;
             this.targetPosition = targetPosition;
@@ -32,11 +33,22 @@ namespace G01_Perseus
             this.timeToLive = timeToLive;
 
             isAlive = true;
-            rotation = 0;
+
+            dPos = position - targetPosition;
+
+            rotation = (float)Math.Atan2(dPos.Y, dPos.X);
             direction = Vector2.Normalize(targetPosition - position);
 
             texture = Util.CreateFilledRectangleTexture(color, size.X, size.Y);
-            origin = new Vector2(size.X / 2, size.Y / 2);
+            if (isLaser)
+            {
+                origin = new Vector2(Vector2.Distance(position, targetPosition), size.Y / 2);
+            }
+            else
+            {
+                origin = new Vector2(size.X / 2, size.Y / 2);
+            }
+            
             hitBox = new Rectangle(position.ToPoint(), size);
         }
 
