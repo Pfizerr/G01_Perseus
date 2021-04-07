@@ -11,10 +11,14 @@ namespace G01_Perseus
     {
         protected float rateOfFire;
         protected float timeSinceLastFire;
+        protected float baseDamagePerShot;
+        protected float powerLevel;
+        protected float damagePerShot;
 
-        public Weapon(int iD) : base(iD)
+        public Weapon(int iD, float powerLevel) : base(iD)
         {
-
+            this.powerLevel = powerLevel;
+            damagePerShot = powerLevel * baseDamagePerShot;
         }
 
         public override void Update(GameTime gameTime)
