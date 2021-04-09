@@ -11,11 +11,16 @@ namespace G01_Perseus
         private Vector2 direction;
         private Vector2 friction;
 
+        //Components
+        private PlayerStatus playerStatus;
+
         public Player(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, float health) 
             : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
         {
             this.health = health;
             origin = size / 2;
+
+            playerStatus = new PlayerStatus(health, 0f);
 
             #region TEMP
             friction = new Vector2(0.99f, 0.99f); // move to Level.cs ?
@@ -89,6 +94,11 @@ namespace G01_Perseus
             }
         }
 
+        public void RecieveRewards(int skillPointRewards, int resourceRewards, int dustRewards)
+        {
+            
+        }
+
         public override void Destroy()
         {
             //Code to execute when destroyed..
@@ -100,6 +110,12 @@ namespace G01_Perseus
         protected override void DefaultTexture()
         {
             this.texture = AssetManager.TextureAsset("player_ship");
+        }
+
+        public PlayerStatus Status
+        {
+            get => playerStatus;
+            private set => playerStatus = value;
         }
     }
 }

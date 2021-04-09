@@ -15,12 +15,16 @@ namespace G01_Perseus
         private Vector2 direction;
         private float damage;
 
+        private PlayerStatus status;
+
         public Enemy(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, float health, float damage) 
             : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
         {
             this.health = health;
             this.damage = damage;
+            
             origin = size / 2;
+            status = new PlayerStatus(health, 0);
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
