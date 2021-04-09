@@ -20,8 +20,6 @@ namespace G01_Perseus
         public static Random random;
         List<SpaceObject> spaceObjects;
 
-        private StateStack stateStack;
-
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -47,7 +45,6 @@ namespace G01_Perseus
 
             AssetManager.LoadAssets(Content);
 
-            TextureManager.LoadTextures(Content);
             Input.Init();
             EntityManager.CreatePlayer();
             EntityManager.CreateEnemy();
@@ -78,9 +75,6 @@ namespace G01_Perseus
             enemy = new Enemy(Util.CreateFilledRectangleTexture(Color.Cyan, 50, 50), new Vector2(50, 50), Vector2.Zero, Vector2.One, null, SpriteEffects.None, Color.White, 0, 0.8f, false, 1, 0);
             level.AddEntity(enemy);
 
-            stateStack = new StateStack();
-            stateStack.Push(new InGameState());
-            stateStack.Push(new TestState());
 
             backgroundColor = Color.Black;
         }
@@ -102,8 +96,6 @@ namespace G01_Perseus
             camera.Update();
             Input.Update();
 
-            
-
             base.Update(gameTime);
         }
 
@@ -117,25 +109,15 @@ namespace G01_Perseus
 
             foreach(SpaceObject spaceObject in spaceObjects)
             {
-                spaceObject.Draw(spriteBatch);
+                //spaceObject.Draw(spriteBatch);
             }
 
             EntityManager.Draw(spriteBatch);
-            
+
             //player.Draw(spriteBatch);
 
-            spriteBatch.End();
+            spriteBatch.End();       
 
-
-            //stateStack.Draw(spriteBatch, gameTime);
-
-            //Second draw call to make the HUD independant of the camera/world movement
-            spriteBatch.Begin();
-            spriteBatch.Draw(TextureManager.GradientBar, new Rectangle(40, Window.ClientBounds.Height - 40, TextureManager.GradientBar.Width, TextureManager.GradientBar.Height / 2), Color.Crimson);
-            spriteBatch.Draw(TextureManager.GradientBar, new Rectangle(40, Window.ClientBounds.Height - 80, TextureManager.GradientBar.Width, TextureManager.GradientBar.Height / 2), Color.Cyan);
-
-
-            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
