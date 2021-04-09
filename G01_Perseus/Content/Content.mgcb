@@ -189,6 +189,7 @@
 /build:textures/ProjektilesSpritesheet.png
 
 #begin textures/projektileYellow.png
+#begin GradientBar.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -199,4 +200,5 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/projektileYellow.png
+/build:GradientBar.png
 
