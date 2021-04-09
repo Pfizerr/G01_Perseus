@@ -9,12 +9,12 @@ using System.Threading.Tasks;
 namespace G01_Perseus
 {
     // This class might change a lot and if it grows too large, then it should have its' own file
-    public class Tile
+    public class Sector
     {
         //123
         private ICollection<Entity> entities;
 
-        public Tile()
+        public Sector()
         {
             entities = new List<Entity>();
         }
@@ -29,7 +29,7 @@ namespace G01_Perseus
         public void RemoveEntity(Entity entity)
         {
             entities.Remove(entity);
-        }        
+        }
     }
 
     public class Level
@@ -40,7 +40,7 @@ namespace G01_Perseus
         private int tileWidth;
         private int tileHeight;
 
-        private Tile[,] tiles;
+        private Sector[,] tiles;
 
         // This code is only for debugging purpose
         #region
@@ -55,32 +55,33 @@ namespace G01_Perseus
             this.tileWidth = tileWidth;
             this.tileHeight = tileHeight;
 
-            this.tiles = new Tile[width, height];
+            this.tiles = new Sector[width, height];
             for (int y = 0; y < height; y++)
             {
                 for (int x = 0; x < width; x++)
                 {
-                    this.tiles[x, y] = new Tile();
+                    this.tiles[x, y] = new Sector();
                 }
             }
 
             // This code is only for debugging purpose
             #region
-            colors = new Color[width,height];
-            for(int y = 0; y < height;y++)
+            colors = new Color[width, height];
+            for (int y = 0; y < height; y++)
             {
-                for(int x = 0; x < width; x++)
+                for (int x = 0; x < width; x++)
                 {
-                    int r =  (x + 1) * (255 / width);
+                    int r = (x + 1) * (255 / width);
                     int g = (y + 1) * (255 / height);
                     int b = 0;
                     int a = 255;
-                    colors[x,y] = new Color(r, g, b, a);
-                }               
+                    colors[x, y] = new Color(r, g, b, a);
+                }
             }
             #endregion
 
             this.tileTexture = Util.CreateRectangleTexture(tileWidth, tileHeight, Color.Green, Color.White);
+    
         }
 
         public void AddEntity(Entity entity)
@@ -90,17 +91,25 @@ namespace G01_Perseus
             int endX = (int)Math.Ceiling((entity.Position.X + (entity.Size.X * 0.5f)) / (float)tileWidth);
             int endY = (int)Math.Ceiling((entity.Position.Y + (entity.Size.Y * 0.5f)) / (float)tileHeight);
 
-            for(int y = startY; y < endY;y++)
+            for (int y = startY; y < endY; y++)
             {
-                for(int x = startX; x < endX;x++)
+                for (int x = startX; x < endX; x++)
                 {
-                    int ix = x % width >= 0 ? x % width : (x % width) + width;
-                    int iy = y % height >= 0 ? y % height : (y % height) + height;
+                    Point sector = GetSectorCoordinates(x, y);
 
-                    tiles[ix, iy].AddEntity(entity);
-                    Console.WriteLine("Added entity: ("+ix+", "+iy+")");
+                    tiles[sector.X, sector.Y].AddEntity(entity);
+                    Console.WriteLine("Added entity: (" + sector.X + ", " + sector.Y + ")");
                 }
             }
+        }
+
+
+
+        public Point GetSectorCoordinates(int x, int y)
+        {
+            int ix = x % width >= 0 ? x % width : (x % width) + width;
+            int iy = y % height >= 0 ? y % height : (y % height) + height;
+            return new Point(ix, iy);
         }
 
 
@@ -111,8 +120,8 @@ namespace G01_Perseus
 
             int startX = (int)Math.Floor((camera.CenterPosition.X - (tilesPerCameraX * tileWidth * 0.5f)) / tileWidth);
             int startY = (int)Math.Floor((camera.CenterPosition.Y - (tilesPerCameraY * tileHeight * 0.5f)) / tileHeight);
-            int endX = startX +  (int)(tilesPerCameraX)+1;
-            int endY = startY +  (int)(tilesPerCameraY)+1;
+            int endX = startX + (int)(tilesPerCameraX) + 1;
+            int endY = startY + (int)(tilesPerCameraY) + 1;
 
             Console.WriteLine(startY);
 
@@ -120,25 +129,23 @@ namespace G01_Perseus
 
             for (int y = startY; y <= endY; y++)
             {
-                for(int x = startX; x <= endX; x++)
+                for (int x = startX; x <= endX; x++)
                 {
                     // This code is only for debugging purpose
-                    // ix and iy should probably be generated via a function
+                    Point sector = GetSectorCoordinates(x, y);
                     #region
-                    int ix = x % width >= 0 ? x % width : (x % width) + width;
-                    int iy = y % height >= 0 ? y % height : (y % height) + height;
-                    Color color = colors[ix, iy];
+                    Color color = colors[sector.X, sector.Y];
                     #endregion
 
                     spriteBatch.Draw(tileTexture, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
 
-                    foreach(Entity entity in tiles[ix, iy].Entities)
+                    foreach (Entity entity in tiles[sector.X, sector.Y].Entities)
                     {
                         //if (!drawnEntities.Contains(entity))
                         {
                             Vector2 tilePosition = new Vector2(x * tileWidth, y * tileHeight);
                             Vector2 offset = new Vector2();
-                            entity.Draw(spriteBatch, x, y, ix, iy, tileWidth, tileHeight);
+                            //entity.Draw(spriteBatch, x, y, sector.X, sector.Y, tileWidth, tileHeight);
                             drawnEntities.Add(entity);
                         }
                     }
@@ -146,7 +153,5 @@ namespace G01_Perseus
             }
 
         }
-
-
     }
 }
