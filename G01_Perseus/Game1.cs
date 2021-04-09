@@ -44,6 +44,7 @@ namespace G01_Perseus
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
+            TextureManager.LoadTextures(Content);
             Input.Init();
             EntityManager.CreatePlayer();
             EntityManager.CreateEnemy();
@@ -117,13 +118,21 @@ namespace G01_Perseus
             }
 
             EntityManager.Draw(spriteBatch);
-
+            
             //player.Draw(spriteBatch);
 
             spriteBatch.End();
 
+
             //stateStack.Draw(spriteBatch, gameTime);
 
+            //Second draw call to make the HUD independant of the camera/world movement
+            spriteBatch.Begin();
+            spriteBatch.Draw(TextureManager.GradientBar, new Rectangle(40, Window.ClientBounds.Height - 40, TextureManager.GradientBar.Width, TextureManager.GradientBar.Height / 2), Color.Crimson);
+            spriteBatch.Draw(TextureManager.GradientBar, new Rectangle(40, Window.ClientBounds.Height - 80, TextureManager.GradientBar.Width, TextureManager.GradientBar.Height / 2), Color.Cyan);
+
+
+            spriteBatch.End();
             base.Draw(gameTime);
         }
     }
