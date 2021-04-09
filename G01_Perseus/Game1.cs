@@ -20,6 +20,8 @@ namespace G01_Perseus
         public static Random random;
         List<SpaceObject> spaceObjects;
 
+        private StateStack stateStack;
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -72,6 +74,9 @@ namespace G01_Perseus
             enemy = new Enemy(new Vector2(25, 25), 0.0f, Color.Cyan, new Point(50, 50));
             level.AddEntity(enemy);
 
+            stateStack = new StateStack();
+            stateStack.Push(new InGameState());
+            stateStack.Push(new TestState());
 
             backgroundColor = Color.Black;
         }
@@ -93,6 +98,8 @@ namespace G01_Perseus
             camera.Update();
             Input.Update();
 
+            
+
             base.Update(gameTime);
         }
 
@@ -106,14 +113,16 @@ namespace G01_Perseus
 
             foreach(SpaceObject spaceObject in spaceObjects)
             {
-                //spaceObject.Draw(spriteBatch);
+                spaceObject.Draw(spriteBatch);
             }
 
             EntityManager.Draw(spriteBatch);
 
             //player.Draw(spriteBatch);
 
-            spriteBatch.End();       
+            spriteBatch.End();
+
+            //stateStack.Draw(spriteBatch, gameTime);
 
             base.Draw(gameTime);
         }
