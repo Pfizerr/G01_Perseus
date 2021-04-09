@@ -45,7 +45,10 @@
     <Compile Include="Bullet.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="EventManager.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="GameState.cs" />
+    <Compile Include="InGameState.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Mission\MissionManager.cs" />
@@ -53,6 +56,10 @@
     <Compile Include="PlayerStatus.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="SpaceObject.cs" />
+    <Compile Include="Sprite.cs" />
+    <Compile Include="StateStack.cs" />
+    <Compile Include="TestState.cs" />
+    <Compile Include="TextureManager.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityManager.cs" />
@@ -71,6 +78,10 @@
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="EventSystem\Events\" />
+    <Folder Include="EventSystem\Listeners\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
