@@ -10,11 +10,6 @@ namespace G01_Perseus
         private Vector2 acceleration;
         private Vector2 direction;
         private Vector2 friction;
-        
-        //remove speed and reimplement maxVelocity and acceleration
-        //private float maxVelocity;
-        private Vector2 velocity;
-        private Weapon equippedWeapon;
 
         //Components
         private PlayerStatus playerStatus;
@@ -31,16 +26,11 @@ namespace G01_Perseus
             friction = new Vector2(0.99f, 0.99f); // move to Level.cs ?
             acceleration = new Vector2(4, 4); // move to constructor ?
             #endregion 
-            Console.WriteLine("Texture Created!");
-            Console.WriteLine(texture.ToString());
-            equippedWeapon = new WeaponTripleShot(1,1);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            equippedWeapon.Update(gameTime);
-            float timeThisFrame = (float)gameTime.TotalGameTime.TotalSeconds;
             AdjustAngleTowardsMousePosition();
             HandleInput();
             Movement(gameTime);
@@ -76,7 +66,7 @@ namespace G01_Perseus
 
             if(Input.IsLeftMouseButtonClicked)
             {
-                equippedWeapon.Fire(Center, Input.MouseWorldPosition, rotation);
+                EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
             }
         }
 
