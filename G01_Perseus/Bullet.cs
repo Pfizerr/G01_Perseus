@@ -10,7 +10,7 @@ namespace G01_Perseus
         private Entity parent;
         private Vector2 direction;
 
-        public Bullet(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, Entity parent, Vector2 target, float damage, float timeToLive) 
+        public Bullet(Texture2D texture, Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, Entity parent, float damage, float timeToLive, bool isLaser) 
             : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
         {
             this.parent = parent;
@@ -18,10 +18,17 @@ namespace G01_Perseus
             this.timeToLive = timeToLive;
             velocity = maxVelocity;
             Center = position;
-            origin = size / 2;
+            if (isLaser)
+            {
+                origin = new Vector2(Vector2.Distance(position, targetPosition), size.Y / 2);
+            }
+            else
+            {
+                origin = size / 2;
+            }
             health = 1; 
 
-            direction = Vector2.Normalize(target - position);
+            direction = Vector2.Normalize(targetPosition - position);
         }
 
         public override void Update(GameTime gameTime)

@@ -12,7 +12,7 @@ namespace G01_Perseus
 
         public static void CreatePlayer()
         {
-            Player = new Player(AssetManager.TextureAsset("player_ship"), new Vector2(250, 250), new Vector2(500, 500), new Vector2(0.2f, 0.2f), null, SpriteEffects.None,  Color.White, 0f, 0.85f, true, 100);
+            Player = new Player(AssetManager.TextureAsset("player_ship"), new Vector2(250, 250), new Vector2(500, 500), new Vector2(0.2f, 0.2f), null, SpriteEffects.None, Color.White, 0f, 0.85f, true, 100);
             entities.Add(Player);
         }
 
@@ -21,7 +21,7 @@ namespace G01_Perseus
             entities.Add(new Enemy(AssetManager.TextureAsset("enemy_ship"), new Vector2(200, 200), new Vector2(400, 400), new Vector2(0.2f, 0.2f), null, SpriteEffects.None, Color.White, 0f, 0.8f, true, 100, 25));
         }
 
-        public static void CreateBullet(Entity parent, Vector2 start, Vector2 target)
+        public static void CreateBullet(Entity parent, Vector2 start, Vector2 target, bool isLaser)
         {
             #region no good
             Vector2 maxBulletVelocity = new Vector2(50, 50);
@@ -33,16 +33,16 @@ namespace G01_Perseus
             float bulletDamage = 50;
             float bulletTimeToLive = 10;
             #endregion
-            EntityManager.AddBullet(new Bullet(AssetManager.TextureAsset("projectile_green"), start, maxBulletVelocity, bulletScale, null, SpriteEffects.None, bulletColor, bulletRotation, bulletLayerDepth, bulletIsCollidable, parent, target, bulletDamage, bulletTimeToLive));
+            EntityManager.AddBullet(new Bullet(AssetManager.TextureAsset("projectile_green"), start, target, maxBulletVelocity, bulletScale, null, SpriteEffects.None, bulletColor, bulletRotation, bulletLayerDepth, bulletIsCollidable, parent, bulletDamage, bulletTimeToLive, isLaser));
         }
 
         public static void AddBullet(Bullet bullet) => entities.Add(bullet);
 
         public static void Update(GameTime gameTime)
         {
-            for(int i = 0; i < entities.Count; i++)
+            for (int i = 0; i < entities.Count; i++)
             {
-                if(!entities[i].IsAlive)
+                if (!entities[i].IsAlive)
                 {
                     entities[i].Destroy();
                     entities.RemoveAt(i);
@@ -69,7 +69,7 @@ namespace G01_Perseus
 
         public static void HandleCollisions(Entity entity, Entity otherEntity)
         {
-            if(!entity.IsCollidable || !otherEntity.IsCollidable || !entity.IsAlive || !otherEntity.IsAlive)
+            if (!entity.IsCollidable || !otherEntity.IsCollidable || !entity.IsAlive || !otherEntity.IsAlive)
             {
                 return;
             }
@@ -80,7 +80,7 @@ namespace G01_Perseus
 
         public static void Draw(SpriteBatch spriteBatch)
         {
-            for(int i = 0; i < entities.Count; i++)
+            for (int i = 0; i < entities.Count; i++)
             {
                 entities[i].Draw(spriteBatch, 0, 0, 0, 0, 0, 0);
             }

@@ -10,7 +10,7 @@ namespace G01_Perseus
         private Vector2 acceleration;
         private Vector2 direction;
         private Vector2 friction;
-
+        private Weapon equippedWeapon = new WeaponTripleShot(1, 1);
         //Components
         private PlayerStatus playerStatus;
 
@@ -35,6 +35,7 @@ namespace G01_Perseus
             HandleInput();
             Movement(gameTime);
             Console.WriteLine(health);
+            equippedWeapon.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
@@ -66,7 +67,8 @@ namespace G01_Perseus
 
             if(Input.IsLeftMouseButtonClicked)
             {
-                EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
+                //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
+                equippedWeapon.Fire(Center, Input.MouseWorldPosition, rotation, this);
             }
         }
 
