@@ -6,12 +6,15 @@ namespace G01_Perseus
     public class Bullet : Entity
     {
         private float timeToLive;
-        private float damage;
-        private Entity parent;
-        private Vector2 direction;
+        private Rectangle hitBox;
+        private float rotation;
+        private Vector2 origin;
+        private float speed;
+        private Color color;
+        private Vector2 offset;
+        private Vector2 dPos;
 
-        public Bullet(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, Entity parent, Vector2 target, float damage, float timeToLive) 
-            : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
+        public Bullet(Vector2 position, Vector2 targetPosition, float speed, Color color, Point size, float timeToLive, bool isLaser) : base()
         {
             this.parent = parent;
             this.damage = damage;
@@ -21,7 +24,24 @@ namespace G01_Perseus
             origin = size / 2;
             health = 1; 
 
-            direction = Vector2.Normalize(target - position);
+            isAlive = true;
+
+            dPos = position - targetPosition;
+
+            rotation = (float)Math.Atan2(dPos.Y, dPos.X);
+            direction = Vector2.Normalize(targetPosition - position);
+
+            texture = Util.CreateFilledRectangleTexture(color, size.X, size.Y);
+            if (isLaser)
+            {
+                origin = new Vector2(Vector2.Distance(position, targetPosition), size.Y / 2);
+            }
+            else
+            {
+                origin = new Vector2(size.X / 2, size.Y / 2);
+            }
+            
+            hitBox = new Rectangle(position.ToPoint(), size);
         }
 
         public override void Update(GameTime gameTime)
