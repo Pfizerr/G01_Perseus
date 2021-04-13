@@ -51,7 +51,6 @@
     <Compile Include="InGameState.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Level.cs" />
-    <Compile Include="Mission\MissionManager.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerStatus.cs" />
     <Compile Include="Program.cs" />
