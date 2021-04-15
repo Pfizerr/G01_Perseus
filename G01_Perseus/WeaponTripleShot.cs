@@ -23,10 +23,10 @@ namespace G01_Perseus
             if (timeSinceLastFire >= rateOfFire)
             {
                 
-                secondBulletTarget.X = (float)Math.Cos(rotation - (float)Math.PI / 1.8) + center.X;
-                secondBulletTarget.Y = (float)Math.Sin(rotation - (float)Math.PI / 1.8) + center.Y;
-                thirdBulletTarget.X = (float)Math.Cos(rotation - (float)Math.PI / 2.2) + center.X;
-                thirdBulletTarget.Y = (float)Math.Sin(rotation - (float)Math.PI / 2.2) + center.Y;
+                secondBulletTarget.X = (float)Math.Cos(rotation + (float)Math.PI * 1.3) + center.X;
+                secondBulletTarget.Y = (float)Math.Sin(rotation + (float)Math.PI * 1.3) + center.Y;
+                thirdBulletTarget.X = (float)Math.Cos(rotation + (float)Math.PI * 1.7) + center.X;
+                thirdBulletTarget.Y = (float)Math.Sin(rotation + (float)Math.PI * 1.7) + center.Y;
 
                 EntityManager.CreateBullet(parent, center, target, false);
                 EntityManager.CreateBullet(parent, center, secondBulletTarget, false);

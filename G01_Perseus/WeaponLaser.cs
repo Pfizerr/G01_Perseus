@@ -9,8 +9,6 @@ namespace G01_Perseus
 {
     class WeaponLaser : Weapon
     {
-        private Vector2 distance;
-        private float laserLength;
         public WeaponLaser(int iD, float powerLevel) : base(iD, powerLevel)
         {
             name = "Laser";
@@ -23,7 +21,6 @@ namespace G01_Perseus
         {
             if (timeSinceLastFire >= rateOfFire)
             {
-
                 EntityManager.CreateBullet(parent, center, target, true);
 
                 timeSinceLastFire = 0;

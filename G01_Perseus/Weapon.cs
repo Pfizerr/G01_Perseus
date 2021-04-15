@@ -19,6 +19,7 @@ namespace G01_Perseus
         {
             this.powerLevel = powerLevel;
             damagePerShot = powerLevel * baseDamagePerShot;
+            timeSinceLastFire = 0;
         }
 
         public override void Update(GameTime gameTime)

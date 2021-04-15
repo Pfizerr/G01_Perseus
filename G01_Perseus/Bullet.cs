@@ -27,7 +27,6 @@ namespace G01_Perseus
                 origin = size / 2;
             }
             health = 1; 
-
             direction = Vector2.Normalize(targetPosition - position);
         }
 
@@ -60,10 +59,20 @@ namespace G01_Perseus
 
         public override void HandleCollision(Entity other)
         {
-            if (other is Enemy)
+            if (!parent.Equals(other))
             {
-                (other as Enemy).RecieveDamage(damage);
-                isAlive = false;
+                if (other is Enemy)
+                {
+                    (other as Enemy).RecieveDamage(damage);
+                    isAlive = false;
+                }
+                else if (other is Player)
+                {
+
+                    (other as Player).RecieveDamage(damage);
+                    isAlive = false;
+                }
+               
             }
         }
 
