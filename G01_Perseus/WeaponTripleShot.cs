@@ -22,7 +22,7 @@ namespace G01_Perseus
         {
             if (timeSinceLastFire >= rateOfFire)
             {
-                
+                // Calculates angles based on the 
                 secondBulletTarget.X = (float)Math.Cos(rotation + (float)Math.PI * 1.3) + center.X;
                 secondBulletTarget.Y = (float)Math.Sin(rotation + (float)Math.PI * 1.3) + center.Y;
                 thirdBulletTarget.X = (float)Math.Cos(rotation + (float)Math.PI * 1.7) + center.X;

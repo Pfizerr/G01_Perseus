@@ -19,6 +19,8 @@ namespace G01_Perseus
         public static void CreateEnemy()
         {
             entities.Add(new Enemy(AssetManager.TextureAsset("enemy_ship"), new Vector2(250, 50), new Vector2(400, 400), new Vector2(0.2f, 0.2f), null, SpriteEffects.None, Color.White, 0f, 0.8f, true, 100, 25));
+            entities.Add(new Enemy(AssetManager.TextureAsset("enemy_ship"), new Vector2(50, 50), new Vector2(400, 400), new Vector2(0.2f, 0.2f), null, SpriteEffects.None, Color.White, 0f, 0.8f, true, 100, 25));
+
         }
 
         public static void CreateBullet(Entity parent, Vector2 start, Vector2 target, bool isLaser)
@@ -33,7 +35,7 @@ namespace G01_Perseus
             float bulletDamage = 50;
             float bulletTimeToLive = 10;
             #endregion
-            AddBullet(new Bullet(AssetManager.TextureAsset("projectile_green"), start, target, new Vector2(1f, 1f)/*maxBulletVelocity*/, new Vector2(0.5f, 0.5f)/*bulletScale*/, null, SpriteEffects.None, bulletColor, bulletRotation, bulletLayerDepth, bulletIsCollidable, parent, bulletDamage, bulletTimeToLive, isLaser));
+            AddBullet(new Bullet(AssetManager.TextureAsset("projectile_green"), start, target, new Vector2(7, 7)/*maxBulletVelocity*/, new Vector2(0.5f, 0.5f)/*bulletScale*/, null, SpriteEffects.None, bulletColor, bulletRotation, bulletLayerDepth, bulletIsCollidable, parent, bulletDamage, bulletTimeToLive, isLaser));
         }
 
         public static void AddBullet(Bullet bullet) => entities.Add(bullet);

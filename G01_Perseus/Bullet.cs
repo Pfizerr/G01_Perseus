@@ -61,7 +61,7 @@ namespace G01_Perseus
         {
             if (!parent.Equals(other))
             {
-                if (other is Enemy)
+                if (other is Enemy && !(parent is Enemy))
                 {
                     (other as Enemy).RecieveDamage(damage);
                     isAlive = false;

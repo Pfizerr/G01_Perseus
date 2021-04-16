@@ -103,7 +103,7 @@ namespace G01_Perseus
 
         }
 
-        private void Retreat()
+        private void Retreat() // Moves away from the player
         {
             Vector2 vectorResult = new Vector2((float)Math.Cos(rotation + (float)Math.PI / 2), (float)Math.Sin(rotation + (float)Math.PI / 2));
             vectorResult.Normalize();
