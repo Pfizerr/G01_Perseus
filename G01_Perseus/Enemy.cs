@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace G01_Perseus
 {
-    public class Enemy : Entity
+    public class Enemy : Entity, PlayerShootListener
     {
         private Vector2 direction;
         private Vector2 friction;
@@ -31,6 +31,8 @@ namespace G01_Perseus
             origin = size / 2;
             status = new PlayerStatus(health, 0);
 
+            EventManager.Register(this);
+
             #region TEMP //Copied from Player
             friction = new Vector2(0.99f, 0.99f); // move to Level.cs ?
             acceleration = new Vector2(4, 4); // move to constructor ?
@@ -40,6 +42,9 @@ namespace G01_Perseus
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
             spriteBatch.Draw(texture, hitbox, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, SpriteEffects.None, 0.8f);
+
+            //Vector2 drawPosition = new Vector2((tileX * tileWidth) + position.X - (ix * tileWidth), (tileY * tileWidth) + position.Y - (iy * tileHeight));
+            //spriteBatch.Draw(texture, drawPosition, null, Color.White, rotation, size / 2, Vector2.One, SpriteEffects.None, 0.5f);
         }
 
         public override void Update(GameTime gameTime)
@@ -165,6 +170,11 @@ namespace G01_Perseus
         protected override void DefaultTexture()
         {
             this.texture = AssetManager.TextureAsset("enemy_ship");
+        }
+
+        public void PlayerFired(PlayerShootEvent e)
+        {
+            System.Diagnostics.Debug.WriteLine("Player has fired at position "+e.position +" with damage: "+e.damage);
         }
     }
 }

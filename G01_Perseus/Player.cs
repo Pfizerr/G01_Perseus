@@ -69,6 +69,7 @@ namespace G01_Perseus
             {
                 //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
                 equippedWeapon.Fire(Center, Input.MouseWorldPosition, rotation, this);
+                EventManager.Dispatch(new PlayerShootEvent(position, 1337));
             }
         }
 
