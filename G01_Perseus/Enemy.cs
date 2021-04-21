@@ -15,7 +15,8 @@ namespace G01_Perseus
         private Vector2 friction;
         private Vector2 acceleration;
         private float damage;
-        private float strafeTimer = 2, timeStrafed;
+        private float strafeTimer = 2;
+        private float timeStrafed;
         private Weapon equippedWeapon = new WeaponSingleShot(1, 1);
         private Vector2 strafeVector = Vector2.Zero;
         private Random random = new Random();
