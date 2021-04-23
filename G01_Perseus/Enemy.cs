@@ -152,9 +152,9 @@ namespace G01_Perseus
 
         public override void HandleCollision(Entity other)
         {
-            if (other is Player)
+            if (other is Player player)  
             {
-                (other as Player).RecieveDamage(damage);
+                RecieveDamage(10);
                 //IsAlive = false;
             }
         }
