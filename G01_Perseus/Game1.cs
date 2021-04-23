@@ -64,15 +64,15 @@ namespace G01_Perseus
             Texture2D spaceObjectTexture = Util.CreateFilledRectangleTexture(Color.White, 10, 10);
             spaceObjects = new List<SpaceObject>();
             Rectangle spawnArea = new Rectangle(0, 10, 0, 10);
-            for(int i = 0; i < 1000; i++)
-            {
+            //for(int i = 0; i < 1000; i++)
+            //{
 
-                Vector2 size = new Vector2(random.Next(1, 5));
-                Vector2 position = new Vector2(random.Next(spawnArea.X, spawnArea.Y) * tileWidth + random.Next((int)size.X, tileWidth - (int)size.X), random.Next(spawnArea.Width, spawnArea.Height) * tileHeight + random.Next((int)size.Y, tileHeight - (int)size.Y));
-                //Vector2 position = new Vector2((i % 10) * 50 + 25, (i / 10) * 50 + 25);
-                spaceObjects.Add(new SpaceObject(spaceObjectTexture, position, size));
-                level.AddEntity(new Enemy(Util.CreateFilledRectangleTexture(Color.White, (int)size.X, (int)size.Y), position, Vector2.Zero, Vector2.One, null, SpriteEffects.None, Color.White, 0, 0.3f, false, 1, 0));
-            }
+            //    Vector2 size = new Vector2(random.Next(1, 5));
+            //    Vector2 position = new Vector2(random.Next(spawnArea.X, spawnArea.Y) * tileWidth + random.Next((int)size.X, tileWidth - (int)size.X), random.Next(spawnArea.Width, spawnArea.Height) * tileHeight + random.Next((int)size.Y, tileHeight - (int)size.Y));
+            //    //Vector2 position = new Vector2((i % 10) * 50 + 25, (i / 10) * 50 + 25);
+            //    spaceObjects.Add(new SpaceObject(spaceObjectTexture, position, size));
+            //    level.AddEntity(new Enemy(Util.CreateFilledRectangleTexture(Color.White, (int)size.X, (int)size.Y), position, Vector2.Zero, Vector2.One, null, SpriteEffects.None, Color.White, 0, 0.3f, false, 1, 0));
+            //}
 
 
             enemy = new Enemy(Util.CreateFilledRectangleTexture(Color.Cyan, 50, 50), new Vector2(50, 50), Vector2.Zero, Vector2.One, null, SpriteEffects.None, Color.White, 0, 0.8f, false, 1, 0);

@@ -18,7 +18,7 @@ namespace G01_Perseus
             : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
         {
             this.health = health;
-            origin = size / 2;
+            Origin = Size / 2;
 
             playerStatus = new PlayerStatus(health, 0f);
 
@@ -50,7 +50,7 @@ namespace G01_Perseus
 
             velocity = (velocity + direction * acceleration) * friction;
             Util.Clamp(velocity, -maxVelocity, maxVelocity); // clamp velocity to values between min value -maxVelocity and max value -maxVelocity
-            position += velocity * deltaTime;
+            Position += velocity * deltaTime;
             hitbox.Location = Center.ToPoint();
         }
 
@@ -68,22 +68,30 @@ namespace G01_Perseus
             if(Input.IsLeftMouseButtonClicked)
             {
                 //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
-                equippedWeapon.Fire(Center, Input.MouseWorldPosition, rotation, this);
-                EventManager.Dispatch(new PlayerShootEvent(position, 1337));
+                equippedWeapon.Fire(Center, Input.MouseWorldPosition, rotation, TypeOfBullet.Player);
+                EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
         }
 
         public override void HandleCollision(Entity other)
         {
-
+            if (other is Enemy enemy)
+            {
+                //RecieveDamage(enemy.damage);
+            }
+            else if (other is Bullet bullet)
+            {
+                RecieveDamage(bullet.damage);
+            }
         }
+
 
         public void AdjustAngleTowardsMousePosition()
         {
             Vector2 mousePosition = new Vector2(Input.mouseState.X, Input.mouseState.Y);
             Vector3 cameraTranslation = Game1.camera.Translation.Translation;
             Vector2 cameraOffset = new Vector2(-cameraTranslation.X, -cameraTranslation.Y);
-            Vector2 dPos = (Position + origin) - (mousePosition + cameraOffset);
+            Vector2 dPos = (Position + Origin) - (mousePosition + cameraOffset);
             rotation = (float)Math.Atan2(dPos.Y, dPos.X) - MathHelper.ToRadians(90);
         }
 
@@ -93,7 +101,7 @@ namespace G01_Perseus
             
             if(health <= 0)
             {
-                isAlive = false;
+                IsAlive = false;
             }
         }
 

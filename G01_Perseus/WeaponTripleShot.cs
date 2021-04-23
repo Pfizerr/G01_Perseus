@@ -18,7 +18,7 @@ namespace G01_Perseus
             damagePerShot = baseDamagePerShot * powerLevel;
         }
 
-        public override void Fire(Vector2 center, Vector2 target, float rotation, Entity parent)
+        public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type)
         {
             if (timeSinceLastFire >= rateOfFire)
             {
@@ -28,9 +28,9 @@ namespace G01_Perseus
                 thirdBulletTarget.X = (float)Math.Cos(rotation + (float)Math.PI * 1.7) + center.X;
                 thirdBulletTarget.Y = (float)Math.Sin(rotation + (float)Math.PI * 1.7) + center.Y;
 
-                EntityManager.CreateBullet(parent, center, target, false);
-                EntityManager.CreateBullet(parent, center, secondBulletTarget, false);
-                EntityManager.CreateBullet(parent, center, thirdBulletTarget, false);
+                EntityManager.CreateBullet(type, center, target, false);
+                EntityManager.CreateBullet(type, center, secondBulletTarget, false);
+                EntityManager.CreateBullet(type, center, thirdBulletTarget, false);
                 timeSinceLastFire = 0;
             }
         }

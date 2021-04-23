@@ -19,11 +19,11 @@ namespace G01_Perseus
         public static void CreateEnemy()
         {
             entities.Add(new Enemy(AssetManager.TextureAsset("enemy_ship"), new Vector2(250, 50), new Vector2(400, 400), new Vector2(0.2f, 0.2f), null, SpriteEffects.None, Color.White, 0f, 0.8f, true, 100, 25));
-            entities.Add(new Enemy(AssetManager.TextureAsset("enemy_ship"), new Vector2(50, 50), new Vector2(400, 400), new Vector2(0.2f, 0.2f), null, SpriteEffects.None, Color.White, 0f, 0.8f, true, 100, 25));
+            //entities.Add(new Enemy(AssetManager.TextureAsset("enemy_ship"), new Vector2(50, 50), new Vector2(400, 400), new Vector2(0.2f, 0.2f), null, SpriteEffects.None, Color.White, 0f, 0.8f, true, 100, 25));
 
         }
 
-        public static void CreateBullet(Entity parent, Vector2 start, Vector2 target, bool isLaser)
+        public static void CreateBullet(TypeOfBullet type, Vector2 start, Vector2 target, bool isLaser)
         {
             #region no good
             Vector2 maxBulletVelocity = new Vector2(50, 50);
@@ -32,10 +32,10 @@ namespace G01_Perseus
             float bulletRotation = 0f;
             float bulletLayerDepth = 0.8f;
             bool bulletIsCollidable = true;
-            float bulletDamage = 50;
+            float bulletDamage = 10;
             float bulletTimeToLive = 10;
             #endregion
-            AddBullet(new Bullet(AssetManager.TextureAsset("projectile_green"), start, target, new Vector2(7, 7)/*maxBulletVelocity*/, new Vector2(0.5f, 0.5f)/*bulletScale*/, null, SpriteEffects.None, bulletColor, bulletRotation, bulletLayerDepth, bulletIsCollidable, parent, bulletDamage, bulletTimeToLive, isLaser));
+            AddBullet(new Bullet(AssetManager.TextureAsset("projectile_green"), start, target, new Vector2(7, 7)/*maxBulletVelocity*/, new Vector2(0.5f, 0.5f)/*bulletScale*/, null, SpriteEffects.None, bulletColor, bulletRotation, bulletLayerDepth, bulletIsCollidable, type, bulletDamage, bulletTimeToLive, isLaser));
         }
 
         public static void AddBullet(Bullet bullet) => entities.Add(bullet);
@@ -51,22 +51,28 @@ namespace G01_Perseus
                     continue;
                 }
 
-                entities[i].Update(gameTime);
+                entities[i].Update(gameTime);                
+            }
 
-                for (int y = 1; y < entities.Count; y++)
+            for(int i = 0; i < entities.Count; i++)
+            {
+                for (int j = 0; j < entities.Count; j++)
                 {
-                    if (entities[i] == entities[y])
+                    if ((entities[i] == entities[j]) || (entities[i] is Bullet && entities[j] is Bullet))
                     {
                         continue;
                     }
-                    if (entities[i].HitBox.Intersects(entities[y].HitBox))
+
+                    if (entities[i].HitBox.Intersects(entities[j].HitBox))
                     {
                         // Collision Event
-                        Console.WriteLine(entities[i].ToString() + " collided with " + entities[y].ToString());
-                        HandleCollisions(entities[i], entities[y]);
+                        Console.WriteLine(entities[i].ToString() + " collided with " + entities[j].ToString());
+                        EventManager.Dispatch(new CollissionEvent(entities[i], entities[j]));
+                        //HandleCollisions(entities[i], entities[y]);
                     }
                 }
             }
+
         }
 
         public static void HandleCollisions(Entity entity, Entity otherEntity)
@@ -78,6 +84,7 @@ namespace G01_Perseus
 
             entity.HandleCollision(otherEntity);
             otherEntity.HandleCollision(entity);
+
         }
 
         public static void Draw(SpriteBatch spriteBatch)

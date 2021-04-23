@@ -1,6 +1,5 @@
 ﻿using System;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -30,7 +29,7 @@ namespace G01_Perseus
             }
         }
 
-        public virtual void Fire(Vector2 center, Vector2 target, float rotation, Entity parent)
+        public virtual void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet typeOfBullet)
         {
 
         }

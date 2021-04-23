@@ -17,12 +17,12 @@ namespace G01_Perseus
             damagePerShot = baseDamagePerShot * powerLevel;
         }
 
-        public override void Fire(Vector2 center, Vector2 target, float rotation, Entity parent)
+        public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type)
         {
             if (timeSinceLastFire >= rateOfFire)
             {
 
-                EntityManager.CreateBullet(parent, center, target, false);
+                EntityManager.CreateBullet(type, center, target, false);
 
                 timeSinceLastFire = 0;
             }

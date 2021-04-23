@@ -14,12 +14,13 @@ namespace G01_Perseus
         private Vector2 direction;
         private Vector2 friction;
         private Vector2 acceleration;
-        private float damage;
+        public float damage; // temp
         private float strafeTimer = 2;
         private float timeStrafed;
         private Weapon equippedWeapon = new WeaponSingleShot(1, 1);
         private Vector2 strafeVector = Vector2.Zero;
         private Random random = new Random();
+        public List<Bullet> bullets = new List<Bullet>();
 
         private PlayerStatus status;
 
@@ -29,7 +30,7 @@ namespace G01_Perseus
             this.health = health;
             this.damage = damage;
 
-            origin = size / 2;
+            Origin = Size / 2;
             status = new PlayerStatus(health, 0);
 
             EventManager.Register(this);
@@ -50,16 +51,16 @@ namespace G01_Perseus
 
         public override void Update(GameTime gameTime)
         {
-            equippedWeapon.Fire(Center, EntityManager.Player.Position, rotation, this);
+            equippedWeapon.Fire(Center, EntityManager.Player.Position, rotation, TypeOfBullet.Enemy);
             equippedWeapon.Update(gameTime);
             AdjustAngleTowardsTarget();
 
-            if (Vector2.Distance(position, EntityManager.Player.Position) > 500)
+            if (Vector2.Distance(Position, EntityManager.Player.Position) > 500)
             {
                 Pursue();
 
             }
-            else if (Vector2.Distance(position, EntityManager.Player.Position) < 100)
+            else if (Vector2.Distance(Position, EntityManager.Player.Position) < 100)
             {
                 Retreat();
             }
@@ -77,7 +78,7 @@ namespace G01_Perseus
 
             velocity = (velocity + direction * acceleration) * friction;
             Util.Clamp(velocity, -maxVelocity, maxVelocity); // clamp velocity to values between min value -maxVelocity and max value -maxVelocity
-            position += velocity * deltaTime;
+            Position += velocity * deltaTime;
             hitbox.Location = Center.ToPoint();
         }
 
@@ -91,14 +92,14 @@ namespace G01_Perseus
 
         private void AdjustAngleTowardsTarget()
         {
-            Vector2 dPos = (position + origin) - EntityManager.Player.Position;
+            Vector2 dPos = (Position + Origin) - EntityManager.Player.Position;
             rotation = (float)Math.Atan2(dPos.Y, dPos.X) - MathHelper.ToRadians(90);
         }
 
         private void Pursue() // Moves toward the player
         {
             //direction = Vector2.Zero;
-            Vector2 vectorResult = EntityManager.Player.Position - position;
+            Vector2 vectorResult = EntityManager.Player.Position - Position;
             vectorResult.Normalize();
             direction = vectorResult;
         }
@@ -154,7 +155,7 @@ namespace G01_Perseus
             if (other is Player)
             {
                 (other as Player).RecieveDamage(damage);
-                isAlive = false;
+                //IsAlive = false;
             }
         }
 
@@ -164,7 +165,7 @@ namespace G01_Perseus
 
             if (health <= 0)
             {
-                isAlive = false;
+                IsAlive = false;
             }
         }
 
@@ -175,7 +176,7 @@ namespace G01_Perseus
 
         public void PlayerFired(PlayerShootEvent e)
         {
-            System.Diagnostics.Debug.WriteLine("Player has fired at position "+e.position +" with damage: "+e.damage);
+            //System.Diagnostics.Debug.WriteLine("Player has fired at position "+e.position +" with damage: "+e.damage);
         }
     }
 }

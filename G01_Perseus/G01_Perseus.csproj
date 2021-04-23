@@ -44,6 +44,8 @@
     <Compile Include="AssetManager.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="Camera.cs" />
+    <Compile Include="CollissionEvent.cs" />
+    <Compile Include="CollissionListener.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Equipment.cs" />
     <Compile Include="EventManager.cs" />
