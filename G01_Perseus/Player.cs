@@ -1,6 +1,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 
 namespace G01_Perseus
 {
@@ -10,7 +11,9 @@ namespace G01_Perseus
         private Vector2 acceleration;
         private Vector2 direction;
         private Vector2 friction;
-        private Weapon equippedWeapon = new WeaponTripleShot(1, 1);
+        private Weapon trippleShot = new WeaponTripleShot(1, 1);
+        private Weapon singleShot = new WeaponSingleShot(1, 1);
+        private List<Weapon> equipments;
         //Components
         private PlayerStatus playerStatus;
 
@@ -21,9 +24,9 @@ namespace G01_Perseus
             Origin = Size / 2;
 
             playerStatus = new PlayerStatus(health, 0f);
-
-            #region TEMP
-            friction = new Vector2(0.99f, 0.99f); // move to Level.cs ?
+            equipments = new List<Weapon>() { trippleShot, singleShot};
+        #region TEMP
+        friction = new Vector2(0.99f, 0.99f); // move to Level.cs ?
             acceleration = new Vector2(4, 4); // move to constructor ?
             #endregion 
         }

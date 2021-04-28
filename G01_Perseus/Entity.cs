@@ -12,21 +12,14 @@ namespace G01_Perseus
 
         //protected bool isCollidable;
         //protected bool isAlive;
-        protected float health;
-        protected float deltaTime;
-        protected float totalTimeLastFrame;
-        protected Vector2 velocity;
+        protected float health, deltaTime, totalTimeLastFrame, rotation, layerDepth;
+        protected Vector2 velocity, maxVelocity, scale;
         //protected Vector2 origin;
         //protected Vector2 size;
 
         protected Texture2D texture;
         //protected Vector2 position;
-        protected Vector2 maxVelocity;
-        protected Vector2 scale;
         protected Color color;
-        protected float rotation;
-        protected float layerDepth;
-
 
         public Entity(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable)
         {

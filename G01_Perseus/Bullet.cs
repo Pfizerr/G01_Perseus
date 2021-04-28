@@ -8,14 +8,14 @@ namespace G01_Perseus
     {
         private float timeToLive;
         public float damage;
-        private Entity parent;
+        //private Entity parent;
         private Vector2 direction;
-        public TypeOfBullet TypeOfBullet { get; private set; }
+        public TypeOfBullet Type { get; private set; }
 
         public Bullet(Texture2D texture, Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, TypeOfBullet typeOfBullet, float damage, float timeToLive, bool isLaser) 
             : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
         {
-            TypeOfBullet = typeOfBullet;
+            Type = typeOfBullet;
             this.damage = damage;
             this.timeToLive = timeToLive;
             velocity = maxVelocity;
@@ -28,6 +28,10 @@ namespace G01_Perseus
             {
                 Origin = Size / 2;
             }
+
+
+            
+
             health = 1; 
             direction = Vector2.Normalize(targetPosition - position);
         }
@@ -61,10 +65,7 @@ namespace G01_Perseus
 
         public override void HandleCollision(Entity other)
         {
-            
-                IsAlive = false;
-               
-            
+            IsAlive = false;                         
         }
 
         protected override void DefaultTexture()
@@ -72,10 +73,10 @@ namespace G01_Perseus
             texture = AssetManager.TextureAsset("projectile_green");
         }
 
-        public Entity Parent
-        {
-            get => parent;
-            private set => parent = value;
-        }
+        //public Entity Parent
+        //{
+        //    get => parent;
+        //    private set => parent = value;
+        //}
     }
 }

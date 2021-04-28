@@ -54,7 +54,13 @@ namespace G01_Perseus
                 entities[i].Update(gameTime);                
             }
 
-            for(int i = 0; i < entities.Count; i++)
+            CheckEntityCollisions();
+
+        }
+
+        public static void CheckEntityCollisions()
+        {
+            for (int i = 0; i < entities.Count; i++)
             {
                 for (int j = 0; j < entities.Count; j++)
                 {
@@ -72,7 +78,6 @@ namespace G01_Perseus
                     }
                 }
             }
-
         }
 
         public static void HandleCollisions(Entity entity, Entity otherEntity)

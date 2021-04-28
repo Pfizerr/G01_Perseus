@@ -43,11 +43,11 @@ namespace G01_Perseus
         {
             if (entity is Bullet bullet)
             {
-                if (bullet.TypeOfBullet == TypeOfBullet.Player && otherEntity is Player)
+                if (bullet.Type == TypeOfBullet.Player && otherEntity is Player)
                 {
                     return true;
                 }
-                else if (bullet.TypeOfBullet == TypeOfBullet.Enemy && otherEntity is Enemy)
+                else if (bullet.Type == TypeOfBullet.Enemy && otherEntity is Enemy)
                 {
                     return true;
                 }
