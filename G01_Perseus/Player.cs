@@ -1,5 +1,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 
@@ -11,9 +12,10 @@ namespace G01_Perseus
         private Vector2 acceleration;
         private Vector2 direction;
         private Vector2 friction;
+        private Weapon equipedWeapon;
         private Weapon trippleShot = new WeaponTripleShot(1, 1);
         private Weapon singleShot = new WeaponSingleShot(1, 1);
-        private List<Weapon> equipments;
+        private List<Weapon> weapons;
         //Components
         private PlayerStatus playerStatus;
 
@@ -24,7 +26,8 @@ namespace G01_Perseus
             Origin = Size / 2;
 
             playerStatus = new PlayerStatus(health, 0f);
-            equipments = new List<Weapon>() { trippleShot, singleShot};
+            weapons = new List<Weapon>() { trippleShot, singleShot};
+            equipedWeapon = weapons[0];
         #region TEMP
         friction = new Vector2(0.99f, 0.99f); // move to Level.cs ?
             acceleration = new Vector2(4, 4); // move to constructor ?
@@ -38,7 +41,7 @@ namespace G01_Perseus
             HandleInput();
             Movement(gameTime);
             Console.WriteLine(health);
-            equippedWeapon.Update(gameTime);
+            equipedWeapon.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
@@ -61,19 +64,21 @@ namespace G01_Perseus
         {
             direction = Vector2.Zero;
 
-            direction.Y += Input.keyboardState.IsKeyDown(Input.Up) ? -1 : 0;
-            direction.Y += Input.keyboardState.IsKeyDown(Input.Down) ? 1 : 0;
-            direction.X += Input.keyboardState.IsKeyDown(Input.Left) ? -1 : 0;
-            direction.X += Input.keyboardState.IsKeyDown(Input.Right) ? 1 : 0;
+            direction.Y += KeyMouseReader.KeyHold(Keys.W) ? -1 : 0;
+            direction.Y += KeyMouseReader.KeyHold(Keys.S) ? 1 : 0;
+            direction.X += KeyMouseReader.KeyHold(Keys.A) ? -1 : 0;
+            direction.X += KeyMouseReader.KeyHold(Keys.D) ? 1 : 0;
 
             direction = direction.LengthSquared() > 1 ? Vector2.Normalize(direction) : direction;
 
-            if(Input.IsLeftMouseButtonClicked)
+            if(KeyMouseReader.LeftClick())
             {
                 //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
-                equippedWeapon.Fire(Center, Input.MouseWorldPosition, rotation, TypeOfBullet.Player);
+                equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, rotation, TypeOfBullet.Player);
                 EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
+
+            ChangeWeapon();
         }
 
         public override void HandleCollision(Entity other)
@@ -88,10 +93,25 @@ namespace G01_Perseus
             }
         }
 
+        /// <summary>
+        /// If you press the 1 or 2 key you will change the wepon type that you're using.
+        /// </summary>
+        private void ChangeWeapon()
+        {
+            if (KeyMouseReader.KeyPressed(Keys.D1))
+            {
+                equipedWeapon = weapons[0];
+            }
+
+            if (KeyMouseReader.KeyPressed(Keys.D2))
+            {
+                equipedWeapon = weapons[1];
+            }
+        }
 
         public void AdjustAngleTowardsMousePosition()
         {
-            Vector2 mousePosition = new Vector2(Input.mouseState.X, Input.mouseState.Y);
+            Vector2 mousePosition = new Vector2(KeyMouseReader.mouseState.X, KeyMouseReader.mouseState.Y);
             Vector3 cameraTranslation = Game1.camera.Translation.Translation;
             Vector2 cameraOffset = new Vector2(-cameraTranslation.X, -cameraTranslation.Y);
             Vector2 dPos = (Position + Origin) - (mousePosition + cameraOffset);

@@ -53,6 +53,7 @@
     <Compile Include="GameState.cs" />
     <Compile Include="InGameState.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="KeyMouseReader.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerShootEvent.cs" />

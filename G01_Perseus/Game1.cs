@@ -101,6 +101,7 @@ namespace G01_Perseus
             //player.Update(gameTime);
             camera.Update();
             Input.Update();
+            KeyMouseReader.Update();
 
             
 

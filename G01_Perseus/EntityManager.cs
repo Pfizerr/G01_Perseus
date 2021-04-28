@@ -18,12 +18,12 @@ namespace G01_Perseus
 
         public static void CreateEnemy()
         {
-            entities.Add(new Enemy(AssetManager.TextureAsset("enemy_ship"), new Vector2(250, 50), new Vector2(400, 400), new Vector2(0.2f, 0.2f), null, SpriteEffects.None, Color.White, 0f, 0.8f, true, 100, 25));
+            entities.Add(new Enemy(AssetManager.TextureAsset("enemy_ship"), new Vector2(250, 50), new Vector2(400, 400), new Vector2(0.2f, 0.2f), null, SpriteEffects.None, Color.White, 0f, 0.8f, true, 10, 25));
             //entities.Add(new Enemy(AssetManager.TextureAsset("enemy_ship"), new Vector2(50, 50), new Vector2(400, 400), new Vector2(0.2f, 0.2f), null, SpriteEffects.None, Color.White, 0f, 0.8f, true, 100, 25));
 
         }
 
-        public static void CreateBullet(TypeOfBullet type, Vector2 start, Vector2 target, bool isLaser)
+        public static void CreateBullet(TypeOfBullet type, Vector2 start, Vector2 target, bool isLaser, float damage)
         {
             #region no good
             Vector2 maxBulletVelocity = new Vector2(50, 50);
@@ -32,10 +32,10 @@ namespace G01_Perseus
             float bulletRotation = 0f;
             float bulletLayerDepth = 0.8f;
             bool bulletIsCollidable = true;
-            float bulletDamage = 10;
+            //float bulletDamage = 10;
             float bulletTimeToLive = 10;
             #endregion
-            AddBullet(new Bullet(AssetManager.TextureAsset("projectile_green"), start, target, new Vector2(7, 7)/*maxBulletVelocity*/, new Vector2(0.5f, 0.5f)/*bulletScale*/, null, SpriteEffects.None, bulletColor, bulletRotation, bulletLayerDepth, bulletIsCollidable, type, bulletDamage, bulletTimeToLive, isLaser));
+            AddBullet(new Bullet(AssetManager.TextureAsset("projectile_green"), start, target, new Vector2(7, 7)/*maxBulletVelocity*/, new Vector2(0.5f, 0.5f)/*bulletScale*/, null, SpriteEffects.None, bulletColor, bulletRotation, bulletLayerDepth, bulletIsCollidable, type, damage, bulletTimeToLive, isLaser));
         }
 
         public static void AddBullet(Bullet bullet) => entities.Add(bullet);
