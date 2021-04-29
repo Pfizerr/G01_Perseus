@@ -15,9 +15,12 @@ namespace G01_Perseus
         private Weapon equipedWeapon;
         private Weapon trippleShot = new WeaponTripleShot(1, 1);
         private Weapon singleShot = new WeaponSingleShot(1, 1);
+        private double hitTimer, hitTimerInterval;
+        public double maxShields;       
         private List<Weapon> weapons;
         //Components
         private PlayerStatus playerStatus;
+        public double Shields { get; private set; }
 
         public Player(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, float health) 
             : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
@@ -28,6 +31,10 @@ namespace G01_Perseus
             playerStatus = new PlayerStatus(health, 0f);
             weapons = new List<Weapon>() { trippleShot, singleShot};
             equipedWeapon = weapons[0];
+            Shields = 100;
+            maxShields = Shields;
+            hitTimer = 0;
+            hitTimerInterval = 3;
         #region TEMP
         friction = new Vector2(0.99f, 0.99f); // move to Level.cs ?
             acceleration = new Vector2(4, 4); // move to constructor ?
@@ -37,10 +44,12 @@ namespace G01_Perseus
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+
+            ShieldRegeneration(gameTime);
             AdjustAngleTowardsMousePosition();
             HandleInput();
             Movement(gameTime);
-            Console.WriteLine(health);
+            //Console.WriteLine(health);
             equipedWeapon.Update(gameTime);
         }
 
@@ -74,6 +83,7 @@ namespace G01_Perseus
             if(KeyMouseReader.LeftClick())
             {
                 //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
+
                 equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, rotation, TypeOfBullet.Player);
                 EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
@@ -90,9 +100,24 @@ namespace G01_Perseus
             else if (other is Bullet bullet)
             {
                 RecieveDamage(bullet.damage);
-            }
+            }            
         }
 
+        private void ShieldRegeneration(GameTime gameTime)
+        {
+            if (hitTimer > 0)
+            {
+                hitTimer -= gameTime.ElapsedGameTime.TotalSeconds;
+            }
+            else if (hitTimer <= 0 && Shields < maxShields)
+            {
+                Shields += 10;
+                if (Shields > maxShields)
+                {
+                    Shields = maxShields;
+                }
+            }
+        }
         /// <summary>
         /// If you press the 1 or 2 key you will change the wepon type that you're using.
         /// </summary>
@@ -118,11 +143,29 @@ namespace G01_Perseus
             rotation = (float)Math.Atan2(dPos.Y, dPos.X) - MathHelper.ToRadians(90);
         }
 
+        /// <summary>
+        /// The damage Recieved will be applied to the shields and then check is the shields are negative taking that to subtrect from the health of the player
+        /// </summary>
+        /// <param name="damage">This is the damage that the clided object have asssigned to it</param>
         public void RecieveDamage(float damage)
         {
-            health -= damage;
-            
-            if(health <= 0)
+            if(Shields > 0)
+            {
+                Shields -= damage;
+                if(Shields < 0)
+                {
+                    damage = Math.Abs((float)Shields);
+                    Shields = 0.0;
+                }
+            }
+
+            if(Shields <= 0)
+            {
+                health -= damage;
+            }
+
+            hitTimer = hitTimerInterval;
+            if (health <= 0)
             {
                 IsAlive = false;
             }
@@ -137,13 +180,13 @@ namespace G01_Perseus
         {
             //Code to execute when destroyed..
 
-            System.Console.WriteLine("{0} has been killed.", this.ToString());
+            //Console.WriteLine("{0} has been killed.", this.ToString());
             return;
         }
 
         protected override void DefaultTexture()
         {
-            this.texture = AssetManager.TextureAsset("player_ship");
+            texture = AssetManager.TextureAsset("player_ship");
         }
 
         public PlayerStatus Status

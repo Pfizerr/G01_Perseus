@@ -72,7 +72,7 @@ namespace G01_Perseus
                     if (entities[i].HitBox.Intersects(entities[j].HitBox))
                     {
                         // Collision Event
-                        Console.WriteLine(entities[i].ToString() + " collided with " + entities[j].ToString());
+                        //Console.WriteLine(entities[i].ToString() + " collided with " + entities[j].ToString());
                         EventManager.Dispatch(new CollissionEvent(entities[i], entities[j]));
                         //HandleCollisions(entities[i], entities[y]);
                     }

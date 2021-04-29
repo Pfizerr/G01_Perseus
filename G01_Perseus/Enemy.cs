@@ -31,7 +31,7 @@ namespace G01_Perseus
         {
             this.health = health;
             this.damage = damage;
-
+            maxHealth = health; //This should be initiated in the Entity class for better consistency along with health as an input if there is to be a moving entity class!!!
             Origin = Size / 2;
             status = new PlayerStatus(health, 0);
             healthBarHeight = 10;
@@ -96,7 +96,7 @@ namespace G01_Perseus
         {
             //Code to execute when destroyed..
 
-            System.Console.WriteLine("{0} has been killed.", this.ToString());
+            //Console.WriteLine("{0} has been killed.", this.ToString());
             return;
         }
 
@@ -180,11 +180,12 @@ namespace G01_Perseus
             {
                 IsAlive = false;
             }
+            healthPos.Width = (int)(hitbox.Width * (health / maxHealth));
         }
 
         protected override void DefaultTexture()
         {
-            this.texture = AssetManager.TextureAsset("enemy_ship");
+            texture = AssetManager.TextureAsset("enemy_ship");
         }
 
         public void PlayerFired(PlayerShootEvent e)

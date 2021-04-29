@@ -60,6 +60,7 @@
     <Compile Include="PlayerShootListener.cs" />
     <Compile Include="PlayerStatus.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Resources.cs" />
     <Compile Include="SpaceObject.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="StateStack.cs" />
