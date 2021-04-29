@@ -40,6 +40,7 @@ namespace G01_Perseus
             loadedTextures.Add("player_ship", content.Load<Texture2D>(@"textures\PlayerShip2"));
             loadedTextures.Add("enemy_ship", content.Load<Texture2D>(@"textures\EShip"));
             loadedTextures.Add("enemy_ship2", content.Load<Texture2D>(@"textures\EnemyShip"));
+            loadedTextures.Add("enemy_ship3", content.Load<Texture2D>(@"textures\EnemyShip3"));
             loadedTextures.Add("projectile_green", content.Load<Texture2D>(@"textures\projektileGreen"));
             loadedTextures.Add("projectile_pink", content.Load<Texture2D>(@"textures\projektilePink"));
             loadedTextures.Add("projectile_blue", content.Load<Texture2D>(@"textures\projektileBlue"));
@@ -49,6 +50,14 @@ namespace G01_Perseus
             loadedTextures.Add("planet_2", content.Load<Texture2D>(@"textures\planet2"));
             loadedTextures.Add("planet_3", content.Load<Texture2D>(@"textures\planet3"));
             loadedTextures.Add("resource_currency", content.Load<Texture2D>(@"textures\Currency"));
+            loadedTextures.Add("gradient_bar", content.Load <Texture2D>(@"textures\GradientBar"));
+            loadedTextures.Add("quest_UI", content.Load<Texture2D>(@"textures\monitor"));
+            loadedTextures.Add("skill_UI", content.Load<Texture2D>(@"textures\SkillMonitor"));
+            loadedTextures.Add("space_background", content.Load<Texture2D>(@"textures\Space"));
+            loadedTextures.Add("sun", content.Load<Texture2D>(@"textures\Sun"));
+            loadedTextures.Add("smokeParticle_sprite", content.Load<Texture2D>(@"textures\SmokeSpriteSheet"));
+            loadedTextures.Add("button_red", content.Load<Texture2D>(@"textures\ButtonRed"));
+            loadedTextures.Add("button_blue", content.Load<Texture2D>(@"textures\ButtonBlue"));
             //Fonts
             loadedFonts.Add("default_font", content.Load<SpriteFont>(@"fonts\default_font"));
             //Spritesheets

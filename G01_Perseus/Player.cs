@@ -38,7 +38,7 @@ namespace G01_Perseus
             HandleInput();
             Movement(gameTime);
             Console.WriteLine(health);
-            equippedWeapon.Update(gameTime);
+            trippleShot.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
@@ -71,7 +71,7 @@ namespace G01_Perseus
             if(Input.IsLeftMouseButtonClicked)
             {
                 //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
-                equippedWeapon.Fire(Center, Input.MouseWorldPosition, rotation, TypeOfBullet.Player);
+                trippleShot.Fire(Center, Input.MouseWorldPosition, rotation, TypeOfBullet.Player);
                 EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
         }

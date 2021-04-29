@@ -131,8 +131,8 @@ namespace G01_Perseus
 
             //Second draw call to make the HUD independant of the camera/world movement
             spriteBatch.Begin();
-            spriteBatch.Draw(TextureManager.GradientBar, new Rectangle(40, Window.ClientBounds.Height - 40, TextureManager.GradientBar.Width, TextureManager.GradientBar.Height / 2), Color.Crimson);
-            spriteBatch.Draw(TextureManager.GradientBar, new Rectangle(40, Window.ClientBounds.Height - 80, TextureManager.GradientBar.Width, TextureManager.GradientBar.Height / 2), Color.Cyan);
+            spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, Window.ClientBounds.Height - 40, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Crimson);
+            spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, Window.ClientBounds.Height - 80, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Cyan);
 
 
             spriteBatch.End();

@@ -15,7 +15,7 @@ namespace G01_Perseus
 
         public static void LoadTextures(ContentManager content)
         {
-            GradientBar = content.Load<Texture2D>("GradientBar");
+            //GradientBar = content.Load<Texture2D>("GradientBar");
 
         }
     }
