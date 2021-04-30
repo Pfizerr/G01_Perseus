@@ -22,7 +22,7 @@ namespace G01_Perseus
             if (timeSinceLastFire >= rateOfFire)
             {
 
-                EntityManager.CreateBullet(type, center, target, false);
+                EntityManager.CreateBullet(type, center, target, false, damagePerShot);
 
                 timeSinceLastFire = 0;
             }

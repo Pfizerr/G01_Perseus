@@ -9,16 +9,10 @@ namespace G01_Perseus
         protected SpriteEffects spriteEffects;
         protected Rectangle? source;
         protected Rectangle hitbox;
-
-        //protected bool isCollidable;
-        //protected bool isAlive;
-        protected float health, deltaTime, totalTimeLastFrame, rotation, layerDepth;
+        protected float health, maxHealth, deltaTime, totalTimeLastFrame, rotation, layerDepth;
         protected Vector2 velocity, maxVelocity, scale;
-        //protected Vector2 origin;
-        //protected Vector2 size;
 
         protected Texture2D texture;
-        //protected Vector2 position;
         protected Color color;
 
         public Entity(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable)
@@ -33,6 +27,7 @@ namespace G01_Perseus
             this.layerDepth = layerDepth;
             IsCollidable = isCollidable;
             this.spriteEffects = spriteEffects;
+            //maxHealth = health;
 
             if(this.texture == null)
             {

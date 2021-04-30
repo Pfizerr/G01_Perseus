@@ -19,6 +19,8 @@ namespace G01_Perseus
         private float timeStrafed;
         private Weapon equippedWeapon = new WeaponSingleShot(1, 1);
         private Vector2 strafeVector = Vector2.Zero;
+        int healthBarHeight;
+        public Rectangle healthPos;
         private Random random = new Random();
         public List<Bullet> bullets = new List<Bullet>();
 
@@ -29,10 +31,11 @@ namespace G01_Perseus
         {
             this.health = health;
             this.damage = damage;
-
+            maxHealth = health; //This should be initiated in the Entity class for better consistency along with health as an input if there is to be a moving entity class!!!
             Origin = Size / 2;
             status = new PlayerStatus(health, 0);
-
+            healthBarHeight = 10;
+            healthPos = new Rectangle((int)position.X, (int)position.Y - healthBarHeight, hitbox.Width, healthBarHeight);
             EventManager.Register(this);
 
             #region TEMP //Copied from Player
@@ -44,7 +47,7 @@ namespace G01_Perseus
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
             spriteBatch.Draw(texture, hitbox, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, SpriteEffects.None, 0.8f);
-
+            spriteBatch.Draw(TextureManager.GradientBar, healthPos, null, Color.Blue, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
             //Vector2 drawPosition = new Vector2((tileX * tileWidth) + position.X - (ix * tileWidth), (tileY * tileWidth) + position.Y - (iy * tileHeight));
             //spriteBatch.Draw(texture, drawPosition, null, Color.White, rotation, size / 2, Vector2.One, SpriteEffects.None, 0.5f);
         }
@@ -69,6 +72,13 @@ namespace G01_Perseus
             Movement(gameTime);
             hitbox.Location = Center.ToPoint();
             base.Update(gameTime);
+            SetHealthPosition();
+        }
+
+        private void SetHealthPosition()
+        {
+            healthPos.Location = Position.ToPoint();
+            healthPos.Y -= healthBarHeight;
         }
 
         public void Movement(GameTime gameTime)
@@ -86,7 +96,7 @@ namespace G01_Perseus
         {
             //Code to execute when destroyed..
 
-            System.Console.WriteLine("{0} has been killed.", this.ToString());
+            //Console.WriteLine("{0} has been killed.", this.ToString());
             return;
         }
 
@@ -154,8 +164,11 @@ namespace G01_Perseus
         {
             if (other is Player player)  
             {
-                RecieveDamage(10);
-                //IsAlive = false;
+                //RecieveDamage(10); //Replace with player.damage when this is implemented
+            }
+            else if(other is Bullet bullet)
+            {
+                RecieveDamage(bullet.damage);
             }
         }
 
@@ -167,11 +180,12 @@ namespace G01_Perseus
             {
                 IsAlive = false;
             }
+            healthPos.Width = (int)(hitbox.Width * (health / maxHealth));
         }
 
         protected override void DefaultTexture()
         {
-            this.texture = AssetManager.TextureAsset("enemy_ship");
+            texture = AssetManager.TextureAsset("enemy_ship");
         }
 
         public void PlayerFired(PlayerShootEvent e)

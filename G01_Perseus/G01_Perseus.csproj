@@ -53,12 +53,14 @@
     <Compile Include="GameState.cs" />
     <Compile Include="InGameState.cs" />
     <Compile Include="Input.cs" />
+    <Compile Include="KeyMouseReader.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerShootEvent.cs" />
     <Compile Include="PlayerShootListener.cs" />
     <Compile Include="PlayerStatus.cs" />
     <Compile Include="Program.cs" />
+    <Compile Include="Resources.cs" />
     <Compile Include="SpaceObject.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="StateStack.cs" />

@@ -98,7 +98,7 @@ namespace G01_Perseus
                     Point sector = GetSectorCoordinates(x, y);
 
                     tiles[sector.X, sector.Y].AddEntity(entity);
-                    Console.WriteLine("Added entity: (" + sector.X + ", " + sector.Y + ")");
+                    //Console.WriteLine("Added entity: (" + sector.X + ", " + sector.Y + ")");
                 }
             }
         }
@@ -123,7 +123,7 @@ namespace G01_Perseus
             int endX = startX + (int)(tilesPerCameraX) + 1;
             int endY = startY + (int)(tilesPerCameraY) + 1;
 
-            Console.WriteLine(startY);
+            //Console.WriteLine(startY);
 
             List<Entity> drawnEntities = new List<Entity>();
 

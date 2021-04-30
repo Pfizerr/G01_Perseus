@@ -28,10 +28,7 @@ namespace G01_Perseus
             {
                 Origin = Size / 2;
             }
-
-
-            
-
+         
             health = 1; 
             direction = Vector2.Normalize(targetPosition - position);
         }
