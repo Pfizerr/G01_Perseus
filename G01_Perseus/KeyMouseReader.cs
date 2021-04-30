@@ -29,7 +29,7 @@ namespace G01_Perseus
             return mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released;
         }
 
-        public static Vector2 MouseWorldPosition => new Vector2(EntityManager.Player.Position.X + 20, EntityManager.Player.Position.Y + 20) + Input.mouseState.Position.ToVector2() - new Vector2(Game1.camera.Viewport.Width / 2, Game1.camera.Viewport.Height / 2);
+        public static Vector2 MouseWorldPosition => new Vector2(EntityManager.Player.Position.X + 20, EntityManager.Player.Position.Y + 20) + mouseState.Position.ToVector2() - new Vector2(Game1.camera.Viewport.Width / 2, Game1.camera.Viewport.Height / 2);
 
         //Should be called at beginning of Update in Game
         public static void Update()

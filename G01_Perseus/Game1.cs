@@ -18,7 +18,6 @@ namespace G01_Perseus
         public static Camera camera;
 
         public static Random random;
-        List<SpaceObject> spaceObjects;
 
         private StateStack stateStack;
 
@@ -47,8 +46,6 @@ namespace G01_Perseus
 
             AssetManager.LoadAssets(Content);
 
-            TextureManager.LoadTextures(Content);
-            Input.Init();
             EntityManager.CreatePlayer();
             EntityManager.CreateEnemy();
             camera = new Camera();
@@ -62,7 +59,6 @@ namespace G01_Perseus
             level = new Level(10, 10, tileWidth, tileHeight);
 
             Texture2D spaceObjectTexture = Util.CreateFilledRectangleTexture(Color.White, 10, 10);
-            spaceObjects = new List<SpaceObject>();
             Rectangle spawnArea = new Rectangle(0, 10, 0, 10);
             //for(int i = 0; i < 1000; i++)
             //{
@@ -80,7 +76,6 @@ namespace G01_Perseus
 
             stateStack = new StateStack();
             stateStack.Push(new InGameState());
-            stateStack.Push(new TestState());
 
             backgroundColor = Color.Black;
         }
@@ -100,7 +95,6 @@ namespace G01_Perseus
             EntityManager.Update(gameTime);
             //player.Update(gameTime);
             camera.Update();
-            Input.Update();
             KeyMouseReader.Update();
 
             
@@ -116,10 +110,6 @@ namespace G01_Perseus
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, null, null, null, null, camera.Translation);
             level.Draw(spriteBatch, camera);
 
-            foreach(SpaceObject spaceObject in spaceObjects)
-            {
-                spaceObject.Draw(spriteBatch);
-            }
 
             EntityManager.Draw(spriteBatch);
             
