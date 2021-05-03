@@ -61,6 +61,7 @@
     <Compile Include="PlayerStatus.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources.cs" />
+    <Compile Include="Ship.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="StateStack.cs" />
     <Compile Include="Util.cs" />

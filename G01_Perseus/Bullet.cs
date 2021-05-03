@@ -8,27 +8,17 @@ namespace G01_Perseus
     {
         private float timeToLive;
         public float damage;
-        //private Entity parent;
         private Vector2 direction;
         public TypeOfBullet Type { get; private set; }
 
-        public Bullet(Vector2 position, Vector2 targetPosition, Vector2 velocity, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable, TypeOfBullet typeOfBullet, float damage, float timeToLive) 
-            : base(velocity, position, scale, source, rotation, layerDepth, isCollidable)
+        public Bullet(Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable, TypeOfBullet typeOfBullet, float damage, float timeToLive) 
+            : base(maxVelocity, position, scale, source, rotation, layerDepth, isCollidable)
         {
             Type = typeOfBullet;
             this.damage = damage;
             this.timeToLive = timeToLive;
-            velocity = maxVelocity;
             Center = position;
             Origin = Size / 2;
-            //if (isLaser)
-            //{
-            //    Origin = new Vector2(Vector2.Distance(position, targetPosition), Size.Y / 2);
-            //}
-            //else
-            //{
-            //    Origin = Size / 2;
-            //}
          
             direction = Vector2.Normalize(targetPosition - position);
         }
@@ -43,7 +33,7 @@ namespace G01_Perseus
                 IsAlive = false;
             }
 
-            Position += direction * velocity;
+            Position += direction * maxVelocity;
             hitbox.Location = Center.ToPoint();
         }
 
@@ -56,7 +46,7 @@ namespace G01_Perseus
         {
             //Code to execute when destroyed..
 
-            System.Console.WriteLine("{0} has been killed.", this.ToString());
+            //System.Console.WriteLine("{0} has been killed.", this.ToString());
             return;
         }
 
@@ -70,10 +60,5 @@ namespace G01_Perseus
             texture = AssetManager.TextureAsset("projectile_green");
         }
 
-        //public Entity Parent
-        //{
-        //    get => parent;
-        //    private set => parent = value;
-        //}
     }
 }

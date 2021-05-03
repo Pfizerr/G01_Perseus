@@ -9,13 +9,13 @@ namespace G01_Perseus
 {
     public abstract class MovingEntity : Entity
     {
-        protected float health, maxHealth, deltaTime, totalTimeLastFrame;
-        protected Vector2 velocity, maxVelocity;
+        protected float deltaTime, totalTimeLastFrame;
+        protected Vector2 maxVelocity;
 
-        public MovingEntity(Vector2 velocity, Vector2 position, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable) 
+        public MovingEntity(Vector2 maxVelocity, Vector2 position, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable) 
             : base (position, scale, source, rotation, layerDepth, isCollidable)
         {
-            this.velocity = velocity;
+            this.maxVelocity = maxVelocity;
         }
 
         public override void Update(GameTime gameTime)
@@ -24,10 +24,6 @@ namespace G01_Perseus
             deltaTime = totalTimeThisFrame - totalTimeLastFrame;
             totalTimeLastFrame = totalTimeThisFrame;
 
-            if (health <= 0)
-            {
-                IsAlive = false;
-            }
         }
     }
 }

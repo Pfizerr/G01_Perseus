@@ -9,9 +9,10 @@ namespace G01_Perseus
         protected Rectangle hitbox;
         protected float rotation, layerDepth;
         protected Vector2 scale;
-
         protected Texture2D texture;
 
+        //Could maybe remove source and rotation as input parameters
+        //Consider changing Roattion to a property that is initiated to 0f for all Entity objects to avoid redundancy
         public Entity(Vector2 position, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable)
         {
             Position = position;
@@ -45,7 +46,8 @@ namespace G01_Perseus
         /// </summary>
         protected abstract void DefaultTexture();
 
-        public virtual bool IsAlive { get; protected set;}
+        public virtual bool IsCollidable { get; protected set; }
+        public virtual bool IsAlive { get; protected set;} //Maybe move this to the MovingEntity class???
         public virtual Vector2 Size { get; protected set;}
         public virtual Vector2 Position { get; protected set;}
         public virtual Vector2 Origin { get; protected set; }
@@ -55,9 +57,7 @@ namespace G01_Perseus
             get => hitbox;
             protected set => hitbox = value;
         }
-
-        public virtual bool IsCollidable { get; protected set;}
-
+       
         public virtual Vector2 Center
         {
             get => Position + Origin;
