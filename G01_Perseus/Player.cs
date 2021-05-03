@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 namespace G01_Perseus
 {
-    public class Player : Entity
+    public class Player : Entity, CollissionListener
     {
         //public static new Vector2 Position { get; private set; }
         private Vector2 acceleration;
@@ -21,6 +21,7 @@ namespace G01_Perseus
         //Components
         private PlayerStatus playerStatus;
         public double Shields { get; private set; }
+        
 
         public Player(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, float health) 
             : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
@@ -35,8 +36,11 @@ namespace G01_Perseus
             maxShields = Shields;
             hitTimer = 0;
             hitTimerInterval = 3;
-        #region TEMP
-        friction = new Vector2(0.99f, 0.99f); // move to Level.cs ?
+
+            EventManager.Register(this);
+
+            #region TEMP
+            friction = new Vector2(0.99f, 0.99f); // move to Level.cs ?
             acceleration = new Vector2(4, 4); // move to constructor ?
             #endregion 
         }
@@ -47,7 +51,7 @@ namespace G01_Perseus
 
             ShieldRegeneration(gameTime);
             AdjustAngleTowardsMousePosition();
-            HandleInput();
+            HandleInput(gameTime);
             Movement(gameTime);
 
             //Console.WriteLine(health);
@@ -71,7 +75,7 @@ namespace G01_Perseus
             hitbox.Location = Center.ToPoint();
         }
 
-        public void HandleInput()
+        public void HandleInput(GameTime gameTime)
         {
             direction = Vector2.Zero;
 
@@ -86,7 +90,7 @@ namespace G01_Perseus
             {
                 //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
 
-                equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, rotation, TypeOfBullet.Player);
+                equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, rotation, TypeOfBullet.Player, gameTime);
 
                 EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
@@ -103,6 +107,7 @@ namespace G01_Perseus
             else if (other is Bullet bullet)
             {
                 RecieveDamage(bullet.damage);
+                bullet.timeToLive = 0;
             }            
         }
 
@@ -192,10 +197,17 @@ namespace G01_Perseus
             texture = AssetManager.TextureAsset("player_ship");
         }
 
+        public void Collision(CollissionEvent e)
+        {
+            HandleCollision(e.OtherEntity);
+        }
+
         public PlayerStatus Status
         {
             get => playerStatus;
             private set => playerStatus = value;
         }
+
+
     }
 }

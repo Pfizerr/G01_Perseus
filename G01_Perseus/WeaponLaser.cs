@@ -15,15 +15,16 @@ namespace G01_Perseus
             rateOfFire = 0.1f;
             baseDamagePerShot = 5;
             damagePerShot = baseDamagePerShot * powerLevel;
+            fireTimer = new Timer(100);
         }
 
-        public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type)
+        public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type, GameTime gameTime)
         {
-            if (timeSinceLastFire >= rateOfFire)
+            if (fireTimer.IsDone(gameTime))
             {
                 EntityManager.CreateBullet(type, center, target, true, damagePerShot);
 
-                timeSinceLastFire = 0;
+                fireTimer.Reset(gameTime);
             }
         }
     }

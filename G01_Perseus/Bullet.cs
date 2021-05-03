@@ -6,7 +6,7 @@ namespace G01_Perseus
     public enum TypeOfBullet { Player, Enemy}
     public class Bullet : Entity
     {
-        private float timeToLive;
+        public float timeToLive;
         public float damage;
         //private Entity parent;
         private Vector2 direction;

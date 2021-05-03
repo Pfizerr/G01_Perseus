@@ -71,8 +71,8 @@ namespace G01_Perseus
             //}
 
 
-            enemy = new Enemy(Util.CreateFilledRectangleTexture(Color.Cyan, 50, 50), new Vector2(50, 50), Vector2.Zero, Vector2.One, null, SpriteEffects.None, Color.White, 0, 0.8f, false, 1, 0);
-            level.AddEntity(enemy);
+            //enemy = new Enemy(Util.CreateFilledRectangleTexture(Color.Cyan, 50, 50), new Vector2(50, 50), Vector2.Zero, Vector2.One, null, SpriteEffects.None, Color.White, 0, 0.8f, false, 1, 0);
+            //level.AddEntity(enemy);
 
             stateStack = new StateStack();
             stateStack.Push(new InGameState());

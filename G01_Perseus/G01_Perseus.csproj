@@ -46,7 +46,9 @@
     <Compile Include="Camera.cs" />
     <Compile Include="CollissionEvent.cs" />
     <Compile Include="CollissionListener.cs" />
+    <Compile Include="DefaultEnemyBehavior.cs" />
     <Compile Include="Enemy.cs" />
+    <Compile Include="EnemyBehavior.cs" />
     <Compile Include="Equipment.cs" />
     <Compile Include="EventManager.cs" />
     <Compile Include="Game1.cs" />
@@ -62,6 +64,7 @@
     <Compile Include="Resources.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="StateStack.cs" />
+    <Compile Include="Timer.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityManager.cs" />

@@ -9,9 +9,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace G01_Perseus
 {
-    public class Enemy : Entity, PlayerShootListener
+    public class Enemy : Entity, PlayerShootListener, CollissionListener
     {
-        private Vector2 direction;
+        public Vector2 direction; //Should not be public, is for test purposes
         private Vector2 friction;
         private Vector2 acceleration;
         public float damage; // temp
@@ -25,8 +25,9 @@ namespace G01_Perseus
         public List<Bullet> bullets = new List<Bullet>();
 
         private PlayerStatus status;
+        private EnemyBehavior behavior;
 
-        public Enemy(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, float health, float damage)
+        public Enemy(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, float health, float damage, EnemyBehavior behavior)
             : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
         {
             this.health = health;
@@ -42,6 +43,9 @@ namespace G01_Perseus
             friction = new Vector2(0.99f, 0.99f); // move to Level.cs ?
             acceleration = new Vector2(4, 4); // move to constructor ?
             #endregion 
+
+            this.behavior = behavior;
+            behavior.enemy = this;
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
@@ -54,25 +58,19 @@ namespace G01_Perseus
 
         public override void Update(GameTime gameTime)
         {
-            equippedWeapon.Fire(Center, EntityManager.Player.Position, rotation, TypeOfBullet.Enemy);
-            equippedWeapon.Update(gameTime);
-            AdjustAngleTowardsTarget();
-
-            if (Vector2.Distance(Position, EntityManager.Player.Position) > 500)
-            {
-                Pursue();
-
-            }
-            else if (Vector2.Distance(Position, EntityManager.Player.Position) < 100)
-            {
-                Retreat();
-            }
-            else
-                Strafe(gameTime);
+            this.behavior.Update(gameTime, rotation);
             Movement(gameTime);
+            
+           
             hitbox.Location = Center.ToPoint();
             base.Update(gameTime);
             SetHealthPosition();
+        }
+
+        public void FireWeapon(GameTime gameTime)
+        {
+            equippedWeapon.Fire(Center, EntityManager.Player.Position, rotation, TypeOfBullet.Enemy, gameTime);
+            equippedWeapon.Update(gameTime);
         }
 
         private void SetHealthPosition()
@@ -100,65 +98,11 @@ namespace G01_Perseus
             return;
         }
 
-        private void AdjustAngleTowardsTarget()
+        public void AdjustAngleTowardsTarget()
         {
             Vector2 dPos = (Position + Origin) - EntityManager.Player.Position;
             rotation = (float)Math.Atan2(dPos.Y, dPos.X) - MathHelper.ToRadians(90);
-        }
-
-        private void Pursue() // Moves toward the player
-        {
-            //direction = Vector2.Zero;
-            Vector2 vectorResult = EntityManager.Player.Position - Position;
-            vectorResult.Normalize();
-            direction = vectorResult;
-        }
-
-        private void Roam() // Moves following a set / random path
-        {
-
-
-        }
-
-        private void Retreat() // Moves away from the player
-        {
-            Vector2 vectorResult = new Vector2((float)Math.Cos(rotation + (float)Math.PI / 2), (float)Math.Sin(rotation + (float)Math.PI / 2));
-            vectorResult.Normalize();
-            direction = vectorResult;
-        }
-
-        private void Strafe(GameTime gameTime) // Moves horizontally in relation to the facing direction
-        {
-
-            if (timeStrafed == 0)
-            {
-                //direction = Vector2.Zero;
-                double rand = random.NextDouble();
-                strafeVector = Vector2.Zero;
-                if (rand > 0.49)
-                {
-                    strafeVector = new Vector2((float)Math.Cos(rotation + (float)Math.PI), (float)Math.Sin(rotation + (float)Math.PI));
-                }
-                else
-                {
-                    strafeVector = new Vector2((float)Math.Cos(rotation + (float)Math.PI * 2), (float)Math.Sin(rotation + (float)Math.PI * 2));
-                }
-
-                timeStrafed += (float)gameTime.ElapsedGameTime.TotalSeconds;
-                strafeVector.Normalize();
-                direction = strafeVector;
-            }
-
-            if (timeStrafed < strafeTimer)
-            {
-                timeStrafed += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                if (timeStrafed > strafeTimer)
-                {
-                    timeStrafed = 0;
-                }
-            }
-        }
+        }       
 
         public override void HandleCollision(Entity other)
         {
@@ -169,7 +113,9 @@ namespace G01_Perseus
             else if(other is Bullet bullet)
             {
                 RecieveDamage(bullet.damage);
+                bullet.timeToLive = 0;
             }
+
         }
 
         public void RecieveDamage(float damage)
@@ -191,6 +137,13 @@ namespace G01_Perseus
         public void PlayerFired(PlayerShootEvent e)
         {
             //System.Diagnostics.Debug.WriteLine("Player has fired at position "+e.position +" with damage: "+e.damage);
+        }
+
+        public void Collision(CollissionEvent e)
+        {
+            System.Diagnostics.Debug.WriteLine("Entity: "+e.Entity + " collided with: " + e.OtherEntity); //debug
+
+            HandleCollision(e.OtherEntity);
         }
     }
 }

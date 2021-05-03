@@ -16,11 +16,13 @@ namespace G01_Perseus
             rateOfFire = 1.5f;
             baseDamagePerShot = 2;
             damagePerShot = baseDamagePerShot * powerLevel;
+            fireTimer = new Timer(1500);
+            
         }
 
-        public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type)
+        public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type, GameTime gameTime)
         {
-            if (timeSinceLastFire >= rateOfFire)
+            if (fireTimer.IsDone(gameTime))
             {
                 // Calculates angles based on the 
                 secondBulletTarget.X = (float)Math.Cos(rotation + (float)Math.PI * 1.3) + center.X;
@@ -31,7 +33,7 @@ namespace G01_Perseus
                 EntityManager.CreateBullet(type, center, target, false, damagePerShot);
                 EntityManager.CreateBullet(type, center, secondBulletTarget, false, damagePerShot);
                 EntityManager.CreateBullet(type, center, thirdBulletTarget, false, damagePerShot);
-                timeSinceLastFire = 0;
+                fireTimer.Reset(gameTime);
             }
         }
     }

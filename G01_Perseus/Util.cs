@@ -49,5 +49,6 @@ namespace G01_Perseus
             subject.Y = subject.Y > max.Y ? max.Y : subject.Y;
             subject.Y = subject.Y < -min.Y ? -min.Y : subject.Y;
         }
+
     }
 }

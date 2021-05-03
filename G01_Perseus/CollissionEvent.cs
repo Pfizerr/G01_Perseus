@@ -9,6 +9,9 @@ namespace G01_Perseus
 {
     public class CollissionEvent : Event
     {
+        private Entity entity;
+        private Entity otherEntity;
+
         public CollissionEvent(Entity entity, Entity otherEntity)
         {
             if (!entity.IsCollidable || !otherEntity.IsCollidable || !entity.IsAlive || !otherEntity.IsAlive)
@@ -21,11 +24,17 @@ namespace G01_Perseus
                 return;
             }
 
-            Debug.WriteLine(entity.ToString() + " " + otherEntity.ToString());
-            entity.HandleCollision(otherEntity);
+            this.entity = entity;
+            this.otherEntity = otherEntity;
+
+            //Debug.WriteLine(entity.ToString() + " " + otherEntity.ToString());
+            //entity.HandleCollision(otherEntity);
             //otherEntity.HandleCollision(entity);
 
         }
+
+        public Entity Entity => entity;
+        public Entity OtherEntity => otherEntity;
 
         public override void Dispatch(EventListener listener)
         {
@@ -36,7 +45,10 @@ namespace G01_Perseus
 
             CollissionListener l = (CollissionListener)listener;
 
-            l.Collision(this);
+            if(listener.Equals(entity))
+            {
+                l.Collision(this);
+            }
         }
 
         private bool CheckParent(Entity entity, Entity otherEntity)

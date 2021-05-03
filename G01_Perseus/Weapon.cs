@@ -13,6 +13,7 @@ namespace G01_Perseus
         protected float baseDamagePerShot;
         protected float powerLevel;
         protected float damagePerShot;
+        protected Timer fireTimer;
 
         public Weapon(int iD, float powerLevel) : base(iD)
         {
@@ -29,7 +30,7 @@ namespace G01_Perseus
             }
         }
 
-        public virtual void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet typeOfBullet)
+        public virtual void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet typeOfBullet, GameTime gameTime)
         {
 
         }
