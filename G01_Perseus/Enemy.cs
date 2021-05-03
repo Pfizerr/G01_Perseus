@@ -11,13 +11,12 @@ namespace G01_Perseus
 {
     public class Enemy : Ship, PlayerShootListener
     {
-
         public float damage; // Could be moved to the Moving object class if the player has some damage when it rams into other enemies
         private float strafeTimer = 2;
         private float timeStrafed;
         private Vector2 strafeVector = Vector2.Zero;
         private int healthBarHeight;
-        public Rectangle healthPos;
+        private Rectangle healthPos;
         private Random random = new Random();
         public List<Bullet> bullets = new List<Bullet>();
 
