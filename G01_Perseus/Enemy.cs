@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace G01_Perseus
 {
-    public class Enemy : Entity, PlayerShootListener
+    public class Enemy : MovingEntity, PlayerShootListener
     {
         private Vector2 direction;
         private Vector2 friction;
@@ -26,8 +26,8 @@ namespace G01_Perseus
 
         private PlayerStatus status;
 
-        public Enemy(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, float health, float damage)
-            : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
+        public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable, float health, float damage)
+            : base(position, maxVelocity, scale, source, rotation, layerDepth, isCollidable)
         {
             this.health = health;
             this.damage = damage;

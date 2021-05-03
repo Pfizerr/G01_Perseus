@@ -6,24 +6,22 @@ using System.Collections.Generic;
 
 namespace G01_Perseus
 {
-    public class Player : Entity
+    public class Player : MovingEntity
     {
-        //public static new Vector2 Position { get; private set; }
         private Vector2 acceleration;
         private Vector2 direction;
         private Vector2 friction;
         private Weapon equipedWeapon;
         private Weapon trippleShot = new WeaponTripleShot(1, 1);
         private Weapon singleShot = new WeaponSingleShot(1, 1);
-        private double hitTimer, hitTimerInterval;
-        public double maxShields;       
+        private double hitTimer, hitTimerInterval, maxShields;    
         private List<Weapon> weapons;
         //Components
         private PlayerStatus playerStatus;
         public double Shields { get; private set; }
 
-        public Player(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, float health) 
-            : base(texture, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
+        public Player(Vector2 position, Vector2 velocity, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable, float health) 
+            : base(position, velocity, scale, source, rotation, layerDepth, isCollidable)
         {
             this.health = health;
             Origin = Size / 2;

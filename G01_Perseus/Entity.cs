@@ -4,53 +4,35 @@ using Microsoft.Xna.Framework;
 namespace G01_Perseus
 {
     public abstract class Entity
-    {
-        
-        protected SpriteEffects spriteEffects;
+    {       
         protected Rectangle? source;
         protected Rectangle hitbox;
-        protected float health, maxHealth, deltaTime, totalTimeLastFrame, rotation, layerDepth;
-        protected Vector2 velocity, maxVelocity, scale;
+        protected float rotation, layerDepth;
+        protected Vector2 scale;
 
         protected Texture2D texture;
-        protected Color color;
 
-        public Entity(Texture2D texture, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable)
+        public Entity(Vector2 position, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable)
         {
-            this.texture = texture;
             Position = position;
-            this.maxVelocity = maxVelocity;
             this.scale = scale;
             this.source = source;
-            this.color = color;
             this.rotation = rotation;
             this.layerDepth = layerDepth;
             IsCollidable = isCollidable;
-            this.spriteEffects = spriteEffects;
-            //maxHealth = health;
 
-            if(this.texture == null)
+            if(texture == null)
             {
                 DefaultTexture();
             }
 
-            Size = this.texture.Bounds.Size.ToVector2() * this.scale;
+            Size = texture.Bounds.Size.ToVector2() * this.scale;
             hitbox = new Rectangle(Position.ToPoint(), Size.ToPoint()); 
 
             IsAlive = true;
         }
-        
-        public virtual void Update(GameTime gameTime)
-        {
-            var totalTimeThisFrame = (float)gameTime.TotalGameTime.TotalSeconds;
-            deltaTime = totalTimeThisFrame - totalTimeLastFrame;
-            totalTimeLastFrame = totalTimeThisFrame;
 
-            if(health <= 0)
-            {
-                IsAlive = false;
-            }
-        }
+        public abstract void Update(GameTime gameTime);
 
         public abstract void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight);
 

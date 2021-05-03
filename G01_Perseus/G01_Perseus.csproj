@@ -54,6 +54,7 @@
     <Compile Include="InGameState.cs" />
     <Compile Include="KeyMouseReader.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="MovingEntity.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerShootEvent.cs" />
     <Compile Include="PlayerShootListener.cs" />
