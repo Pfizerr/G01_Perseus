@@ -9,7 +9,7 @@ namespace G01_Perseus
 {
     public abstract class Ship : MovingEntity
     {
-        protected Vector2 direction;
+        public Vector2 direction;
         protected Vector2 friction;
         protected Vector2 acceleration;
         protected Vector2 velocity;

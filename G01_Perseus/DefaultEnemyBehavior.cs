@@ -16,7 +16,7 @@ namespace G01_Perseus
         public override void Update(GameTime gameTime, float rotation)
         {
             enemy.FireWeapon(gameTime);
-            enemy.AdjustAngleTowardsTarget();
+            enemy.AdjustAngleTowardsTarget(EntityManager.Player.Position);
             Vector2 position = enemy.Position;
 
             if (Vector2.Distance(position, EntityManager.Player.Position) > 500)
