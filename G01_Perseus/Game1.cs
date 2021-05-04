@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using G01_Perseus.EventSystem.Events;
+using G01_Perseus.EventSystem.Listeners;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -6,7 +8,7 @@ using System.Collections.Generic;
 
 namespace G01_Perseus
 {
-    public class Game1 : Game
+    public class Game1 : Game, PushStateListener, PopStateListener
     {
         //test
         GraphicsDeviceManager graphics;
@@ -19,7 +21,7 @@ namespace G01_Perseus
 
         public static Random random;
 
-        private StateStack stateStack;
+        public static StateStack stateStack;
 
         public Game1()
         {
@@ -29,6 +31,8 @@ namespace G01_Perseus
 
             graphics.PreferredBackBufferWidth = 1280;
             graphics.PreferredBackBufferHeight = 920;
+
+            EventManager.Register(this);
         }
 
 
@@ -96,6 +100,7 @@ namespace G01_Perseus
             //player.Update(gameTime);
             camera.Update();
             KeyMouseReader.Update();
+            stateStack.Update(gameTime);
 
             
 
@@ -118,7 +123,7 @@ namespace G01_Perseus
             spriteBatch.End();
 
 
-            //stateStack.Draw(spriteBatch, gameTime);
+            stateStack.Draw(spriteBatch, gameTime);
 
             //Second draw call to make the HUD independant of the camera/world movement
             spriteBatch.Begin();
@@ -128,6 +133,18 @@ namespace G01_Perseus
 
             spriteBatch.End();
             base.Draw(gameTime);
+        }
+
+        public void OnPopState(PopStateEvent e)
+        {
+            stateStack.Pop();
+            Console.WriteLine("Popped State: "+e);
+        }
+
+        public void OnPushState(PushStateEvent e)
+        {
+            stateStack.Push(e.State);
+            Console.WriteLine("Pushed State: "+e);
         }
     }
 }

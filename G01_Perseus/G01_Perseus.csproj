@@ -51,6 +51,10 @@
     <Compile Include="EnemyBehavior.cs" />
     <Compile Include="Equipment.cs" />
     <Compile Include="EventManager.cs" />
+    <Compile Include="EventSystem\Events\PopStateEvent.cs" />
+    <Compile Include="EventSystem\Events\PushStateEvent.cs" />
+    <Compile Include="EventSystem\Listeners\PopStateListener.cs" />
+    <Compile Include="EventSystem\Listeners\PushStateListener.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="GameState.cs" />
     <Compile Include="InGameState.cs" />
@@ -67,6 +71,10 @@
     <Compile Include="Sprite.cs" />
     <Compile Include="StateStack.cs" />
     <Compile Include="Timer.cs" />
+    <Compile Include="TestState.cs" />
+    <Compile Include="TextureManager.cs" />
+    <Compile Include="UI\QuestLogInterface.cs" />
+    <Compile Include="UI\UIButton.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Entity.cs" />
     <Compile Include="EntityManager.cs" />
@@ -90,13 +98,10 @@
     <MonoGameContentReference Include="Content\Content.mgcb" />
     <None Include="app.manifest" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="EventSystem\Events\" />
-    <Folder Include="EventSystem\Listeners\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
-  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">
   </Target>
