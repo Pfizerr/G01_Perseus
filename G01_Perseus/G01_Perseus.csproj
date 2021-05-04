@@ -56,12 +56,14 @@
     <Compile Include="InGameState.cs" />
     <Compile Include="KeyMouseReader.cs" />
     <Compile Include="Level.cs" />
+    <Compile Include="MovingEntity.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="PlayerShootEvent.cs" />
     <Compile Include="PlayerShootListener.cs" />
     <Compile Include="PlayerStatus.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Resources.cs" />
+    <Compile Include="Ship.cs" />
     <Compile Include="Sprite.cs" />
     <Compile Include="StateStack.cs" />
     <Compile Include="Timer.cs" />
