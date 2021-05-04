@@ -1,5 +1,6 @@
 ﻿using G01_Perseus.EventSystem.Events;
 using G01_Perseus.EventSystem.Listeners;
+using G01_Perseus.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -79,7 +80,7 @@ namespace G01_Perseus
             //level.AddEntity(enemy);
 
             stateStack = new StateStack();
-            stateStack.Push(new InGameState());
+            //stateStack.Push(new QuestLogInterface()); // MARKUS, Avkommentera denna raden för att testa quest loggen
 
             backgroundColor = Color.Black;
         }

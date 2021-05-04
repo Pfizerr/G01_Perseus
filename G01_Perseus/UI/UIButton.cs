@@ -72,10 +72,10 @@ namespace G01_Perseus.UI
 
         public void Update(GameTime gameTime)
         {
-            Vector2 mousePosition = Input.MouseScreenPosition;            
+            Vector2 mousePosition = KeyMouseReader.MouseScreenPosition;            
             isMouseHovered = Hitbox.Contains(mousePosition.ToPoint());
 
-            if(isMouseHovered && Input.IsLeftMouseButtonClicked && Action != null)
+            if(isMouseHovered && KeyMouseReader.LeftClick() && Action != null)
             {
                 Action();
             }
