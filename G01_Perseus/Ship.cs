@@ -20,19 +20,19 @@ namespace G01_Perseus
         protected double hitTimer, hitTimerInterval, maxShields;
         protected List<Weapon> weapons;
         protected float health, maxHealth;
-        //public List<Bullet> bullets = new List<Bullet>();
 
         //Components
         protected PlayerStatus playerStatus;
         public double Shields { get; protected set; }
 
-        public Ship(Vector2 maxVelocity, Vector2 position, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable, float health, float shield) 
-            : base(maxVelocity, position, scale, source, rotation, layerDepth, isCollidable)
+        public Ship(Vector2 maxVelocity, Vector2 position, Vector2 scale, float health, float shield) : base(maxVelocity, position, scale)
         {
             this.health = health;
             maxHealth = health;
             Origin = Size / 2;
-
+            layerDepth = 0.7f;
+            rotation = 0f;
+            source = null;
             playerStatus = new PlayerStatus(health, 0f);
             weapons = new List<Weapon>() { trippleShot, singleShot };
             equipedWeapon = weapons[1];

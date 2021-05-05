@@ -11,23 +11,16 @@ namespace G01_Perseus
 {
     public class Enemy : Ship, PlayerShootListener, CollissionListener
     {
-        public float damage; // temp
-
-        private float strafeTimer = 2;
-        private float timeStrafed;
         private Vector2 strafeVector = Vector2.Zero;
         private int healthBarHeight;
         private Rectangle healthPos;
         private Random random = new Random();
         public List<Bullet> bullets = new List<Bullet>();
 
-        private PlayerStatus status;
         private EnemyBehavior behavior;
 
-        public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable, float health, float damage, float shield, EnemyBehavior behavior)
-            : base(position, maxVelocity, scale, source, rotation, layerDepth, isCollidable, health, shield)
+        public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, EnemyBehavior behavior): base(position, maxVelocity, scale, health, shield)
         {
-            this.damage = damage;
             healthBarHeight = 10;
             healthPos = new Rectangle((int)position.X, (int)position.Y - healthBarHeight, hitbox.Width, healthBarHeight);
             EventManager.Register(this);

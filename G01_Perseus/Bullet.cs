@@ -11,15 +11,17 @@ namespace G01_Perseus
         private Vector2 direction;
         public TypeOfBullet Type { get; private set; }
 
-        public Bullet(Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable, TypeOfBullet typeOfBullet, float damage, float timeToLive) 
-            : base(maxVelocity, position, scale, source, rotation, layerDepth, isCollidable)
+        public Bullet(Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale, TypeOfBullet type, float damage, float timeToLive) 
+            : base(maxVelocity, position, scale)
         {
-            Type = typeOfBullet;
+            Type = type;
             this.damage = damage;
             this.timeToLive = timeToLive;
             Center = position;
             Origin = Size / 2;
-         
+            rotation = 0f;
+            layerDepth = 0.8f;
+            source = null;
             direction = Vector2.Normalize(targetPosition - position);
         }
 
@@ -40,6 +42,7 @@ namespace G01_Perseus
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
             spriteBatch.Draw(texture, hitbox, source, Color.White, rotation, Origin, SpriteEffects.None, layerDepth);
+            //spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), hitbox, source, Color.White, rotation, Origin, SpriteEffects.None, 0.9f);
         }
 
         public override void Destroy()

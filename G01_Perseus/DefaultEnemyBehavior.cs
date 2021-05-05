@@ -21,16 +21,16 @@ namespace G01_Perseus
 
             if (Vector2.Distance(position, EntityManager.Player.Position) > 500)
             {
-                enemy.direction = Pursue(position);                
+                enemy.direction = Pursue(position);
             }
             else if (Vector2.Distance(position, EntityManager.Player.Position) < 100)
             {
-                enemy.direction = Retreat(rotation);               
+                enemy.direction = Retreat(rotation);
             }
             else
             {
                 enemy.direction = Strafe(gameTime, rotation);
-            }        
+            }
         }
 
         public Vector2 Pursue(Vector2 position) // Moves toward the player

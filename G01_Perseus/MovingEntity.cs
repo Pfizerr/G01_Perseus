@@ -12,8 +12,7 @@ namespace G01_Perseus
         protected float deltaTime, totalTimeLastFrame;
         protected Vector2 maxVelocity;
 
-        public MovingEntity(Vector2 maxVelocity, Vector2 position, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable) 
-            : base (position, scale, source, rotation, layerDepth, isCollidable)
+        public MovingEntity(Vector2 maxVelocity, Vector2 position, Vector2 scale) : base (position, scale)
         {
             this.maxVelocity = maxVelocity;
         }

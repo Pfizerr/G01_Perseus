@@ -9,8 +9,7 @@ namespace G01_Perseus
 
     public class Player : Ship, CollissionListener
     {
-        public Player(Vector2 position, Vector2 velocity, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable, float health, float shield) 
-            : base(position, velocity, scale, source, rotation, layerDepth, isCollidable, health, shield)
+        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield) : base(position, velocity, scale, health, shield)
         {
             EventManager.Register(this);
         }

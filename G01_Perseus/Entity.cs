@@ -13,14 +13,14 @@ namespace G01_Perseus
 
         //Could maybe remove source and rotation as input parameters
         //Consider changing Roattion to a property that is initiated to 0f for all Entity objects to avoid redundancy
-        public Entity(Vector2 position, Vector2 scale, Rectangle? source, float rotation, float layerDepth, bool isCollidable)
+        public Entity(Vector2 position, Vector2 scale)
         {
             Position = position;
             this.scale = scale;
-            this.source = source;
-            this.rotation = rotation;
-            this.layerDepth = layerDepth;
-            IsCollidable = isCollidable;
+            //this.source = source;
+            //this.rotation = rotation;
+            //this.layerDepth = layerDepth;
+            IsCollidable = true;
 
             if(texture == null)
             {
@@ -52,7 +52,7 @@ namespace G01_Perseus
         public virtual Vector2 Position { get; protected set;}
         public virtual Vector2 Origin { get; protected set; }
 
-        public virtual Rectangle HitBox //Kan vi ta bort denna??
+        public virtual Rectangle HitBox
         {
             get => hitbox;
             protected set => hitbox = value;
