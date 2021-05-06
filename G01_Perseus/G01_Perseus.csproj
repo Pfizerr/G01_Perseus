@@ -72,6 +72,7 @@
     <Compile Include="Sprite.cs" />
     <Compile Include="StateStack.cs" />
     <Compile Include="Timer.cs" />
+    <Compile Include="UI\HUD.cs" />
     <Compile Include="UI\QuestLogInterface.cs" />
     <Compile Include="UI\UIButton.cs" />
     <Compile Include="Util.cs" />
