@@ -16,7 +16,7 @@ namespace G01_Perseus
 
         }
 
-        public abstract void Update(Microsoft.Xna.Framework.GameTime gameTime, float rotation);
+        public abstract void Update(GameTime gameTime, float rotation);
     }
 
 
