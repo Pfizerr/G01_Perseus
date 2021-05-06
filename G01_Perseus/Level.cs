@@ -42,6 +42,9 @@ namespace G01_Perseus
 
         private Sector[,] tiles;
 
+        private Background background;
+
+
         // This code is only for debugging purpose
         #region
         private Texture2D tileTexture;
@@ -54,6 +57,8 @@ namespace G01_Perseus
             this.height = height;
             this.tileWidth = tileWidth;
             this.tileHeight = tileHeight;
+
+            background = new Background();
 
             this.tiles = new Sector[width, height];
             for (int y = 0; y < height; y++)
@@ -115,6 +120,8 @@ namespace G01_Perseus
 
         public void Draw(SpriteBatch spriteBatch, Camera camera)
         {
+            //background.Draw(spriteBatch);
+
             int tilesPerCameraX = (int)Math.Ceiling(camera.Viewport.Width / (float)tileWidth);
             int tilesPerCameraY = (int)Math.Ceiling(camera.Viewport.Height / (float)tileHeight);
 
@@ -138,6 +145,7 @@ namespace G01_Perseus
                     #endregion
 
                     spriteBatch.Draw(tileTexture, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
+                    //background.Draw(spriteBatch, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight));
 
                     foreach (Entity entity in tiles[sector.X, sector.Y].Entities)
                     {

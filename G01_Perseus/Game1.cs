@@ -24,6 +24,8 @@ namespace G01_Perseus
 
         public static StateStack stateStack;
 
+        
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -59,8 +61,8 @@ namespace G01_Perseus
 
             random = new Random(1);
 
-            int tileWidth = 50;
-            int tileHeight = 50;
+            int tileWidth = 1180;
+            int tileHeight = 1080;
             level = new Level(10, 10, tileWidth, tileHeight);
 
             Texture2D spaceObjectTexture = Util.CreateFilledRectangleTexture(Color.White, 10, 10);
@@ -83,6 +85,8 @@ namespace G01_Perseus
             //stateStack.Push(new QuestLogInterface()); // MARKUS, Avkommentera denna raden för att testa quest loggen
 
             backgroundColor = Color.Black;
+            
+           
         }
 
 
@@ -131,6 +135,7 @@ namespace G01_Perseus
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, Window.ClientBounds.Height - 40, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Crimson);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, Window.ClientBounds.Height - 80, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Cyan);
 
+            
 
             spriteBatch.End();
             base.Draw(gameTime);
