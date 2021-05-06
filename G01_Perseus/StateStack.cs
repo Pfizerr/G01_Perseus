@@ -22,7 +22,8 @@ namespace G01_Perseus
 
         public void Pop()
         {
-            amountToPop++;
+            //amountToPop++;
+            stack.Pop();
         }
 
         public GameState Peek()
@@ -33,7 +34,7 @@ namespace G01_Perseus
 
         public void Update(GameTime gameTime)
         {
-            foreach(GameState state in stack)
+            foreach(GameState state in stack.ToList())
             {
                 state.Update(gameTime);
                 if(!state.Transparent)
@@ -42,7 +43,7 @@ namespace G01_Perseus
                 }
             }
 
-            for(int i = 0; i < amountToPop;i++)
+            /*for(int i = 0; i < amountToPop;i++)
             {
                 if(stack.Count <= 0)
                 {
@@ -51,7 +52,7 @@ namespace G01_Perseus
                 }
                 stack.Pop();
                 amountToPop--;
-            }
+            }*/
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
