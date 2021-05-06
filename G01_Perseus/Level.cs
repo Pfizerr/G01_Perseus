@@ -102,7 +102,7 @@ namespace G01_Perseus
                 {
                     Point sector = GetSectorCoordinates(x, y);
 
-                    tiles[sector.X, sector.Y].AddEntity(entity);
+                    //tiles[sector.X, sector.Y].AddEntity(entity);
                     //Console.WriteLine("Added entity: (" + sector.X + ", " + sector.Y + ")");
                 }
             }
@@ -144,16 +144,19 @@ namespace G01_Perseus
                     Color color = colors[sector.X, sector.Y];
                     #endregion
 
-                    spriteBatch.Draw(tileTexture, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
-                    //background.Draw(spriteBatch, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight));
+                    #region draw stars
+                    //spriteBatch.Draw(tileTexture, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
+                    #endregion
 
                     foreach (Entity entity in tiles[sector.X, sector.Y].Entities)
                     {
                         //if (!drawnEntities.Contains(entity))
                         {
                             Vector2 tilePosition = new Vector2(x * tileWidth, y * tileHeight);
-                            Vector2 offset = new Vector2();
+                            //Vector2 offset = new Vector2();
+                            #region draw bg color
                             //entity.Draw(spriteBatch, x, y, sector.X, sector.Y, tileWidth, tileHeight);
+                            #endregion
                             drawnEntities.Add(entity);
                         }
                     }

@@ -23,7 +23,7 @@ namespace G01_Perseus
             if (fireTimer.IsDone(gameTime))
             {
 
-                EntityManager.CreateBullet(type, center, target, false, damagePerShot);
+                EntityManager.CreateBullet(parent, center, target, false);
 
                 fireTimer.Reset(gameTime);
             }

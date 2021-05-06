@@ -24,7 +24,7 @@ namespace G01_Perseus
 
         public static StateStack stateStack;
 
-        
+
 
         public Game1()
         {
@@ -85,8 +85,8 @@ namespace G01_Perseus
             //stateStack.Push(new QuestLogInterface()); // MARKUS, Avkommentera denna raden för att testa quest loggen
 
             backgroundColor = Color.Black;
-            
-           
+
+
         }
 
 
@@ -107,7 +107,7 @@ namespace G01_Perseus
             KeyMouseReader.Update();
             stateStack.Update(gameTime);
 
-            
+
 
             base.Update(gameTime);
         }
@@ -122,7 +122,7 @@ namespace G01_Perseus
 
 
             EntityManager.Draw(spriteBatch);
-            
+
             //player.Draw(spriteBatch);
 
             spriteBatch.End();
@@ -135,7 +135,7 @@ namespace G01_Perseus
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, Window.ClientBounds.Height - 40, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Crimson);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, Window.ClientBounds.Height - 80, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Cyan);
 
-            
+
 
             spriteBatch.End();
             base.Draw(gameTime);
@@ -144,13 +144,13 @@ namespace G01_Perseus
         public void OnPopState(PopStateEvent e)
         {
             stateStack.Pop();
-            Console.WriteLine("Popped State: "+e);
+            Console.WriteLine("Popped State: " + e);
         }
 
         public void OnPushState(PushStateEvent e)
         {
             stateStack.Push(e.State);
-            Console.WriteLine("Pushed State: "+e);
+            Console.WriteLine("Pushed State: " + e);
         }
     }
 }

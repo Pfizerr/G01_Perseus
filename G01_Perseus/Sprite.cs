@@ -58,6 +58,18 @@ namespace G01_Perseus
             set { this.yIndex = value % rows; }
         }
 
+        public int Width
+        {
+            get { return spriteSize.X; }
+            private set { spriteSize.X = value; }
+        }
+
+        public int Height
+        {
+            get { return spriteSize.Y; }
+            private set { spriteSize.Y = value; }
+        }
+
         public virtual void Draw(SpriteBatch spriteBatch, Vector2 position, Vector2 scale, Vector2 origin, float rotation, float layerDepth)
         {
             Point spriteStart = new Point(start.X + (spriteSize.X * XIndex) + (offset * XIndex), start.Y + (spriteSize.Y * YIndex) + (offset * YIndex));
@@ -66,5 +78,11 @@ namespace G01_Perseus
         }
 
 
+        public virtual void Draw(SpriteBatch spriteBatch, Rectangle hitbox, Rectangle? source, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects spriteEffects, float layerDepth)
+        {
+            Point spriteStart = new Point(start.X + (spriteSize.X * XIndex) + (offset * XIndex), start.Y + (spriteSize.Y * YIndex) + (offset * YIndex));
+            Rectangle sourceRectangle = new Rectangle(spriteStart, spriteSize);
+            spriteBatch.Draw(texture, hitbox, sourceRectangle, color, rotation, origin, spriteEffects, layerDepth);
+        }
     }
 }

@@ -45,13 +45,6 @@ namespace G01_Perseus
             //spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), hitbox, source, Color.White, rotation, Origin, SpriteEffects.None, 0.9f);
         }
 
-        public override void Destroy()
-        {
-            //Code to execute when destroyed..
-
-            //System.Console.WriteLine("{0} has been killed.", this.ToString());
-            return;
-        }
 
         public override void HandleCollision(Entity other)
         {
@@ -63,5 +56,9 @@ namespace G01_Perseus
             texture = AssetManager.TextureAsset("projectile_green");
         }
 
+        public override void Destroy()
+        {
+            throw new System.NotImplementedException();
+        }
     }
 }

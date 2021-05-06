@@ -111,13 +111,5 @@ namespace G01_Perseus
                 }
             }
         }
-
-        public override void Destroy()
-        {
-            //Code to execute when destroyed..
-
-            //Console.WriteLine("{0} has been killed.", this.ToString());
-            return;
-        }
     }
 }

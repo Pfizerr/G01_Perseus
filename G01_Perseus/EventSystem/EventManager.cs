@@ -13,7 +13,6 @@ namespace G01_Perseus
     
     public interface EventListener
     {
-
     }
 
     public static class EventManager

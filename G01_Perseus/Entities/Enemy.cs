@@ -19,7 +19,7 @@ namespace G01_Perseus
 
         private EnemyBehavior behavior;
 
-        public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, EnemyBehavior behavior): base(position, maxVelocity, scale, health, shield)
+        public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, EnemyBehavior behavior) : base(position, maxVelocity, scale, health, shield)
         {
             healthBarHeight = 10;
             healthPos = new Rectangle((int)position.X, (int)position.Y - healthBarHeight, hitbox.Width, healthBarHeight);
@@ -43,12 +43,12 @@ namespace G01_Perseus
             this.behavior.Update(gameTime, rotation);
 
             Movement(gameTime);
-            
-           
+
+
             hitbox.Location = Center.ToPoint();
             SetHealthPosition();
             base.Update(gameTime);
-            
+
         }
 
         public void FireWeapon(GameTime gameTime)
@@ -65,11 +65,11 @@ namespace G01_Perseus
 
         public override void HandleCollision(Entity other)
         {
-            if (other is Player player)  
+            if (other is Player player)
             {
                 //RecieveDamage(10); //Replace with player.damage when this is implemented
             }
-            else if(other is Bullet bullet)
+            else if (other is Bullet bullet)
             {
                 RecieveDamage(bullet.damage);
                 bullet.timeToLive = 0;
@@ -95,7 +95,7 @@ namespace G01_Perseus
 
         public void Collision(CollissionEvent e)
         {
-            System.Diagnostics.Debug.WriteLine("Entity: "+e.Entity + " collided with: " + e.OtherEntity); //debug
+            System.Diagnostics.Debug.WriteLine("Entity: " + e.Entity + " collided with: " + e.OtherEntity); //debug
 
             HandleCollision(e.OtherEntity);
         }
