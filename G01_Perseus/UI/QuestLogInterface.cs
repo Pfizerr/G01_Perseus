@@ -15,7 +15,7 @@ namespace G01_Perseus.UI
         private Rectangle bounds;
         private Texture2D backgroundTexture;
 
-        private UIButton testButton;
+        private UIButton testButton, testButton2;
 
         public QuestLogInterface()
         {
@@ -25,16 +25,25 @@ namespace G01_Perseus.UI
 
             this.backgroundTexture = Util.CreateFilledRectangleTexture(new Color(255, 255, 255, 255), 1, 1);
             this.testButton = new UIButton(new Rectangle(bounds.X + 10, bounds.Y + 10, 50, 50), Test);
-        
+            this.testButton2 = new UIButton(new Rectangle(bounds.X + 100, bounds.Y + 100, 50, 50), Test2);
+
         }
 
         public void Test()
         {
-
+            EventManager.Dispatch(new PopStateEvent());
         }
+
+        public void Test2()
+        {
+            Resources.AddCurrency(100);
+            Console.WriteLine(Resources.Currency);
+        }
+
         public override void Update(GameTime gameTime)
         {
             testButton.Update(gameTime);
+            testButton2.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -42,6 +51,7 @@ namespace G01_Perseus.UI
             spriteBatch.Begin();
             spriteBatch.Draw(backgroundTexture, bounds, null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
             testButton.Draw(spriteBatch, gameTime);
+            testButton2.Draw(spriteBatch, gameTime);
             spriteBatch.End();
         }
     }

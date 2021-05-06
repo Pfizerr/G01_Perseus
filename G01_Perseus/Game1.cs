@@ -82,8 +82,8 @@ namespace G01_Perseus
             //level.AddEntity(enemy);
 
             stateStack = new StateStack();
-            stateStack.Push(new HUD()); // MARKUS, Avkommentera denna raden för att testa quest loggen
-
+            stateStack.Push(new HUD(Window)); // MARKUS, Avkommentera denna raden för att testa quest loggen
+            Resources.Initialize(0, 0, 0, 0, 0, 0);
             backgroundColor = Color.Black;
             
            
@@ -129,12 +129,6 @@ namespace G01_Perseus
 
 
             stateStack.Draw(spriteBatch, gameTime);
-
-            //Second draw call to make the HUD independant of the camera/world movement
-            spriteBatch.Begin();
-            spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, Window.ClientBounds.Height - 40, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Crimson);
-            spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, Window.ClientBounds.Height - 80, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Cyan);            
-            spriteBatch.End();
             base.Draw(gameTime);
         }
 

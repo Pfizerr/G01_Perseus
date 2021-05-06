@@ -6,17 +6,17 @@ using System.Threading.Tasks;
 
 namespace G01_Perseus
 {
-    class Resources
+    public static class Resources
     {
-        public int Currency { get; private set; }
-        public int Dust { get; private set; }
-        public int SkillPoints { get; private set; }
-        public int SpDamage { get; private set; }
-        public int SpHealth { get; private set; }
-        public int SpShields { get; private set; }
-        public int SpTBD { get; private set; }
+        public static int Currency { get; private set; }
+        public static int Dust { get; private set; }
+        public static int SkillPoints { get; private set; }
+        public static int SpDamage { get; private set; }
+        public static int SpHealth { get; private set; }
+        public static int SpShields { get; private set; }
+        public static int SpTBD { get; private set; }
 
-        public Resources(int currency, int dust, int sp, int spDamage, int spShields, int spHealth)
+        public static void Initialize(int currency, int dust, int sp, int spDamage, int spShields, int spHealth)
         {
             Currency = currency;
             Dust = dust;
@@ -25,37 +25,37 @@ namespace G01_Perseus
             SpShields = spShields;
         }
 
-        public void AddCurrency(int amount)
+        public static void AddCurrency(int amount)
         {
             Currency += amount;
         }
 
-        public void DecreaseCurrency(int amount)
+        public static void DecreaseCurrency(int amount)
         {
             Currency -= amount;
         }
 
-        public void AddDust(int amount)
+        public static void AddDust(int amount)
         {
             Dust += amount;
         }
 
-        public void DecreaseDust(int amount)
+        public static void DecreaseDust(int amount)
         {
             Dust -= amount;
         }
 
-        public void AddSkillPoint(int amount)
+        public static void AddSkillPoint(int amount)
         {
             SkillPoints += amount;
         }
 
-        public void DecreaseSkillPoints()
+        public static void DecreaseSkillPoints()
         {
             SkillPoints -= 1;
         }
 
-        public void ResetSkillpoints()
+        public static void ResetSkillpoints()
         {
             SkillPoints += (SpDamage + SpHealth + SpShields);
             SpDamage = 0;
@@ -63,17 +63,17 @@ namespace G01_Perseus
             SpShields = 0;
         }
 
-        public void AddSpDamage()
+        public static void AddSpDamage()
         {
             SpDamage += 1;
         }
 
-        public void AddSpHealth()
+        public static void AddSpHealth()
         {
             SpHealth += 1;
         }
 
-        public void AddSpShields()
+        public static void AddSpShields()
         {
             SpShields += 1;
         }

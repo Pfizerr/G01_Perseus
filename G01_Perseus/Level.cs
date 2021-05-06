@@ -144,8 +144,8 @@ namespace G01_Perseus
                     Color color = colors[sector.X, sector.Y];
                     #endregion
 
-                    spriteBatch.Draw(tileTexture, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
-                    //background.Draw(spriteBatch, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight));
+                    //spriteBatch.Draw(tileTexture, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
+                    background.Draw(spriteBatch, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight));
 
                     foreach (Entity entity in tiles[sector.X, sector.Y].Entities)
                     {
