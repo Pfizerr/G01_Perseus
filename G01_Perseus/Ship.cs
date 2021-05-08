@@ -17,17 +17,18 @@ namespace G01_Perseus
         //Can use wapon dependinng on the type of enemy
         protected Weapon trippleShot = new WeaponTripleShot(1, 1);
         protected Weapon singleShot = new WeaponSingleShot(1, 1);
-        protected double hitTimer, hitTimerInterval, maxShields;
+        protected double hitTimer, hitTimerInterval;
         protected List<Weapon> weapons;
-        protected float health, maxHealth;
+        protected float maxHealth, maxShields;
 
         //Components
         protected PlayerStatus playerStatus;
-        public double Shields { get; protected set; }
+        public float Shields { get; protected set; }
+        public float Health { get; protected set; }
 
         public Ship(Vector2 maxVelocity, Vector2 position, Vector2 scale, float health, float shield) : base(maxVelocity, position, scale)
         {
-            this.health = health;
+            Health = health;
             maxHealth = health;
             Origin = Size / 2;
             layerDepth = 0.7f;
@@ -80,17 +81,17 @@ namespace G01_Perseus
                 if (Shields < 0)
                 {
                     damage = Math.Abs((float)Shields);
-                    Shields = 0.0;
+                    Shields = 0f;
                 }
             }
 
             if (Shields <= 0)
             {
-                health -= damage;
+                Health -= damage;
             }
 
             hitTimer = hitTimerInterval;
-            if (health <= 0)
+            if (Health <= 0)
             {
                 IsAlive = false;
             }
