@@ -1,6 +1,13 @@
-﻿namespace G01_Perseus
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace G01_Perseus
 {
-    internal interface CollissionListener
+    public interface CollissionListener : EventListener
     {
+        void Collision(CollissionEvent e);
     }
 }

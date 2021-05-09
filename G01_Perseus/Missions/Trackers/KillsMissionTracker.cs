@@ -41,9 +41,10 @@ namespace G01_Perseus
         {
             if(IsActive)
             {
-                if (Owner == (e.AttackerEntity as Bullet).Parent /* <-- kan hanteras bättre */ && typeOfSubject == e.SubjectEntity.GetType())
+                if (/*Owner*/TypeOfBullet.Player == (e.AttackerEntity as Bullet).Type /* <-- kan hanteras bättre */ && typeOfSubject == e.SubjectEntity.GetType())
                 {
                     TaskComplete();
+                    TaskComplete(); // Remove this
                 }
             }
         }

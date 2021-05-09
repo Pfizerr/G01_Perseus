@@ -58,7 +58,7 @@ namespace G01_Perseus
             this.tileWidth = tileWidth;
             this.tileHeight = tileHeight;
 
-            background = new Background();
+            //background = new Background();
 
             this.tiles = new Sector[width, height];
             for (int y = 0; y < height; y++)

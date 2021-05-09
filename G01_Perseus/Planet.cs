@@ -19,7 +19,7 @@ namespace G01_Perseus
         private int maxNrOfMissions;
         private int minMissionCooldown;
         private int maxMissionCooldown;
-        private Timer[] missionCooldowns;
+        private ExtendedTimer[] missionCooldowns;
         private Mission[] missions;
         private Vector2 highlightedSpriteOffset;
         private Vector2 highlightedSpriteOrigin;
@@ -28,6 +28,7 @@ namespace G01_Perseus
         private Vector2 position;
         private Vector2 origin;
         private Vector2 scale;
+        private GameTime gameTime; // <---
 
         public Planet(string name, int maxNrOfMissions, Sprite highlightedSprite, Sprite sprite, Vector2 position)
         {
@@ -41,7 +42,7 @@ namespace G01_Perseus
             isDisplayingUserInterface = false;
 
             missions = new Mission[maxNrOfMissions];
-            missionCooldowns = new Timer[maxNrOfMissions];
+            missionCooldowns = new ExtendedTimer[maxNrOfMissions];
             minMissionCooldown = 20000; /* ms */
             maxMissionCooldown = 30000; /* ms */
 
@@ -64,7 +65,7 @@ namespace G01_Perseus
             {
                 if (missionCooldowns[i] == null)
                 {
-                    missionCooldowns[i] = new Timer(Game1.random.Next(minMissionCooldown, maxMissionCooldown), false);
+                    missionCooldowns[i] = new ExtendedTimer(Game1.random.Next(minMissionCooldown, maxMissionCooldown), false);
                 }
             }
 
@@ -78,12 +79,13 @@ namespace G01_Perseus
 
         public void Update(GameTime gameTime)
         {
+            this.gameTime = gameTime;
             elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             for (int i = 0; i < missionCooldowns.Length; i++)
             {
-                Timer timer = missionCooldowns[i];
-
+                ExtendedTimer timer = missionCooldowns[i];
+               
                 if (timer.IsCounting)
                 {
                     timer.Update(gameTime);
@@ -104,15 +106,15 @@ namespace G01_Perseus
 
         public void HandleInteractions()
         {
-            if (Input.MouseWorldPosition.X < (Center.X + radius)
-                && Input.MouseWorldPosition.X > (Center.X - radius)
-                && Input.MouseWorldPosition.Y < (Center.Y + radius)
-                && Input.MouseWorldPosition.Y > (Center.Y - radius))
+            if (KeyMouseReader.MouseWorldPosition.X < (Center.X + radius)
+                && KeyMouseReader.MouseWorldPosition.X > (Center.X - radius)
+                && KeyMouseReader.MouseWorldPosition.Y < (Center.Y + radius)
+                && KeyMouseReader.MouseWorldPosition.Y > (Center.Y - radius))
             {
                 isHighlighted = true;
                 EventManager.Dispatch(new MouseEnterPlanetEvent(this));
 
-                if (Input.IsLeftMouseButtonClicked /* && !isDisplayingUserInterface */)
+                if (KeyMouseReader.LeftClick() /* && !isDisplayingUserInterface */)
                 {
                     // Open GUI
                     isDisplayingUserInterface = true;
@@ -145,9 +147,9 @@ namespace G01_Perseus
             {
                 foreach (Mission mission in completedMissions)
                 {
-                    customer.RewardResources(mission.Resources);
-                    customer.RewardDust(mission.Dust);
-                    customer.RewardSkillPoints(mission.SkillPoints);
+                    customer.Status.Resources += mission.Resources;
+                    customer.Status.Dust += mission.Dust;
+                    customer.Status.SkillPoints += mission.SkillPoints;
                 }
             }
             #endregion
@@ -171,6 +173,8 @@ namespace G01_Perseus
                 }
 
                 customer.RecieveMission(missions[index]);
+                missions[index].Tracker.IsActive = true;
+                missions[index].State = Mission.EState.Accepted;
                 missions[index] = null;
                 missionCooldowns[index].Start();
                 Console.WriteLine("New timer duration: " + missionCooldowns[index].Duration);

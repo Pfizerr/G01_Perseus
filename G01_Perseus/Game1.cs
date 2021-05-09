@@ -20,7 +20,7 @@ namespace G01_Perseus
         Enemy enemy;
         public static Camera camera;
 
-        public static Random random;
+        public static Random random = new Random(1);
 
         public static StateStack stateStack;
 
@@ -32,9 +32,6 @@ namespace G01_Perseus
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 920;
-
             EventManager.Register(this);
         }
 
@@ -42,6 +39,10 @@ namespace G01_Perseus
         protected override void Initialize()
         {
             Util.Device = graphics.GraphicsDevice;
+
+            graphics.PreferredBackBufferWidth = 1280;
+            graphics.PreferredBackBufferHeight = 720;
+            graphics.ApplyChanges();
 
             base.Initialize();
         }
@@ -52,9 +53,12 @@ namespace G01_Perseus
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             AssetManager.LoadAssets(Content);
+            MissionManager.LoadMissions();
 
+            EntityManager.AddFaction(new Faction("test faction one", AssetManager.SpriteAsset("planet1"), AssetManager.SpriteAsset("planet_highlight_outline2_green")));
+            EntityManager.factions[0].CreatePlanet("planet name one", new Vector2(0, 0), 3);
             EntityManager.CreatePlayer();
-            EntityManager.CreateEnemy();
+            EntityManager.CreateEnemy(new Vector2(250, 250));
             camera = new Camera();
             camera.FollowTarget = player;
             camera.Viewport = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
@@ -132,8 +136,8 @@ namespace G01_Perseus
 
             //Second draw call to make the HUD independant of the camera/world movement
             spriteBatch.Begin();
-            spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, Window.ClientBounds.Height - 40, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Crimson);
-            spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, Window.ClientBounds.Height - 80, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Cyan);
+            spriteBatch.Draw(AssetManager.TextureAsset("GradientBar"), new Rectangle(40, Window.ClientBounds.Height - 40, AssetManager.TextureAsset("GradientBar").Width, AssetManager.TextureAsset("GradientBar").Height / 2), Color.Crimson);
+            spriteBatch.Draw(AssetManager.TextureAsset("GradientBar"), new Rectangle(40, Window.ClientBounds.Height - 80, AssetManager.TextureAsset("GradientBar").Width, AssetManager.TextureAsset("GradientBar").Height / 2), Color.Cyan);
 
 
 

@@ -44,11 +44,15 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Bullet.cs" />
     <Compile Include="Background.cs" />
     <Compile Include="CollissionEvent.cs" />
     <Compile Include="CollissionListener.cs" />
     <Compile Include="EnemyBehavior.cs" />
+    <Compile Include="Entities\Bullet.cs" />
+    <Compile Include="EventSystem\EventManager.cs" />
+    <Compile Include="EventSystem\Listeners\MouseEnterPlanetListener.cs" />
+    <Compile Include="EventSystem\Listeners\MouseExitPlanetListener.cs" />
+    <Compile Include="ExtendedTimer.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="KeyMouseReader.cs" />
     <Compile Include="MovingEntity.cs" />
@@ -62,18 +66,15 @@
     <Compile Include="EventSystem\Events\PopStateEvent.cs" />
     <Compile Include="EventSystem\Events\PushStateEvent.cs" />
     <Compile Include="EventSystem\Listeners\PlanetInteractionListener.cs" />
-    <Compile Include="EventSystem\Listeners\PlanetMouseExitListener.cs" />
-    <Compile Include="EventSystem\Listeners\PlanetMouseEnterListener.cs" />
     <Compile Include="EventSystem\Listeners\PlayerShootListener.cs" />
     <Compile Include="EventSystem\Events\MouseExitPlanetEvent.cs" />
     <Compile Include="EventSystem\Events\PlanetInteractionEvent.cs" />
     <Compile Include="EventSystem\Events\MouseEnterPlanetEvent.cs" />
     <Compile Include="EventSystem\Events\PlayerShootEvent.cs" />
     <Compile Include="Missions\Trackers\KillsMissionTracker.cs" />
-    <Compile Include="Missions\Trackers\MissionTracker.cs" />
+    <Compile Include="Missions\MissionTracker.cs" />
     <Compile Include="Missions\MissionManager.cs" />
-    <Compile Include="Managers\EntityManager.cs" />
-    <Compile Include="Managers\EventManager.cs" />
+    <Compile Include="Entities\EntityManager.cs" />
     <Compile Include="Managers\AssetManager.cs" />
     <Compile Include="DefaultEnemyBehavior.cs" />
     <Compile Include="Missions\Mission.cs" />

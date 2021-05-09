@@ -9,7 +9,7 @@ namespace G01_Perseus
     public interface MouseEnterPlanetListener : EventListener
     {
 
-        void OnMouseEnter(PlanetHighlightEvent e);
+        void OnMouseEnter(MouseEnterPlanetEvent e);
 
     }
 }

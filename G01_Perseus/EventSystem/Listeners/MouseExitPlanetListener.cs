@@ -6,8 +6,9 @@ using System.Threading.Tasks;
 
 namespace G01_Perseus
 {
-    public class EntityKilledEvent : Event
+    public interface MouseExitPlanetListener : EventListener
     {
+        void OnMouseExit(MouseExitPlanetEvent e);
 
     }
 }

@@ -1,148 +1,165 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 
 namespace G01_Perseus
 {
-    public class Player : Entity
+    public class Player : Ship, CollissionListener, PlanetInteractionListener, MouseEnterPlanetListener, MouseExitPlanetListener
     {
-        private Vector2 acceleration;
-        private Vector2 direction;
-        private Vector2 friction;
-        private Weapon equippedWeapon = new WeaponTripleShot(1, 1);
-        private bool isInteractingWithEnvironment;
-
-        //Components
-        private PlayerStatus status;
-
-        public Player(Sprite sprite, Vector2 position, Vector2 maxVelocity, Vector2 scale, Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, float health) 
-            : base(sprite, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
+        private bool hasFocusOnPlanet;
+        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield) : base(position, velocity, scale, health, shield)
         {
-            this.health = health;
-            origin = size / 2;
-
-            status = new PlayerStatus(health, 0f);
-
-            isInteractingWithEnvironment = false;
-
-            #region TEMP
-            friction = new Vector2(0.99f, 0.99f); // move to Level.cs ?
-            acceleration = new Vector2(4, 4); // move to constructor ?
-            #endregion 
+            EventManager.Register(this);
         }
 
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
-            AdjustAngleTowardsMousePosition();
-            HandleInput();
+
+            ShieldRegeneration(gameTime);
+
+            AdjustAngleTowardsTarget(FindMousePosition());
+            HandleInput(gameTime);
+
             Movement(gameTime);
-            Console.WriteLine(health);
-            equippedWeapon.Update(gameTime);
+            equipedWeapon.Update(gameTime);
 
-            //Console.WriteLine(health);
-
-            if (status.Mission.Count > 0)
+            if (Status.Missions.Count > 0)
             {
-                foreach (Mission mission in status.Mission)
+                foreach (Mission mission in Status.Missions)
                 {
                 Console.WriteLine(String.Format("ID: {0} Contractor: {1} Owner: {2}", mission.Id, mission.Contractor, mission.Owner));
                 }
             }
-            //Console.WriteLine();
+
+            Status.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            sprite.Draw(spriteBatch, hitbox.Location.ToVector2(), scale, origin, rotation, layerDepth);
+            spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
+            Status.Draw(spriteBatch);
+            
+            //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
 
-        public void Movement(GameTime gameTime)
-        {
-            if (velocity.Length() < 3f && velocity.Length() > -3f)
-                velocity = Vector2.Zero;
-
-            velocity = (velocity + direction * acceleration) * friction;
-            Util.Clamp(velocity, -maxVelocity, maxVelocity); // clamp velocity to values between min value -maxVelocity and max value -maxVelocity
-            position += velocity * deltaTime;
-            hitbox.Location = Center.ToPoint();
-        }
-
-        public void HandleInput()
+        public void HandleInput(GameTime gameTime)
         {
             direction = Vector2.Zero;
 
-            direction.Y += Input.keyboardState.IsKeyDown(Input.Up) ? -1 : 0;
-            direction.Y += Input.keyboardState.IsKeyDown(Input.Down) ? 1 : 0;
-            direction.X += Input.keyboardState.IsKeyDown(Input.Left) ? -1 : 0;
-            direction.X += Input.keyboardState.IsKeyDown(Input.Right) ? 1 : 0;
+            direction.Y += KeyMouseReader.KeyHold(Keys.W) ? -1 : 0;
+            direction.Y += KeyMouseReader.KeyHold(Keys.S) ? 1 : 0;
+            direction.X += KeyMouseReader.KeyHold(Keys.A) ? -1 : 0;
+            direction.X += KeyMouseReader.KeyHold(Keys.D) ? 1 : 0;
 
             direction = direction.LengthSquared() > 1 ? Vector2.Normalize(direction) : direction;
 
-            if(Input.IsLeftMouseButtonClicked)
+            if(KeyMouseReader.LeftClick() && !hasFocusOnPlanet)
             {
                 //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
-                equippedWeapon.Fire(Center, Input.MouseWorldPosition, rotation, this);
-                EventManager.Dispatch(new PlayerShootEvent(position, 1337));
+
+                equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, rotation, TypeOfBullet.Player, gameTime);
+                    
+                EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
+
+            ChangeWeapon();
         }
 
         public override void HandleCollision(Entity other)
         {
-
+            if (other is Enemy enemy)
+            {
+                //RecieveDamage(enemy.damage);
+            }
+            else if (other is Bullet bullet)
+            {
+                RecieveDamage(other, bullet.damage);
+                bullet.timeToLive = 0;
+            }            
         }
 
-        public void AdjustAngleTowardsMousePosition()
+        /// <summary>
+        /// If you press the 1 or 2 key you will change the wepon type that you're using.
+        /// </summary>
+        private void ChangeWeapon()
         {
-            Vector2 mousePosition = new Vector2(Input.mouseState.X, Input.mouseState.Y);
+            if (KeyMouseReader.KeyPressed(Keys.D1))
+            {
+                equipedWeapon = weapons[0];
+            }
+
+            if (KeyMouseReader.KeyPressed(Keys.D2))
+            {
+                equipedWeapon = weapons[1];
+            }
+        }
+
+        public Vector2 FindMousePosition()
+        {
+            Vector2 mousePosition = new Vector2(KeyMouseReader.mouseState.X, KeyMouseReader.mouseState.Y);
             Vector3 cameraTranslation = Game1.camera.Translation.Translation;
             Vector2 cameraOffset = new Vector2(-cameraTranslation.X, -cameraTranslation.Y);
-            Vector2 dPos = (Position + origin) - (mousePosition + cameraOffset);
-            rotation = (float)Math.Atan2(dPos.Y, dPos.X) - MathHelper.ToRadians(90);
-        }
-
-        public void RecieveDamage(float damage)
-        {
-            health -= damage;
-            
-            if(health <= 0)
-            {
-                isAlive = false;
-            }
+            return mousePosition + cameraOffset;
         }
 
         public void RecieveRewards(int skillPointRewards, int resourceRewards, int dustRewards)
         {
-            
+            Status.SkillPoints += skillPointRewards;
+            Status.Resources += resourceRewards;
+            Status.Dust += dustRewards;
         }
 
-        public void RecieveMissions(ICollection<Mission> missions)
-        {
-            foreach(Mission mission in missions)
-            {
-                status.Mission.Add(mission);
-            }
-        }
-
-        public override void Destroy()
-        {
-            //Code to execute when destroyed..
-
-            System.Console.WriteLine("{0} has been killed.", this.ToString());
-            return;
-        }
+        public void RecieveMission(Mission mission) => Status.Missions.Add(mission);
 
         protected override void DefaultTexture()
         {
-            this.sprite = AssetManager.SpriteAsset("player_ship");
+            texture = AssetManager.TextureAsset("player_ship");
+        }
+
+        public void Collision(CollissionEvent e)
+        {
+            HandleCollision(e.OtherEntity);
+        }
+
+        public override void Destroy(Event e)
+        {
+            base.Destroy(e);
+            return;
         }
 
         public PlayerStatus Status
         {
-            get => status;
-            private set => status = value;
+            get => playerStatus;
+            private set => playerStatus = value;
+        }
+
+        public void OnMouseClick(PlanetInteractionEvent e)
+        {
+            List<Mission> completedMissions = new List<Mission>();
+            for (int i = 0; i < Status.Missions.Count; i++)
+            {
+                if (Status.Missions[i].State == Mission.EState.Completed)
+                {
+                    completedMissions.Add(Status.Missions[i]);
+                    Status.Missions.RemoveAt(i);
+                    i--;
+                }
+            }
+               
+            e.Planet.EnterNegotiation(this, completedMissions/*TEMP*/);
+        }
+
+        public void OnMouseEnter(MouseEnterPlanetEvent e)
+        {
+            hasFocusOnPlanet = true;
+        }
+
+        public void OnMouseExit(MouseExitPlanetEvent e)
+        {
+            hasFocusOnPlanet = false;
         }
     }
 }

@@ -4,13 +4,12 @@ namespace G01_Perseus
 {
     public class Timer
     {
-        float interval;
-        double start;
+        private float interval;
+        private double start;
 
         public Timer(float interval)
         {
             this.interval = interval;
-            
         }
 
         public bool IsDone(GameTime gameTime)

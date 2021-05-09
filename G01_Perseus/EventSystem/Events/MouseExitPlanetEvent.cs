@@ -5,14 +5,14 @@ namespace G01_Perseus
     {
         public override void Dispatch(EventListener listener)
         {
-            if(!(listener is MouseLeavePlanetListener))
+            if(!(listener is MouseExitPlanetListener))
             {
                 return;
             }
 
-            MouseLeavePlanetListener l = (MouseLeavePlanetListener)listener;
+            MouseExitPlanetListener l = (MouseExitPlanetListener)listener;
 
-            l.OnMouseLeave(this);
+            l.OnMouseExit(this);
         }
     }
 }

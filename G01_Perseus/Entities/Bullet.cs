@@ -3,32 +3,25 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace G01_Perseus
 {
-    public class Bullet : Entity
+    public enum TypeOfBullet { Player, Enemy}
+    public class Bullet : MovingEntity
     {
-        private float timeToLive;
-        private float damage;
-        private Entity parent;
+        public float timeToLive;
+        public float damage;
         private Vector2 direction;
+        public TypeOfBullet Type { get; private set; }
 
-        public Bullet(Sprite sprite, Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale,
-         Rectangle? source, SpriteEffects spriteEffects, Color color, float rotation, float layerDepth, bool isCollidable, 
-         Entity parent, float damage, float timeToLive, bool isLaser) 
-            : base(sprite, position, maxVelocity, scale, source, spriteEffects, color, rotation, layerDepth, isCollidable)
+        public Bullet(Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale, TypeOfBullet type, float damage, float timeToLive) 
+            : base(maxVelocity, position, scale)
         {
-            this.parent = parent;
+            Type = type;
             this.damage = damage;
             this.timeToLive = timeToLive;
-            velocity = maxVelocity;
             Center = position;
-            if (isLaser)
-            {
-                origin = new Vector2(Vector2.Distance(position, targetPosition), size.Y / 2);
-            }
-            else
-            {
-                origin = size / 2;
-            }
-            health = 1; 
+            Origin = Size / 2;
+            rotation = 0f;
+            layerDepth = 0.8f;
+            source = null;
             direction = Vector2.Normalize(targetPosition - position);
         }
 
@@ -39,55 +32,39 @@ namespace G01_Perseus
 
             if (timeToLive <= 0)
             {
-                isAlive = false;
+                IsAlive = false;
             }
 
-            position += direction * velocity;
-            hitbox.Location = Center.ToPoint();
+            Position += direction * maxVelocity;
+            hitbox.Location = Position.ToPoint();
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            sprite.Draw(spriteBatch, hitbox, source, color, rotation, origin, scale, spriteEffects, layerDepth);
+            spriteBatch.Draw(texture, hitbox, source, Color.White, rotation, Origin, SpriteEffects.None, layerDepth);
+            spriteBatch.Draw(texture, Center, source, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f); 
+            //spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), hitbox, source, Color.White, rotation, Origin, SpriteEffects.None, 0.9f);
+            spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
 
-        public override void Destroy()
+
+        public override void HandleCollision(Entity other)
         {
-            //Code to execute when destroyed..
-
-            System.Console.WriteLine("{0} has been killed.", this.ToString());
-            isAlive = false;
-            return;
-        }
-
-        public override void OnCollision(Entity other)
-        {
-            if (!parent.Equals(other))
-            {
-                if (other is Enemy && !(parent is Enemy))
-                {
-                    (other as Enemy).RecieveDamage(damage);
-                    isAlive = false;
-                }
-                else if (other is Player)
-                {
-
-                    (other as Player).RecieveDamage(damage);
-                    isAlive = false;
-                }
-               
-            }
+            IsAlive = false;                         
         }
 
         protected override void DefaultTexture()
         {
-            sprite = AssetManager.SpriteAsset("projectile_green");
+            texture = AssetManager.TextureAsset("projectile_green");
         }
 
-        public Entity Parent
+        public override void Destroy(Event e)
         {
-            get => parent;
-            private set => parent = value;
+            base.Destroy(e);
+            //Code to execute when destroyed..
+
+            //System.Console.WriteLine("{0} has been killed.", this.ToString());
+            return;
         }
     }
 }

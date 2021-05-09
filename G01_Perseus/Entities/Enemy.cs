@@ -32,10 +32,17 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(texture, hitbox, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, SpriteEffects.None, 0.8f);
-            spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), healthPos, null, Color.Blue, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
+            /*spriteBatch.Draw(texture, hitbox, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, SpriteEffects.None, 0.8f);
+            spriteBatch.Draw(AssetManager.TextureAsset("GradientBar"), healthPos, null, Color.Blue, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
             //Vector2 drawPosition = new Vector2((tileX * tileWidth) + position.X - (ix * tileWidth), (tileY * tileWidth) + position.Y - (iy * tileHeight));
             //spriteBatch.Draw(texture, drawPosition, null, Color.White, rotation, size / 2, Vector2.One, SpriteEffects.None, 0.5f);
+            spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, Origin, SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
+            spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Red, hitbox.Width, hitbox.Height), hitbox.Location.ToVector2(), null, Color.White); // Draw hitbox at Position. (debug)*/
+
+            spriteBatch.Draw(AssetManager.TextureAsset("GradientBar"), healthPos, null, Color.Blue, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
+            spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
+
+           //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug
         }
 
         public override void Update(GameTime gameTime)
@@ -45,7 +52,7 @@ namespace G01_Perseus
             Movement(gameTime);
 
 
-            hitbox.Location = Center.ToPoint();
+            hitbox.Location = Position.ToPoint();
             SetHealthPosition();
             base.Update(gameTime);
 
@@ -53,7 +60,7 @@ namespace G01_Perseus
 
         public void FireWeapon(GameTime gameTime)
         {
-            equipedWeapon.Fire(Center, EntityManager.Player.Position, rotation, TypeOfBullet.Enemy, gameTime);
+            equipedWeapon.Fire(Center, EntityManager.Player.Center, rotation, TypeOfBullet.Enemy, gameTime);
             equipedWeapon.Update(gameTime);
         }
 
@@ -71,15 +78,15 @@ namespace G01_Perseus
             }
             else if (other is Bullet bullet)
             {
-                RecieveDamage(bullet.damage);
+                RecieveDamage(other, bullet.damage);
                 bullet.timeToLive = 0;
             }
 
         }
 
-        public override void RecieveDamage(float damage)
+        public override void RecieveDamage(Entity other, float damage)
         {
-            base.RecieveDamage(damage);
+            base.RecieveDamage(other, damage);
             healthPos.Width = (int)(hitbox.Width * (health / maxHealth));
         }
 
@@ -98,6 +105,12 @@ namespace G01_Perseus
             System.Diagnostics.Debug.WriteLine("Entity: " + e.Entity + " collided with: " + e.OtherEntity); //debug
 
             HandleCollision(e.OtherEntity);
+        }
+
+        public override void Destroy(Event e)
+        {
+            base.Destroy(e);
+            return;
         }
     }
 }

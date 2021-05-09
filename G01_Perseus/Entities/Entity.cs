@@ -11,6 +11,7 @@ namespace G01_Perseus
         protected Vector2 scale;
         protected Texture2D texture;
 
+
         //Could maybe remove source and rotation as input parameters
         //Consider changing Roattion to a property that is initiated to 0f for all Entity objects to avoid redundancy
         public Entity(Vector2 position, Vector2 scale)
@@ -39,7 +40,14 @@ namespace G01_Perseus
 
         public abstract void HandleCollision(Entity other);
 
-        public abstract void Destroy();
+        public virtual void Destroy(Event e)
+        {
+            if(e != null)
+            {
+                EventManager.Dispatch(e);
+            }
+            IsAlive = false;
+        }
 
         /// <summary>
         /// if a null value was passed at instantiation, then use this texture.

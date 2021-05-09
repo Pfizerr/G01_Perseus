@@ -25,7 +25,7 @@ namespace G01_Perseus
         protected PlayerStatus playerStatus;
         public double Shields { get; protected set; }
 
-        public Ship(Vector2 maxVelocity, Vector2 position, Vector2 scale, float health, float shield) : base(maxVelocity, position, scale)
+        public Ship(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield) : base(maxVelocity, position, scale)
         {
             this.health = health;
             maxHealth = health;
@@ -59,12 +59,12 @@ namespace G01_Perseus
             velocity = (velocity + direction * acceleration) * friction;
             Util.Clamp(velocity, -maxVelocity, maxVelocity); // clamp velocity to values between min value -maxVelocity and max value -maxVelocity
             Position += velocity * deltaTime;
-            hitbox.Location = Center.ToPoint();
+            hitbox.Location = Position.ToPoint();
         }
 
         public virtual void AdjustAngleTowardsTarget(Vector2 targetPos)
         {
-            Vector2 dPos = (Position + Origin) - targetPos;
+            Vector2 dPos = (Center) - targetPos;
             rotation = (float)Math.Atan2(dPos.Y, dPos.X) - MathHelper.ToRadians(90);
         }
 
@@ -72,7 +72,7 @@ namespace G01_Perseus
         /// The damage Recieved will be applied to the shields and then check is the shields are negative taking that to subtrect from the health of the player
         /// </summary>
         /// <param name="damage">This is the damage that the clided object have asssigned to it</param>
-        public virtual void RecieveDamage(float damage)
+        public virtual void RecieveDamage(Entity other, float damage)
         {
             if (Shields > 0)
             {
@@ -92,7 +92,7 @@ namespace G01_Perseus
             hitTimer = hitTimerInterval;
             if (health <= 0)
             {
-                IsAlive = false;
+                Destroy(new EntityKilledEvent(this, other));
             }
         }
 

@@ -60,7 +60,7 @@ namespace G01_Perseus
             set;
         }
 
-        public List<Mission> Mission
+        public List<Mission> Missions
         {
             get;
             set;
@@ -118,9 +118,17 @@ namespace G01_Perseus
         /// </summary>
         public PlayerStatus()
         {
-            Mission = new List<Mission>();
+            Missions = new List<Mission>();
 
             font = AssetManager.FontAsset("default_font");
+        }
+
+        public void Update()
+        {
+            foreach(Mission mission in Missions)
+            {
+                mission.Update();
+            }
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -131,15 +139,15 @@ namespace G01_Perseus
             Vector2 position;
             Vector2 size;
 
-            for (int i = 0; i < Mission.Count; i++)
+            for (int i = 0; i < Missions.Count; i++)
             {
                 string str = String.Format("name: {0} <{1}> | owner: {2} | contractor: {3} | {4} / {5}", 
-                    Mission[i].Name,
-                    Mission[i].Id,
-                    Mission[i].Owner,
-                    Mission[i].Contractor,
-                    Mission[i].Tracker.TasksCompleted.ToString(),
-                    Mission[i].Tracker.TasksToComplete.ToString());
+                    Missions[i].Name,
+                    Missions[i].Id,
+                    Missions[i].Owner,
+                    Missions[i].Contractor,
+                    Missions[i].Tracker.TasksCompleted.ToString(),
+                    Missions[i].Tracker.TasksToComplete.ToString());
 
                 size = font.MeasureString(str);
                 position = new Vector2(playerPosition.X - viewport.Width * 0.5f + 15, playerPosition.Y - viewport.Height * 0.5f + size.Y * i + 5);
