@@ -23,6 +23,7 @@ namespace G01_Perseus
             SpDamage = spDamage;
             SpHealth = spHealth;
             SpShields = spShields;
+            SkillPoints = 5;
         }
 
         public static void AddCurrency(int amount)
@@ -65,17 +66,29 @@ namespace G01_Perseus
 
         public static void AddSpDamage()
         {
-            SpDamage += 1;
+            if(SkillPoints > 0)
+            {
+                SpDamage += 1;
+                Console.WriteLine(SpDamage);
+            }
+            else
+            {
+                Console.WriteLine("Not enough SP");
+            }
+                
+            
         }
 
         public static void AddSpHealth()
         {
-            SpHealth += 1;
+            if (SkillPoints > 0)
+                SpHealth += 1;
         }
 
         public static void AddSpShields()
         {
-            SpShields += 1;
+            if (SkillPoints > 0)
+                SpShields += 1;
         }
     }
 }

@@ -15,43 +15,47 @@ namespace G01_Perseus.UI
         private Rectangle bounds;
         private Texture2D backgroundTexture;
 
-        private UIButton testButton, testButton2;
+        private UIButton exit, addDamage, addShields, addHealth;
+        //private List<UIButton> buttons;
+        private UIButton[] buttonsArray;
 
-        public QuestLogInterface()
+        public QuestLogInterface(GameWindow window)
         {
             this.Transparent = true;
 
-            this.bounds = new Rectangle(450,200, 250, 400);
+            this.bounds = new Rectangle(window.ClientBounds.Width / 2 - 200, 200, 400, 400);
 
             this.backgroundTexture = Util.CreateFilledRectangleTexture(new Color(255, 255, 255, 255), 1, 1);
-            this.testButton = new UIButton(new Rectangle(bounds.X + 10, bounds.Y + 10, 50, 50), Test);
-            this.testButton2 = new UIButton(new Rectangle(bounds.X + 100, bounds.Y + 100, 50, 50), Test2);
+            this.exit = new UIButton(new Rectangle(bounds.X + 10, bounds.Y + 10, 20, 20), ExitUI);
+            this.addDamage = new UIButton(new Rectangle(bounds.X + bounds.Width - 60, bounds.Y + 60, 50, 50), Resources.AddSpDamage);
+            this.addHealth = new UIButton(new Rectangle(bounds.X + bounds.Width - 60, bounds.Y + 120, 50, 50), Resources.AddSpHealth);
+            this.addShields = new UIButton(new Rectangle(bounds.X + bounds.Width - 60, bounds.Y + 180, 50, 50), Resources.AddSpShields);
+            buttonsArray = new UIButton[] { exit, addDamage, addHealth, addShields};
+
 
         }
 
-        public void Test()
+        public void ExitUI()
         {
             EventManager.Dispatch(new PopStateEvent());
         }
 
-        public void Test2()
-        {
-            Resources.AddCurrency(100);
-            Console.WriteLine(Resources.Currency);
-        }
-
         public override void Update(GameTime gameTime)
         {
-            testButton.Update(gameTime);
-            testButton2.Update(gameTime);
+            foreach(UIButton button in buttonsArray)
+            {
+                button.Update(gameTime);
+            }
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(backgroundTexture, bounds, null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
-            testButton.Draw(spriteBatch, gameTime);
-            testButton2.Draw(spriteBatch, gameTime);
+            spriteBatch.Draw(backgroundTexture, bounds, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 1f);
+            foreach(UIButton button in buttonsArray)
+            {
+                button.Draw(spriteBatch, gameTime);
+            }
             spriteBatch.End();
         }
     }

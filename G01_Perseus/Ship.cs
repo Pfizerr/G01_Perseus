@@ -80,7 +80,7 @@ namespace G01_Perseus
                 Shields -= damage;
                 if (Shields < 0)
                 {
-                    damage = Math.Abs((float)Shields);
+                    damage = Math.Abs(Shields);
                     Shields = 0f;
                 }
             }

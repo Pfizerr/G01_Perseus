@@ -21,7 +21,7 @@ namespace G01_Perseus.UI
             this.Transparent = true;
             this.testButton = new UIButton(new Rectangle(10, 10, 50, 50), AssetManager.TextureAsset("button_blue"), Test);
             testButton.HoveredTexture = AssetManager.TextureAsset("button_red");
-            this.questLogInterface = new QuestLogInterface();
+            this.questLogInterface = new QuestLogInterface(window);
             this.window = window;
 
         }
@@ -44,6 +44,11 @@ namespace G01_Perseus.UI
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, window.ClientBounds.Height - 40, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Crimson);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), new Rectangle(40, window.ClientBounds.Height - 80, AssetManager.TextureAsset("gradient_bar").Width, AssetManager.TextureAsset("gradient_bar").Height / 2), Color.Cyan);
             spriteBatch.End();
+        }
+
+        public void UpdatePlayerHealth()
+        {
+
         }
     }
 }
