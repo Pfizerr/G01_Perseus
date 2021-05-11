@@ -41,10 +41,8 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(texture, hitbox, source, Color.White, rotation, Origin, SpriteEffects.None, layerDepth);
-            spriteBatch.Draw(texture, Center, source, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f); 
-            //spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), hitbox, source, Color.White, rotation, Origin, SpriteEffects.None, 0.9f);
-            spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
+            spriteBatch.Draw(texture, Center, source, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
+            //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
 
         protected override void DefaultTexture()
@@ -61,23 +59,9 @@ namespace G01_Perseus
             return;
         }
 
-        public override void OnCollision(Entity other)
+        public override void HandleCollision(Entity other)
         {
-            if (!parent.Equals(other))
-            {
-                if (other is Enemy && !(parent is Enemy))
-                {
-                    (other as Enemy).RecieveDamage(damage);
-                    isAlive = false;
-                }
-                else if (other is Player)
-                {
-
-                    (other as Player).RecieveDamage(damage);
-                    isAlive = false;
-                }
-               
-            }
+            IsAlive = false;
         }
     }
 }
