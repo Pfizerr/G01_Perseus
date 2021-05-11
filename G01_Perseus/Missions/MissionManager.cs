@@ -27,7 +27,7 @@ namespace G01_Perseus
 
         public static int GetRandomMissionId()
         {
-            int random = Game1.random.Next(0, loadedMissions.Count() * 1000);
+            int random = Game1.random.Next(0, (loadedMissions.Count() - 1) * 1000);
             random = random / 1000;
             //System.Threading.Thread.Sleep(10);
             return random;
