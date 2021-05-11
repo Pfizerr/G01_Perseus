@@ -4,7 +4,7 @@ namespace G01_Perseus
     public class EntityKilledEvent : Event
     {
 
-        // This is the entity that died
+        // This is the entity that got killed
         public Entity SubjectEntity
         {
             get;

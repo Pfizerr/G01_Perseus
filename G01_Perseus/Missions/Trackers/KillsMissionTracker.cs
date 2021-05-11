@@ -11,11 +11,7 @@ namespace G01_Perseus
     {
         private Type typeOfSubject;
 
-        /// <summary>
-        /// If owner Entity is not known at tracker creation.
-        /// </summary>
-        /// <param name="typeOfSubject"></param>
-        /// <param name="tasksToComplete"></param>
+        // If owner Entity is not known at tracker creation.
         public KillsMissionTracker(Type typeOfSubject, int tasksToComplete) : base(tasksToComplete)
         {
             this.typeOfSubject = typeOfSubject;
@@ -23,12 +19,7 @@ namespace G01_Perseus
             EventManager.Register(this);
         }
 
-        /// <summary>
-        /// If owner Entity is known at tracker creation.
-        /// </summary>
-        /// <param name="owner"></param>
-        /// <param name="typeOfSubject"></param>
-        /// <param name="tasksToComplete"></param>
+        // If owner Entity is known at tracker creation.
         public KillsMissionTracker(Entity owner, Type typeOfSubject, int tasksToComplete) : base(tasksToComplete)
         {
             this.typeOfSubject = typeOfSubject;
@@ -44,7 +35,6 @@ namespace G01_Perseus
                 if (/*Owner*/TypeOfBullet.Player == (e.AttackerEntity as Bullet).Type /* <-- kan hanteras bättre */ && typeOfSubject == e.SubjectEntity.GetType())
                 {
                     TaskComplete();
-                    TaskComplete(); // Remove this
                 }
             }
         }
