@@ -83,7 +83,7 @@ namespace G01_Perseus
 
             stateStack = new StateStack();
             stateStack.Push(new HUD(Window)); // MARKUS, Avkommentera denna raden för att testa quest loggen
-            Resources.Initialize(0, 0, 0, 0, 0, 0);
+            Resources.Initialize(0, 0, 0, 1, 1, 1, 1);
             backgroundColor = Color.Black;
             
            

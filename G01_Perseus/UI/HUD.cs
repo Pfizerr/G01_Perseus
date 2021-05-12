@@ -12,7 +12,7 @@ namespace G01_Perseus.UI
     class HUD : GameState
     {
 
-        private UIButton testButton;
+        private UIButton btnSkillUI, btnQuestUI;
         private QuestLogInterface questLogInterface;
         private GameWindow window;
         private float healthbarWidth;
@@ -24,11 +24,18 @@ namespace G01_Perseus.UI
 
         public HUD(GameWindow window)
         {
-            this.Transparent = true;
-            this.testButton = new UIButton(new Rectangle(10, 10, 50, 50), AssetManager.TextureAsset("button_blue"), Test);
-            testButton.HoveredTexture = AssetManager.TextureAsset("button_red");
-            this.questLogInterface = new QuestLogInterface(window);
+            float offsett = 10;
             this.window = window;
+            this.Transparent = true;
+
+            //Buttons on UI
+            this.btnSkillUI = new UIButton(new Rectangle((int)(window.ClientBounds.Width - 60), (int)(window.ClientBounds.Height - 60), 50, 50), AssetManager.TextureAsset("button_blue"), Test);
+            this.btnQuestUI = new UIButton(new Rectangle((int)(btnSkillUI.Hitbox.X - 60), (int)(btnSkillUI.Hitbox.Y), 50, 50), AssetManager.TextureAsset("button_blue"), Test);
+            btnSkillUI.HoveredTexture = AssetManager.TextureAsset("button_red");
+            this.questLogInterface = new QuestLogInterface(window);
+            
+
+            //Healthbar portion
             barTex = AssetManager.TextureAsset("gradient_bar");
             healthbarWidth = barTex.Width;
             shieldbarWidth = barTex.Width;
@@ -36,8 +43,8 @@ namespace G01_Perseus.UI
             healthbarHeight = 40;
             healthbarSize = new Rectangle((int)healthbarHeight, window.ClientBounds.Height - 40, barTex.Width, barTex.Height / 2);
             shieldbarSize = new Rectangle((int)healthbarHeight, window.ClientBounds.Height - 80, barTex.Width, barTex.Height / 2);
-            //Add text to the healthbars for how much you have left
-            float offsett = 10;
+
+            //Text            
             healthNrPos = new Vector2(healthbarSize.X + barTex.Width + offsett, healthbarSize.Y);
             shieldNrPos = new Vector2(shieldbarSize.X + barTex.Width + offsett, shieldbarSize.Y);
 
@@ -52,14 +59,16 @@ namespace G01_Perseus.UI
 
         public override void Update(GameTime gameTime)
         {
-            testButton.Update(gameTime);
+            btnSkillUI.Update(gameTime);
+            btnQuestUI.Update(gameTime);
             UpdatePlayerHealth();
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
-            testButton.Draw(spriteBatch, gameTime);
+            btnSkillUI.Draw(spriteBatch, gameTime);
+            btnQuestUI.Draw(spriteBatch, gameTime);
             spriteBatch.Draw(barTex, healthbarSize, Color.Crimson);
             spriteBatch.Draw(barTex, shieldbarSize, Color.Cyan);
             spriteBatch.DrawString(AssetManager.FontAsset("default_font"), EntityManager.Player.Health.ToString(), healthNrPos, Color.Crimson);
