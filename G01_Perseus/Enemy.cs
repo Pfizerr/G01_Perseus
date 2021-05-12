@@ -16,14 +16,13 @@ namespace G01_Perseus
         private Rectangle healthPos, shieldPos;
         private Random random = new Random();
         public List<Bullet> bullets = new List<Bullet>();
-        public float TotalHealth { get; private set; }
+        //public float TotalHealth { get; private set; }
 
         private EnemyBehavior behavior;
 
         public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, EnemyBehavior behavior): base(position, maxVelocity, scale, health, shield)
         {
-            healthBarHeight = 10;
-            TotalHealth = health + shield;
+            healthBarHeight = 10;            
             healthPos = new Rectangle((int)position.X, (int)position.Y - healthBarHeight, (int)((Health / TotalHealth) * hitbox.Width), healthBarHeight);
             shieldPos = new Rectangle(healthPos.X + healthPos.Width, healthPos.Y, (int)((Shields / TotalHealth) * hitbox.Width), healthBarHeight);
             EventManager.Register(this);
@@ -49,10 +48,10 @@ namespace G01_Perseus
             
            
             hitbox.Location = Center.ToPoint();
-            //Move this section to ship
-            ShieldRegeneration(gameTime);
-            shieldPos.Width = (int)((Shields / TotalHealth) * hitbox.Width);
-            //Here
+            if(Shields < MaxShields)
+            {
+                ShieldRegeneration(gameTime);
+            }                       
             SetHealthPosition();
             base.Update(gameTime);
             
@@ -72,24 +71,25 @@ namespace G01_Perseus
             shieldPos.X += healthPos.Width;
         }
 
-        public override void HandleCollision(Entity other)
-        {
-            if (other is Player player)  
-            {
-                //RecieveDamage(10); //Replace with player.damage when this is implemented
-            }
-            else if(other is Bullet bullet)
-            {
-                RecieveDamage(bullet.damage);
-                bullet.timeToLive = 0;
-            }
-
-        }
+        //public override void HandleCollision(Entity other)
+        //{
+        //    if(other is Bullet bullet)
+        //    {
+        //        RecieveDamage(bullet.damage);
+        //        bullet.timeToLive = 0;
+        //    }
+        //}
 
         public override void RecieveDamage(float damage)
         {
             base.RecieveDamage(damage);
             healthPos.Width = (int)((Health / TotalHealth) * hitbox.Width);
+            shieldPos.Width = (int)((Shields / TotalHealth) * hitbox.Width);
+        }
+
+        public override void ShieldRegeneration(GameTime gameTime) //This should not be made to run at every update!!!
+        {
+            base.ShieldRegeneration(gameTime);
             shieldPos.Width = (int)((Shields / TotalHealth) * hitbox.Width);
         }
 
@@ -103,11 +103,11 @@ namespace G01_Perseus
             //System.Diagnostics.Debug.WriteLine("Player has fired at position "+e.position +" with damage: "+e.damage);
         }
 
-        public void Collision(CollissionEvent e)
-        {
-            System.Diagnostics.Debug.WriteLine("Entity: "+e.Entity + " collided with: " + e.OtherEntity); //debug
+        //public void Collision(CollissionEvent e)
+        //{
+        //    //System.Diagnostics.Debug.WriteLine("Entity: "+e.Entity + " collided with: " + e.OtherEntity); //debug
 
-            HandleCollision(e.OtherEntity);
-        }
+        //    HandleCollision(e.OtherEntity);
+        //}
     }
 }

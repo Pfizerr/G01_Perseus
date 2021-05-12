@@ -55,18 +55,14 @@ namespace G01_Perseus
             ChangeWeapon();
         }
 
-        public override void HandleCollision(Entity other)
-        {
-            if (other is Enemy enemy)
-            {
-                //RecieveDamage(enemy.damage);
-            }
-            else if (other is Bullet bullet)
-            {
-                RecieveDamage(bullet.damage);
-                bullet.timeToLive = 0;
-            }            
-        }
+        //public override void HandleCollision(Entity other)
+        //{
+        //    if (other is Bullet bullet)
+        //    {
+        //        //RecieveDamage(bullet.damage);
+        //        bullet.timeToLive = 0;
+        //    }            
+        //}
 
         /// <summary>
         /// If you press the 1 or 2 key you will change the wepon type that you're using.
@@ -102,10 +98,10 @@ namespace G01_Perseus
             texture = AssetManager.TextureAsset("player_ship");
         }
 
-        public void Collision(CollissionEvent e)
-        {
-            HandleCollision(e.OtherEntity);
-        }
+        //public void Collision(CollissionEvent e)
+        //{
+        //    HandleCollision(e.OtherEntity);
+        //}
 
         public PlayerStatus Status
         {

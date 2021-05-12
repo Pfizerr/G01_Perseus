@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace G01_Perseus
 {
-    public abstract class Ship : MovingEntity
+    public abstract class Ship : MovingEntity, CollissionListener
     {
         public Vector2 direction;
         protected Vector2 friction;
@@ -18,18 +18,20 @@ namespace G01_Perseus
         protected Weapon trippleShot = new WeaponTripleShot(1, 1);
         protected Weapon singleShot = new WeaponSingleShot(1, 1);
         protected double hitTimer, hitTimerInterval;
-        protected List<Weapon> weapons;
-        protected float maxHealth, maxShields;
+        protected List<Weapon> weapons;        
 
         //Components
         protected PlayerStatus playerStatus;
         public float Shields { get; protected set; }
         public float Health { get; protected set; }
+        public float TotalHealth { get; protected set; }
+        public float MaxHealth { get; protected set; }
+        public float MaxShields { get; protected set; }
 
         public Ship(Vector2 maxVelocity, Vector2 position, Vector2 scale, float health, float shield) : base(maxVelocity, position, scale)
         {
             Health = health;
-            maxHealth = health;
+            MaxHealth = health;
             Origin = Size / 2;
             layerDepth = 0.7f;
             rotation = 0f;
@@ -38,7 +40,8 @@ namespace G01_Perseus
             weapons = new List<Weapon>() { trippleShot, singleShot };
             equipedWeapon = weapons[1];
             Shields = shield;
-            maxShields = Shields;
+            MaxShields = Shields;
+            TotalHealth = health + shield;
             hitTimer = 0;
             hitTimerInterval = 3;
             #region TEMP
@@ -103,14 +106,28 @@ namespace G01_Perseus
             {
                 hitTimer -= gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (hitTimer <= 0 && Shields < maxShields)
+            else if (hitTimer <= 0 && Shields < MaxShields)
             {
-                Shields += 10;
-                if (Shields > maxShields)
+                Shields += 1;
+                if (Shields > MaxShields)
                 {
-                    Shields = maxShields;
+                    Shields = MaxShields;
                 }
             }
+        }
+
+        public override void HandleCollision(Entity other)
+        {
+            if (other is Bullet bullet)
+            {
+                RecieveDamage(bullet.damage);
+                bullet.timeToLive = 0;
+            }
+        }
+
+        public void Collision(CollissionEvent e)
+        {
+            HandleCollision(e.OtherEntity);
         }
 
         public override void Destroy()
