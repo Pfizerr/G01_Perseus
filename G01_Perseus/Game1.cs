@@ -82,8 +82,8 @@ namespace G01_Perseus
             //level.AddEntity(enemy);
 
             stateStack = new StateStack();
-            stateStack.Push(new HUD(Window)); // MARKUS, Avkommentera denna raden för att testa quest loggen
-            Resources.Initialize(0, 0, 0, 1, 1, 1, 1);
+            Resources.Initialize(0, 0, 0, 0, 0, 0, 0);
+            stateStack.Push(new HUD(Window)); // MARKUS, Avkommentera denna raden för att testa quest loggen            
             backgroundColor = Color.Black;
             
            

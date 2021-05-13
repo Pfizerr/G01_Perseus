@@ -59,17 +59,18 @@ namespace G01_Perseus
             SkillPoints -= 1;
         }
 
-        public static void ResetSkillpoints()
+        public static void ResetSkillpoints() //Add currency check here
         {
-            SkillPoints += (int)(SpDamage + SpHealth + SpShields);
+            SkillPoints += (int)(SpDamage + SpHealth + SpShields + SpFireRate);
             SpDamage = 0;
             SpHealth = 0;
             SpShields = 0;
+            SpFireRate = 0;
         }
 
         public static void AddSpDamage()
         {
-            if(SkillPoints > 0 || SpDamage < 10)
+            if(SkillPoints > 0 && SpDamage < 10)
             {
                 SpDamage += 1;
                 DecreaseSkillPoints();
@@ -78,39 +79,34 @@ namespace G01_Perseus
             else
             {
                 Console.WriteLine("Not enough SP");
-            }
-                
-            
+            }                           
         }
 
         public static void AddSpHealth()
         {
-            if (SkillPoints > 0 || SpHealth < 10)
+            if (SkillPoints > 0 && SpHealth < 10)
             {
                 SpHealth += 1;
                 DecreaseSkillPoints();
-            }
-                
+            }                
         }
 
         public static void AddSpShields()
         {
-            if (SkillPoints > 0 || SpShields < 10)
+            if (SkillPoints > 0 && SpShields < 10)
             {
                 SpShields += 1;
                 DecreaseSkillPoints();
-            }
-                
+            }               
         }
 
         public static void AddSpFireRate()
         {
-            if (SkillPoints > 0 || SpFireRate < 10)
+            if (SkillPoints > 0 && SpFireRate < 10)
             {
                 SpFireRate += 1;
                 DecreaseSkillPoints();
-            }
-                
+            }                
         }
     }
 }
