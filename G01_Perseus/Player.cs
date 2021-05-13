@@ -9,8 +9,24 @@ namespace G01_Perseus
 
     public class Player : Ship, CollissionListener
     {
+        private float baseMaxHealth;
+        private float baseMaxShields;
+        public override float MaxHealth
+        {
+            get { return baseMaxHealth + Resources.SpHealth * 10; }
+            protected set => base.MaxHealth = value;
+        }
+
+        public override float MaxShields
+        {
+            get { return baseMaxShields + Resources.SpShields * 10; }
+            protected set => base.MaxShields = value;
+        }
+
         public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield) : base(position, velocity, scale, health, shield)
         {
+            baseMaxHealth = health;
+            baseMaxShields = shield;
             EventManager.Register(this);
         }
 

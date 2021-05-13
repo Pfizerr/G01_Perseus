@@ -25,8 +25,8 @@ namespace G01_Perseus
         public float Shields { get; protected set; }
         public float Health { get; protected set; }
         public float TotalHealth { get; protected set; }
-        public float MaxHealth { get; protected set; }
-        public float MaxShields { get; protected set; }
+        public virtual float MaxHealth { get; protected set; }
+        public virtual float MaxShields { get; protected set; }
 
         public Ship(Vector2 maxVelocity, Vector2 position, Vector2 scale, float health, float shield) : base(maxVelocity, position, scale)
         {

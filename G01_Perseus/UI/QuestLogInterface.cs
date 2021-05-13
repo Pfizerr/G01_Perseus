@@ -13,12 +13,13 @@ namespace G01_Perseus.UI
     {
 
         private Rectangle bounds;
-        private Texture2D backgroundTexture;
+        private Texture2D backgroundTexture, skillbarTex;
 
         private UIButton exit, addDamage, addShields, addHealth, addFireRate, resetSP;
         //private List<UIButton> buttons;
         private UIButton[] buttonsArray;
         private List<Rectangle> skillBarPos;
+        private List<Rectangle> skillBarPosTest;
         private Action[] actions; //This is just for an automated system pf the "add" buttons
         private float skillBarMaxWidth;
         private string[] statLables;
@@ -42,11 +43,18 @@ namespace G01_Perseus.UI
             buttonsArray = new UIButton[] { addDamage, addHealth, addShields, addFireRate};
 
             skillBarPos = new List<Rectangle>();
+            skillBarPosTest = new List<Rectangle>();
+
             skillBarMaxWidth = buttonsArray[0].Hitbox.X - (bounds.X + 70);
             for (int i = 0; i < buttonsArray.Length; i++)
             {
                 //Note to self: 60 is the space for the icon/text to the left and thuss you want 70 to the right not to conncet with the button on the right
                 skillBarPos.Add(new Rectangle(bounds.X + 60, buttonsArray[i].Hitbox.Y, (int)(skillBarMaxWidth * (Resources.SpDamage / Resources.MaxPoints)), buttonsArray[i].Hitbox.Height));
+            }
+            for (int i = 0; i < buttonsArray.Length; i++)
+            {
+                //Note to self: 60 is the space for the icon/text to the left and thuss you want 70 to the right not to conncet with the button on the right
+                skillBarPosTest.Add(new Rectangle(bounds.X + 60, buttonsArray[i].Hitbox.Y, (int)(skillBarMaxWidth), buttonsArray[i].Hitbox.Height));
             }
             statLables = new string[] { "Damage", "Health", "Shields", "Fire rate" };
             labelPosition = new List<Vector2>();
@@ -54,6 +62,7 @@ namespace G01_Perseus.UI
             {
                 labelPosition.Add(new Vector2(bounds.X + 5, skillBarPos[i].Y + skillBarPos[i].Height / 2));
             }
+            skillbarTex = Util.CreateRectangleTexture((int)skillBarMaxWidth, buttonsArray[0].Hitbox.Height, Color.Black, Color.Transparent);
         }
 
         public void ExitUI()
@@ -123,11 +132,13 @@ namespace G01_Perseus.UI
             foreach (Rectangle position in skillBarPos)
             {
                 spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), position, Color.Green);
+                
             }
 
             for(int i = 0; i < statLables.Length; i++)
             {
                 spriteBatch.DrawString(AssetManager.FontAsset("default_font"), statLables[i], labelPosition[i], Color.Black);
+                spriteBatch.Draw(skillbarTex, skillBarPosTest[i], Color.White);
             }
             spriteBatch.End();
         }
