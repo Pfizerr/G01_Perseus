@@ -27,6 +27,7 @@ namespace G01_Perseus
         public float TotalHealth { get; protected set; }
         public virtual float MaxHealth { get; protected set; }
         public virtual float MaxShields { get; protected set; }
+        public virtual float PowerLevel { get; protected set; }
 
         public Ship(Vector2 maxVelocity, Vector2 position, Vector2 scale, float health, float shield) : base(maxVelocity, position, scale)
         {
@@ -98,6 +99,7 @@ namespace G01_Perseus
             {
                 IsAlive = false;
             }
+            
         }
 
         public virtual void ShieldRegeneration(GameTime gameTime)
@@ -123,6 +125,7 @@ namespace G01_Perseus
                 RecieveDamage(bullet.damage);
                 bullet.timeToLive = 0;
             }
+            
         }
 
         public void Collision(CollissionEvent e)
@@ -137,5 +140,7 @@ namespace G01_Perseus
             //Console.WriteLine("{0} has been killed.", this.ToString());
             return;
         }
+
+        
     }
 }

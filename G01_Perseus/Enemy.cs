@@ -85,6 +85,7 @@ namespace G01_Perseus
             base.RecieveDamage(damage);
             healthPos.Width = (int)((Health / TotalHealth) * hitbox.Width);
             shieldPos.Width = (int)((Shields / TotalHealth) * hitbox.Width);
+            Console.WriteLine("Projectile had damage: {0}.", damage);
         }
 
         public override void ShieldRegeneration(GameTime gameTime) //This should not be made to run at every update!!!

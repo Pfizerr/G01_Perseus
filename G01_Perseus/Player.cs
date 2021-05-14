@@ -11,22 +11,16 @@ namespace G01_Perseus
     {
         private float baseMaxHealth;
         private float baseMaxShields;
-        public override float MaxHealth
-        {
-            get { return baseMaxHealth + Resources.SpHealth * 10; }
-            protected set => base.MaxHealth = value;
-        }
-
-        public override float MaxShields
-        {
-            get { return baseMaxShields + Resources.SpShields * 10; }
-            protected set => base.MaxShields = value;
-        }
+        private float basePowerLevel;
+        public bool uppdatePowerlevel;
+        
 
         public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield) : base(position, velocity, scale, health, shield)
         {
             baseMaxHealth = health;
             baseMaxShields = shield;
+            basePowerLevel = 1; //This could be an input parameter
+            uppdatePowerlevel = false;
             EventManager.Register(this);
         }
 
@@ -40,6 +34,10 @@ namespace G01_Perseus
             HandleInput(gameTime);
 
             Movement(gameTime);
+            if (uppdatePowerlevel)
+            {
+                UpdateWeapons();
+            }
             equipedWeapon.Update(gameTime);
         }
 
@@ -70,15 +68,6 @@ namespace G01_Perseus
 
             ChangeWeapon();
         }
-
-        //public override void HandleCollision(Entity other)
-        //{
-        //    if (other is Bullet bullet)
-        //    {
-        //        //RecieveDamage(bullet.damage);
-        //        bullet.timeToLive = 0;
-        //    }            
-        //}
 
         /// <summary>
         /// If you press the 1 or 2 key you will change the wepon type that you're using.
@@ -114,17 +103,37 @@ namespace G01_Perseus
             texture = AssetManager.TextureAsset("player_ship");
         }
 
-        //public void Collision(CollissionEvent e)
-        //{
-        //    HandleCollision(e.OtherEntity);
-        //}
-
         public PlayerStatus Status
         {
             get => playerStatus;
             private set => playerStatus = value;
         }
 
+        public void UpdateWeapons()
+        {
+            foreach (Weapon weapon in weapons)
+            {
+                weapon.SetDamagePerShot(PowerLevel);
+            }
+            uppdatePowerlevel = false;
+        }
 
+        public override float MaxHealth
+        {
+            get { return baseMaxHealth + Resources.SpHealth * 10; }
+            protected set => base.MaxHealth = value;
+        }
+
+        public override float MaxShields
+        {
+            get { return baseMaxShields + Resources.SpShields * 10; }
+            protected set => base.MaxShields = value;
+        }
+
+        public override float PowerLevel
+        {
+            get { return basePowerLevel + Resources.SpDamage; }
+            protected set => base.PowerLevel = value;
+        }
     }
 }

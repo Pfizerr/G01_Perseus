@@ -68,6 +68,7 @@ namespace G01_Perseus.UI
         public void ExitUI()
         {
             EventManager.Dispatch(new PopStateEvent());
+            EntityManager.Player.uppdatePowerlevel = true;
         }
 
         public void ResetSP()
@@ -82,6 +83,7 @@ namespace G01_Perseus.UI
         {
             Resources.AddSpDamage();
             CalculateBarWidth(0, Resources.SpDamage);
+            
         }
 
         public void IncreaseHealth()
