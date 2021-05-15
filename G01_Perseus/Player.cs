@@ -61,7 +61,6 @@ namespace G01_Perseus
                 //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
 
                 equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, rotation, TypeOfBullet.Player, gameTime);
-                    
                 EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
 
@@ -105,14 +104,11 @@ namespace G01_Perseus
             return mousePosition + cameraOffset;
         }
 
-        public void RecieveRewards(int skillPointRewards, int resourceRewards, int dustRewards)
+        public void RecieveMission(Mission mission)
         {
-            Status.SkillPoints += skillPointRewards;
-            Status.Resources += resourceRewards;
-            Status.Dust += dustRewards;
+            mission.SetOwner(this);
+            Status.Missions.Add(mission);
         }
-
-        public void RecieveMission(Mission mission) => Status.Missions.Add(mission);
 
         protected override void DefaultTexture()
         {
@@ -148,8 +144,8 @@ namespace G01_Perseus
                     i--;
                 }
             }
-               
-            e.Planet.EnterNegotiation(this, completedMissions/*TEMP*/);
+
+            e.Planet.Customer = this;
         }
 
         public void OnMouseEnter(MouseEnterPlanetEvent e)

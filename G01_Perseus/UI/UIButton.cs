@@ -13,8 +13,6 @@ namespace G01_Perseus.UI
 
         public delegate void OnClick();
 
-        private bool isMouseHovered;
-
         public UIButton(Rectangle rectangle, OnClick onClick = null)
         {
             this.Hitbox = rectangle;
@@ -32,12 +30,26 @@ namespace G01_Perseus.UI
             this.Action = onClick;
         }
 
-        public UIButton(Rectangle rectangle, Texture2D texture, string text, OnClick onClick = null)
+        public UIButton(Rectangle rectangle, Texture2D texture, string text, SpriteFont font, OnClick onClick = null)
         {
             this.Hitbox = rectangle;
             this.Texture = texture;
             this.Text = text;
             this.Action = onClick;
+            this.Font = font;
+
+            this.TextLocation = new Vector2(rectangle.Center.X, rectangle.Center.Y);
+        }
+
+        public UIButton(Rectangle rectangle, Texture2D texture, string text, SpriteFont font, Vector2 textPositionOffset, OnClick onClick = null)
+        {
+            this.Hitbox = rectangle;
+            this.Texture = texture;
+            this.Text = text;
+            this.Action = onClick;
+            this.Font = font;
+
+            this.TextLocation = new Vector2(rectangle.Center.X + textPositionOffset.X, rectangle.Center.Y + textPositionOffset.Y);
         }
 
         public Rectangle Hitbox
@@ -49,7 +61,7 @@ namespace G01_Perseus.UI
         public Texture2D Texture
         {
             get;
-            private set;
+            set;
         }
 
         public Texture2D HoveredTexture
@@ -70,12 +82,30 @@ namespace G01_Perseus.UI
             set;
         }
 
+        public SpriteFont Font
+        {
+            get;
+            set;
+        }
+
+        public Vector2 TextLocation
+        {
+            get;
+            set;
+        }
+
+        public bool IsMouseHovered
+        {
+            get;
+            set;
+        }
+
         public void Update(GameTime gameTime)
         {
             Vector2 mousePosition = KeyMouseReader.MouseScreenPosition;            
-            isMouseHovered = Hitbox.Contains(mousePosition.ToPoint());
+            IsMouseHovered = Hitbox.Contains(mousePosition.ToPoint());
 
-            if(isMouseHovered && KeyMouseReader.LeftClick() && Action != null)
+            if(IsMouseHovered && KeyMouseReader.LeftClick() && Action != null && KeyMouseReader.oldMouseState.LeftButton != Microsoft.Xna.Framework.Input.ButtonState.Pressed) 
             {
                 Action();
             }
@@ -85,7 +115,7 @@ namespace G01_Perseus.UI
         {
             if(Texture != null)
             {
-                if(isMouseHovered)
+                if(IsMouseHovered)
                 {
                     spriteBatch.Draw(HoveredTexture, Hitbox, null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
                 }
@@ -98,6 +128,8 @@ namespace G01_Perseus.UI
             if(Text != null)
             {
                 //DRAW TEXT
+                Vector2 textSize = Font.MeasureString(Text);
+                spriteBatch.DrawString(Font, Text, new Vector2(TextLocation.X - textSize.X / 2, TextLocation.Y - textSize.Y / 2), Color.White);
             }
         }
 

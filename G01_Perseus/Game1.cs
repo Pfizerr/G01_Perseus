@@ -123,14 +123,8 @@ namespace G01_Perseus
 
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, null, null, null, null, camera.Translation);
             level.Draw(spriteBatch, camera);
-
-
             EntityManager.Draw(spriteBatch);
-
-            //player.Draw(spriteBatch);
-
             spriteBatch.End();
-
 
             stateStack.Draw(spriteBatch, gameTime);
 
@@ -138,9 +132,6 @@ namespace G01_Perseus
             spriteBatch.Begin();
             spriteBatch.Draw(AssetManager.TextureAsset("GradientBar"), new Rectangle(40, Window.ClientBounds.Height - 40, AssetManager.TextureAsset("GradientBar").Width, AssetManager.TextureAsset("GradientBar").Height / 2), Color.Crimson);
             spriteBatch.Draw(AssetManager.TextureAsset("GradientBar"), new Rectangle(40, Window.ClientBounds.Height - 80, AssetManager.TextureAsset("GradientBar").Width, AssetManager.TextureAsset("GradientBar").Height / 2), Color.Cyan);
-
-
-
             spriteBatch.End();
             base.Draw(gameTime);
         }

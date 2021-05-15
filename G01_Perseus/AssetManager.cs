@@ -79,13 +79,21 @@ namespace G01_Perseus
             loadedTextures.Add("planet3", content.Load<Texture2D>(@"textures\planet3"));
             loadedTextures.Add("resource_currency", content.Load<Texture2D>(@"textures\Currency"));
             loadedTextures.Add("GradientBar", content.Load<Texture2D>(@"textures\GradientBar"));
-            loadedTextures.Add("quest_UI", content.Load<Texture2D>(@"textures\monitor"));
             loadedTextures.Add("skill_UI", content.Load<Texture2D>(@"textures\SkillMonitor"));
             loadedTextures.Add("space_background", content.Load<Texture2D>(@"textures\Space"));
             loadedTextures.Add("sun", content.Load<Texture2D>(@"textures\Sun"));
             loadedTextures.Add("smokeParticle_sprite", content.Load<Texture2D>(@"textures\SmokeSpriteSheet"));
             loadedTextures.Add("button_red", content.Load<Texture2D>(@"textures\ButtonRed"));
             loadedTextures.Add("button_blue", content.Load<Texture2D>(@"textures\ButtonBlue"));
+            loadedTextures.Add("monitor_focused", content.Load<Texture2D>(@"textures\MonitorFocused"));
+            loadedTextures.Add("monitor_not_focused", content.Load<Texture2D>(@"textures\MonitorNotFocused"));
+            loadedTextures.Add("button_background_available", content.Load <Texture2D>(@"textures\ButtonBackgroundAvailable"));
+            loadedTextures.Add("button_background_unavailable", content.Load <Texture2D>(@"textures\ButtonBackgroundUnavailable"));
+            loadedTextures.Add("button_background_hovered", content.Load<Texture2D>(@"textures\ButtonBackgroundHovered"));
+            loadedTextures.Add("button_background_available_transparent", content.Load<Texture2D>(@"textures\ButtonBackgroundAvailableTransparent"));
+            loadedTextures.Add("button_background_unavailable_transparent", content.Load<Texture2D>(@"textures\ButtonBackgroundUnavailableTransparent"));
+            loadedTextures.Add("button_background_hovered_transparent", content.Load<Texture2D>(@"textures\ButtonBackgroundHoveredTransparent"));
+
             //Fonts
             loadedFonts.Add("default_font", content.Load<SpriteFont>(@"fonts\default_font"));
             //Sprite sheets

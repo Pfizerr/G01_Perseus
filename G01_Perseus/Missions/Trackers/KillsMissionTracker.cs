@@ -38,10 +38,5 @@ namespace G01_Perseus
                 }
             }
         }
-
-        public void AddOwner(Entity owner)
-        {
-            Owner = owner;
-        }
     }
 }

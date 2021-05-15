@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using G01_Perseus.EventSystem.Events;
+using G01_Perseus.UI;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -8,14 +10,12 @@ using System.Threading.Tasks;
 
 namespace G01_Perseus
 {
-    public class Planet : EventListener
+    public class Planet : EventListener, MissionAcceptedClickListener, MissionDeniedClickListener
     {
         private string name;
         private float radius;
         private float elapsedTime;
-        private bool isDisplayingUserInterface;
         private bool isHighlighted;
-        private Player customer;
         private int maxNrOfMissions;
         private int minMissionCooldown;
         private int maxMissionCooldown;
@@ -28,7 +28,8 @@ namespace G01_Perseus
         private Vector2 position;
         private Vector2 origin;
         private Vector2 scale;
-        private GameTime gameTime; // <---
+
+        public Player Customer { get; set; }
 
         public Planet(string name, int maxNrOfMissions, Sprite highlightedSprite, Sprite sprite, Vector2 position)
         {
@@ -39,7 +40,6 @@ namespace G01_Perseus
             this.position = position;
 
             isHighlighted = false;
-            isDisplayingUserInterface = false;
 
             missions = new Mission[maxNrOfMissions];
             missionCooldowns = new ExtendedTimer[maxNrOfMissions];
@@ -79,7 +79,6 @@ namespace G01_Perseus
 
         public void Update(GameTime gameTime)
         {
-            this.gameTime = gameTime;
             elapsedTime += (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             for (int i = 0; i < missionCooldowns.Length; i++)
@@ -116,9 +115,10 @@ namespace G01_Perseus
 
                 if (KeyMouseReader.LeftClick() /* && !isDisplayingUserInterface */)
                 {
-                    // Open GUI
-                    isDisplayingUserInterface = true;
                     EventManager.Dispatch(new PlanetInteractionEvent(this));
+
+                    // Open GUI
+                    EventManager.Dispatch(new PushStateEvent(new MissionInterface(missions, missionCooldowns)));
                 }
             }
             else
@@ -140,44 +140,31 @@ namespace G01_Perseus
             }
         }
 
-        public void EnterNegotiation(Player customer, List<Mission> completedMissions /* TEMP */)
+        public void OnDenied(MissionDeniedClickEvent e)
         {
-            #region 
-            if (completedMissions.Count > 0)
+            for (int i = 0; i < missions.Count(); i++)
             {
-                foreach (Mission mission in completedMissions)
+                if (missions[i] == e.Mission)
                 {
-                    customer.Status.Resources += mission.Resources;
-                    customer.Status.Dust += mission.Dust;
-                    customer.Status.SkillPoints += mission.SkillPoints;
+                    missions[i] = null;
+                    missionCooldowns[i].Start();
+                    Console.WriteLine("New timer duration: " + missionCooldowns[i].Duration);
                 }
             }
-            #endregion
-            else
+        }
+
+        public void OnAccepted(MissionAcceptedClickEvent e)
+        {
+            for (int i = 0; i < missions.Count(); i++)
             {
-                this.customer = customer;
-                int index = 0;
-
-                for (int i = 0; i < missions.Length; i++)
+                if (missions[i] == e.Mission && e.Mission.Contractor == this)
                 {
-                    if (missions[i] != null)
-                    {
-                        index = i;
-                        break;
-                    }
-                    else if (i == missions.Length - 1)
-                    {
-                        Console.WriteLine("No more missions available! Please try again later.");
-                        return;
-                    }
+                    Customer.RecieveMission(missions[i]);
+                    missions[i] = null;
+                    missionCooldowns[i].Start();
+                    Console.WriteLine("New timer duration: " + missionCooldowns[i].Duration);
+                    break;
                 }
-
-                customer.RecieveMission(missions[index]);
-                missions[index].Tracker.IsActive = true;
-                missions[index].State = Mission.EState.Accepted;
-                missions[index] = null;
-                missionCooldowns[index].Start();
-                Console.WriteLine("New timer duration: " + missionCooldowns[index].Duration);
             }
         }
 

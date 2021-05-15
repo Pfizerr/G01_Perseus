@@ -35,10 +35,14 @@ namespace G01_Perseus
             if (Tracker.Owner == null)
             {
                 Tracker.Owner = owner;
+                Tracker.IsActive = true;
+                State = EState.Accepted;
             }
 
             Owner = owner;
         }
+
+        public string Presentation() => string.Format("Name: {0}\nDescription: {1}\nRewards: {2}", Name, Description, Resources.ToString());
 
         public void Update()
         {
@@ -64,11 +68,6 @@ namespace G01_Perseus
 
                     break;
             }
-        }
-
-        public void LoadFromText(string line)
-        {
-
         }
     }
 }

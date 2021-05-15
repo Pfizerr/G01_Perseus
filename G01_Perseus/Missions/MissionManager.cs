@@ -1,4 +1,5 @@
-﻿using System;
+﻿using G01_Perseus.UI;
+using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
@@ -10,47 +11,8 @@ namespace G01_Perseus
         private static List<Mission> loadedMissions = new List<Mission>();
         private static string[] missionData;
         private static string[] trackerData;
-        private static int totalGeneratedMissionsCount = 0;
-        
-        public static Mission[] GenerateMissions(int nrOfMissions, Faction faction, float? difficulty)
-        {
-            //FIX THIS METHOD.
-            Mission[] missions = new Mission[nrOfMissions];
 
-            for (int i = 0; i < nrOfMissions; i++)
-            {
-                missions[i] = GetRandomMission();
-            }
-
-            return missions;
-        }
-
-        public static int GetRandomMissionId()
-        {
-            int random = Game1.random.Next(0, (loadedMissions.Count() - 1) * 1000);
-            random = random / 1000;
-            //System.Threading.Thread.Sleep(10);
-            return random;
-        }
-
-        //public static Mission GenerateMission(Faction faction, float difficulty)
-        //{
-        //    return new Mission(GenerateUniqueMissionIdentifier(), );
-        //}
-
-        public static void LoadMissions()
-        {
-            loadedMissions.Add(LoadMission(1));
-            loadedMissions.Add(LoadMission(2));
-            loadedMissions.Add(LoadMission(3));
-            loadedMissions.Add(LoadMission(4));
-            loadedMissions.Add(LoadMission(5));
-            loadedMissions.Add(LoadMission(6));
-        }
-
-        public static Mission GetRandomMission() => loadedMissions[Game1.random.Next(0, loadedMissions.Count - 1)];
-
-        public static Mission GetMission(int id) => loadedMissions.FirstOrDefault(m => m.Id == id);
+        public static int GetRandomMissionId() => Game1.random.Next(1, loadedMissions.Count() * 1000) / 1000;
 
         public static string LoadMissionDataFromId(int id)
         {
@@ -94,6 +56,7 @@ namespace G01_Perseus
 
                 
             }
+
             // UPDATE THESE AS NEW TRACKERS ARE ADDED
             switch (trackerTypeStr)
             {
@@ -175,12 +138,20 @@ namespace G01_Perseus
             return null;
         }
 
+        public static void LoadMissions()
+        {
+            loadedMissions.Add(LoadMission(1));
+            loadedMissions.Add(LoadMission(2));
+            loadedMissions.Add(LoadMission(3));
+            loadedMissions.Add(LoadMission(4));
+            loadedMissions.Add(LoadMission(5));
+            loadedMissions.Add(LoadMission(6));
+        }
+
         public static void LoadData()
         {
             missionData = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\..\..\..\..\data\missiondata.txt");
             trackerData = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\..\..\..\..\data\trackerdata.txt");
         }
-
-        private static int GenerateUniqueMissionIdentifier() => totalGeneratedMissionsCount++;
     }
 }
