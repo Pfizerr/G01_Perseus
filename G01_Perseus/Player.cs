@@ -93,6 +93,11 @@ namespace G01_Perseus
             {
                 equipedWeapon = weapons[1];
             }
+
+            if (KeyMouseReader.KeyPressed(Keys.D3))
+            {
+                equipedWeapon = weapons[2];
+            }
         }
 
         public Vector2 FindMousePosition()

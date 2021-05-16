@@ -52,6 +52,7 @@
     <Compile Include="ExtendedTimer.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="KeyMouseReader.cs" />
+    <Compile Include="Laser.cs" />
     <Compile Include="MovingEntity.cs" />
     <Compile Include="PursuerEnemyBehavior.cs" />
     <Compile Include="RaptorEnemyBehavior.cs" />

@@ -39,7 +39,7 @@ namespace G01_Perseus
 
         public static void CreateLaser(TypeOfBullet type, Vector2 start, Vector2 target, bool isLaser, float damage)
         {
-            AddBullet(new Bullet(start, target, Vector2.Zero, new Vector2(0.1f, 0.1f), type, damage, 1));
+            AddBullet(new Bullet(start, target, Vector2.Zero, new Vector2(0.1f, Vector2.Distance(start, target)), type, damage, 1));
         }
 
         public static void AddBullet(Bullet bullet) => entities.Add(bullet);

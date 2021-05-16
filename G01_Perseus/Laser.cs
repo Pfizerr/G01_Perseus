@@ -19,11 +19,12 @@ namespace G01_Perseus
             this.damage = damage;
             this.timeToLive = timeToLive;
             Center = position;
-            Origin = Size / 2;
+            //Origin = Size / 2;
             rotation = 0f;
             layerDepth = 0.8f;
             source = null;
-            direction = Vector2.Zero;
+            direction = Vector2.Normalize(targetPosition - position);
+            Origin = new Vector2(Vector2.Distance(position, targetPosition), Size.Y / 2);
         }
 
         public override void Destroy(Event e)
