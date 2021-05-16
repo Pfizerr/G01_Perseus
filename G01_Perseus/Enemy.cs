@@ -49,7 +49,7 @@ namespace G01_Perseus
 
         public override void Update(GameTime gameTime)
         {
-            this.behavior.Update(gameTime, rotation);
+            //this.behavior.Update(gameTime, rotation);
 
             Movement(gameTime);
 
@@ -81,6 +81,10 @@ namespace G01_Perseus
             {
                 RecieveDamage(other, bullet.damage);
                 bullet.timeToLive = 0;
+            }
+            else if (other is Laser laser)
+            {
+                RecieveDamage(other, laser.damage);
             }
 
         }
