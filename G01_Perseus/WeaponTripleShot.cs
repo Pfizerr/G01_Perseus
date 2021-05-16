@@ -29,9 +29,9 @@ namespace G01_Perseus
                 thirdBulletTarget.X = (float)Math.Cos(rotation + (float)Math.PI * 1.7) + center.X;
                 thirdBulletTarget.Y = (float)Math.Sin(rotation + (float)Math.PI * 1.7) + center.Y;
 
-                EntityManager.CreateBullet(type, center, target, false, damagePerShot);
-                EntityManager.CreateBullet(type, center, secondBulletTarget, false, damagePerShot);
-                EntityManager.CreateBullet(type, center, thirdBulletTarget, false, damagePerShot);
+                EntityManager.CreateBullet(type, center, target, damagePerShot);
+                EntityManager.CreateBullet(type, center, secondBulletTarget, damagePerShot);
+                EntityManager.CreateBullet(type, center, thirdBulletTarget, damagePerShot);
                 fireTimer.Reset(gameTime);
             }
         }

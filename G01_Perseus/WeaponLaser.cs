@@ -9,6 +9,7 @@ namespace G01_Perseus
 {
     class WeaponLaser : Weapon
     {
+        private TypeOfLaser laserType;
         public WeaponLaser(int iD, float powerLevel) : base(iD, powerLevel)
         {
             name = "Laser";
@@ -21,7 +22,12 @@ namespace G01_Perseus
         {
             if (fireTimer.IsDone(gameTime))
             {
-                EntityManager.CreateLaser(type, center, target, true, damagePerShot);
+                if (type == TypeOfBullet.Enemy)
+                    laserType = TypeOfLaser.Enemy;
+                else
+                    laserType = TypeOfLaser.Player;
+
+                EntityManager.CreateLaser(laserType, center, target, damagePerShot);
 
                 fireTimer.Reset(gameTime);
             }

@@ -32,17 +32,20 @@ namespace G01_Perseus
             entities.Add(new Enemy(position, new Vector2(0, 0), new Vector2(0.4f, 0.4f), 40, 0, new DefaultEnemyBehavior(), 10000, AssetManager.TextureAsset("enemy_ship3"), 5));
         }
 
-        public static void CreateBullet(TypeOfBullet type, Vector2 start, Vector2 target, bool isLaser, float damage)
+        public static void CreateBullet(TypeOfBullet type, Vector2 start, Vector2 target, float damage)
         {
             AddBullet(new Bullet(start, target, new Vector2(7, 7), new Vector2(0.1f, 0.1f), type, damage, 10));
         }
 
-        public static void CreateLaser(TypeOfBullet type, Vector2 start, Vector2 target, bool isLaser, float damage)
+        public static void CreateLaser(TypeOfLaser type, Vector2 start, Vector2 target, float damage)
         {
-            AddBullet(new Bullet(start, target, Vector2.Zero, new Vector2(0.1f, Vector2.Distance(start, target)), type, damage, 1));
+            AddLaser(new Laser(start, target, new Vector2(0.2f, 1f), type, damage));
+            //AddBullet(new Bullet(start, target, Vector2.Zero, new Vector2(10, 0.1f/*Vector2.Distance(start, target)*/), type, damage, 1));
         }
 
         public static void AddBullet(Bullet bullet) => entities.Add(bullet);
+
+        public static void AddLaser(Laser laser) => entities.Add(laser);
 
         public static void AddFaction(Faction faction) => factions.Add(faction);
 
