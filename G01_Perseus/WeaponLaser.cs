@@ -12,7 +12,6 @@ namespace G01_Perseus
         public WeaponLaser(int iD, float powerLevel) : base(iD, powerLevel)
         {
             name = "Laser";
-            rateOfFire = 0.1f;
             baseDamagePerShot = 5;
             damagePerShot = baseDamagePerShot * powerLevel;
             fireTimer = new Timer(100);

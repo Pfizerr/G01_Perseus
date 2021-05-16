@@ -15,18 +15,25 @@ namespace G01_Perseus
         private int healthBarHeight;
         private Rectangle healthPos;
         private Random random = new Random();
-        public List<Bullet> bullets = new List<Bullet>();
+        public float leashDistance;
+        public Vector2 startingPosition;
 
         private EnemyBehavior behavior;
 
-        public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, EnemyBehavior behavior) : base(position, maxVelocity, scale, health, shield)
+        public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, EnemyBehavior behavior, float leashDistance, Texture2D texture, float acceleration) : base(position, maxVelocity, scale, health, shield) 
         {
             healthBarHeight = 10;
             healthPos = new Rectangle((int)position.X, (int)position.Y - healthBarHeight, hitbox.Width, healthBarHeight);
             EventManager.Register(this);
+            startingPosition = position;
+            //friction = new Vector2(0.97f, 0.97f);
+            this.acceleration = new Vector2(acceleration, acceleration);
 
             this.behavior = behavior;
             behavior.enemy = this;
+
+            this.leashDistance = leashDistance;
+            this.texture = texture;
 
         }
 
@@ -56,7 +63,6 @@ namespace G01_Perseus
         public void FireWeapon(GameTime gameTime)
         {
             equipedWeapon.Fire(Center, EntityManager.Player.Center, rotation, TypeOfBullet.Enemy, gameTime);
-            equipedWeapon.Update(gameTime);
         }
 
         private void SetHealthPosition()

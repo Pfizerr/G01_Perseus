@@ -13,7 +13,6 @@ namespace G01_Perseus
         public WeaponTripleShot(int iD, float powerLevel) : base(iD, powerLevel)
         {
             name = "Tripleshot";
-            rateOfFire = 1.5f;
             baseDamagePerShot = 2;
             damagePerShot = baseDamagePerShot * powerLevel;
             fireTimer = new Timer(1500);

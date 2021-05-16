@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework;
 
 namespace G01_Perseus
 {
-    public class DefaultEnemyBehavior : EnemyBehavior
+    public class RaptorEnemyBehavior : EnemyBehavior
     {
-        Timer timer = new Timer(2000);
+        Timer timer = new Timer(5000);
         private Vector2 strafeVector = Vector2.Zero;
         private bool returning = false;
 
@@ -34,11 +34,11 @@ namespace G01_Perseus
             else
             {
 
-                if (Vector2.Distance(position, EntityManager.Player.Position) > 500)
+                if (Vector2.Distance(position, EntityManager.Player.Position) > 200)
                 {
                     enemy.direction = Pursue(position);
                 }
-                else if (Vector2.Distance(position, EntityManager.Player.Position) < 100)
+                else if (Vector2.Distance(position, EntityManager.Player.Position) < 50)
                 {
                     enemy.direction = Retreat(rotation);
                 }
@@ -92,7 +92,7 @@ namespace G01_Perseus
                 return strafeVector;
             }
 
-            
+
             return strafeVector;
         }
     }

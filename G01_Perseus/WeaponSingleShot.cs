@@ -12,7 +12,6 @@ namespace G01_Perseus
         public WeaponSingleShot(int iD, float powerLevel) : base(iD, powerLevel)
         {
             name = "Singleshot";
-            rateOfFire = 1f;
             baseDamagePerShot = 5;
             damagePerShot = baseDamagePerShot * powerLevel;
             fireTimer = new Timer(1000);

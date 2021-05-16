@@ -24,7 +24,6 @@ namespace G01_Perseus
             HandleInput(gameTime);
 
             Movement(gameTime);
-            equipedWeapon.Update(gameTime);
 
             if (Status.Missions.Count > 0)
             {

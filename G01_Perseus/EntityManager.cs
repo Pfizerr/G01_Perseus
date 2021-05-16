@@ -17,9 +17,19 @@ namespace G01_Perseus
             entities.Add(Player);
         }
 
-        public static void CreateEnemy(Vector2 position)
+        public static void CreateEnemyOrbital(Vector2 position)
         {
-            entities.Add(new Enemy(position, new Vector2(0, 0), new Vector2(0.2f, 0.2f), 1, 0, new DefaultEnemyBehavior()));
+            entities.Add(new Enemy(position, new Vector2(0, 0), new Vector2(0.2f, 0.2f), 10, 0, new DefaultEnemyBehavior(), 1000, AssetManager.TextureAsset("enemy_ship"), 4));
+        }
+
+        public static void CreateEnemyRaptor(Vector2 position)
+        {
+            entities.Add(new Enemy(position, new Vector2(0, 0), new Vector2(0.3f, 0.3f), 20, 0, new RaptorEnemyBehavior(), 3000, AssetManager.TextureAsset("enemy_ship2"), 10));
+        }
+
+        public static void CreateEnemyPursuer(Vector2 position)
+        {
+            entities.Add(new Enemy(position, new Vector2(0, 0), new Vector2(0.4f, 0.4f), 40, 0, new DefaultEnemyBehavior(), 10000, AssetManager.TextureAsset("enemy_ship3"), 5));
         }
 
         public static void CreateBullet(TypeOfBullet type, Vector2 start, Vector2 target, bool isLaser, float damage)
