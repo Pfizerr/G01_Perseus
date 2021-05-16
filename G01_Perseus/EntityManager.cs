@@ -37,6 +37,11 @@ namespace G01_Perseus
             AddBullet(new Bullet(start, target, new Vector2(7, 7), new Vector2(0.1f, 0.1f), type, damage, 10));
         }
 
+        public static void CreateLaser(TypeOfBullet type, Vector2 start, Vector2 target, bool isLaser, float damage)
+        {
+            AddBullet(new Bullet(start, target, Vector2.Zero, new Vector2(0.1f, 0.1f), type, damage, 1));
+        }
+
         public static void AddBullet(Bullet bullet) => entities.Add(bullet);
 
         public static void AddFaction(Faction faction) => factions.Add(faction);
