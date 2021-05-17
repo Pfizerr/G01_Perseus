@@ -24,7 +24,7 @@ namespace G01_Perseus
 
         public static StateStack stateStack;
 
-        
+        //Note: make a class for error messages that takes a string as an input for the player to see what is wrong if there is time left over
 
         public Game1()
         {
@@ -82,7 +82,7 @@ namespace G01_Perseus
             //level.AddEntity(enemy);
 
             stateStack = new StateStack();
-            Resources.Initialize(0, 0, 0, 0, 0, 0, 0);
+            Resources.Initialize(0, 0, 0, 0, 0, 0, 0, 0, 1);
             stateStack.Push(new HUD(Window)); // MARKUS, Avkommentera denna raden för att testa quest loggen            
             backgroundColor = Color.Black;
             

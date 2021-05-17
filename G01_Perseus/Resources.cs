@@ -16,8 +16,11 @@ namespace G01_Perseus
         public static float SpShields { get; private set; }
         public static float SpFireRate { get; private set; }
         public static float MaxPoints { get; private set; } 
+        public static int Level { get; private set; }
+        public static float XP { get; private set; }
+        public static float XPToNextLevel { get; private set; }
 
-        public static void Initialize(int currency, int dust, int sp, int spDamage, int spShields, int spHealth, int spFireRate)
+        public static void Initialize(int currency, int dust, int sp, int spDamage, int spShields, int spHealth, int spFireRate, float xp, int level)
         {
             Currency = currency;
             Dust = dust;
@@ -27,6 +30,9 @@ namespace G01_Perseus
             SpFireRate = spFireRate;
             SkillPoints = 5; //Replace with sp from the parameters
             MaxPoints = 10;
+            XP = xp;
+            Level = level;
+            XPToNextLevel = 1000 + Level * 10;
         }
 
         public static void AddCurrency(int amount)
@@ -107,6 +113,18 @@ namespace G01_Perseus
                 SpFireRate += 1;
                 DecreaseSkillPoints();
             }                
+        }
+
+        public static void AddXP(float amount)
+        {
+            XP += amount;
+            if(XP >= XPToNextLevel)
+            {
+                Level++;
+                XP = XP - XPToNextLevel;
+                XPToNextLevel = XPToNextLevel + Level * 20;
+                AddSkillPoint(1);
+            }
         }
     }
 }

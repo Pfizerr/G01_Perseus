@@ -13,19 +13,38 @@ namespace G01_Perseus
         private float baseMaxShields;
         private float basePowerLevel;
         public bool uppdatePowerlevel;
+        public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
         
-
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="velocity"></param>
+        /// <param name="scale"></param>
+        /// <param name="health"></param>
+        /// <param name="shield"></param>
         public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield) : base(position, velocity, scale, health, shield)
         {
             baseMaxHealth = health;
             baseMaxShields = shield;
-            basePowerLevel = 1; //This could be an input parameter
+            basePowerLevel = 1; //This could be an input parameter for the constructor
             uppdatePowerlevel = false;
             EventManager.Register(this);
         }
 
         public override void Update(GameTime gameTime)
         {
+            //These if statements should be moved perhaps?
+            if(Shields > MaxShields)
+            {
+                Shields = MaxShields;
+            }
+
+            if(Health > MaxHealth)
+            {
+                Health = MaxHealth;
+            }
+
             base.Update(gameTime);
 
             ShieldRegeneration(gameTime);
@@ -46,6 +65,10 @@ namespace G01_Perseus
             spriteBatch.Draw(texture, hitbox.Location.ToVector2(), null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, scale, SpriteEffects.None, 0.9f);
         }
 
+        /// <summary>
+        /// This handles all the inputs the player can made with movement, change weapon, fire etc.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void HandleInput(GameTime gameTime)
         {
             direction = Vector2.Zero;
@@ -85,6 +108,10 @@ namespace G01_Perseus
             }
         }
 
+        /// <summary>
+        /// This sets the direction of the ship in the game world through the mouse position
+        /// </summary>
+        /// <returns>A vector2 for the orientation and bullet direction</returns>
         public Vector2 FindMousePosition()
         {
             Vector2 mousePosition = new Vector2(KeyMouseReader.mouseState.X, KeyMouseReader.mouseState.Y);
@@ -109,6 +136,9 @@ namespace G01_Perseus
             private set => playerStatus = value;
         }
 
+        /// <summary>
+        /// Updates the power level of all the weapons the player has
+        /// </summary>
         public void UpdateWeapons()
         {
             foreach (Weapon weapon in weapons)
@@ -118,6 +148,9 @@ namespace G01_Perseus
             uppdatePowerlevel = false;
         }
 
+        /// <summary>
+        /// Below here are only properties of the player class
+        /// </summary>
         public override float MaxHealth
         {
             get { return baseMaxHealth + Resources.SpHealth * 10; }

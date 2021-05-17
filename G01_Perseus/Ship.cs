@@ -98,6 +98,10 @@ namespace G01_Perseus
             if (Health <= 0)
             {
                 IsAlive = false;
+                if(this is Enemy)
+                {
+                    Resources.AddXP(1100);
+                }
             }
             
         }
