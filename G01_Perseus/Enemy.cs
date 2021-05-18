@@ -40,8 +40,6 @@ namespace G01_Perseus
             //Vector2 drawPosition = new Vector2((tileX * tileWidth) + position.X - (ix * tileWidth), (tileY * tileWidth) + position.Y - (iy * tileHeight));
             //spriteBatch.Draw(texture, drawPosition, null, Color.White, rotation, size / 2, Vector2.One, SpriteEffects.None, 0.5f);*/
 
-            spriteBatch.Draw(AssetManager.TextureAsset("GradientBar"), healthPos, null, Color.Blue, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
-            spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
         }
 
         public override void Update(GameTime gameTime)
@@ -87,7 +85,7 @@ namespace G01_Perseus
 
         public override void RecieveDamage(Entity other, float damage)
         {
-            base.RecieveDamage(damage);
+            base.RecieveDamage(other, damage);
             healthPos.Width = (int)((Health / TotalHealth) * hitbox.Width);
             shieldPos.Width = (int)((Shields / TotalHealth) * hitbox.Width);
             Console.WriteLine("Projectile had damage: {0}.", damage);

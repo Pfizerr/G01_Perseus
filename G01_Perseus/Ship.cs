@@ -127,7 +127,7 @@ namespace G01_Perseus
         {
             if (other is Bullet bullet)
             {
-                RecieveDamage(bullet.damage);
+                RecieveDamage(other, bullet.damage);
                 bullet.timeToLive = 0;
             }
             
@@ -138,7 +138,7 @@ namespace G01_Perseus
             HandleCollision(e.OtherEntity);
         }
 
-        public override void Destroy()
+        public void Destroy()
         {
             //Code to execute when destroyed..
 

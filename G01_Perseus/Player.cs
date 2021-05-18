@@ -173,6 +173,7 @@ namespace G01_Perseus
         public void OnMouseExit(MouseExitPlanetEvent e)
         {
             hasFocusOnPlanet = false;
+        }
         /// <summary>
         /// Updates the power level of all the weapons the player has
         /// </summary>
