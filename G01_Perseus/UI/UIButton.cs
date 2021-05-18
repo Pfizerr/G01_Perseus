@@ -115,7 +115,8 @@ namespace G01_Perseus.UI
         {
             if(Texture != null)
             {
-                if(IsMouseHovered)
+                if(isMouseHovered && HoveredTexture != null)
+
                 {
                     spriteBatch.Draw(HoveredTexture, Hitbox, null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
                 }

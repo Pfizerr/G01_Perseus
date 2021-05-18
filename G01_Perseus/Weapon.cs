@@ -18,7 +18,7 @@ namespace G01_Perseus
         public Weapon(int iD, float powerLevel) : base(iD)
         {
             this.powerLevel = powerLevel;
-            damagePerShot = powerLevel * baseDamagePerShot;
+            //damagePerShot = powerLevel * baseDamagePerShot;
             timeSinceLastFire = 0;
         }
 
@@ -33,6 +33,11 @@ namespace G01_Perseus
         public virtual void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet typeOfBullet, GameTime gameTime)
         {
 
+        }
+
+        public void SetDamagePerShot(float powerLevel)
+        {
+            damagePerShot = powerLevel * baseDamagePerShot;
         }
     }
 }

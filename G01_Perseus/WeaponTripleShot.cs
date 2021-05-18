@@ -15,7 +15,7 @@ namespace G01_Perseus
             name = "Tripleshot";
             rateOfFire = 1.5f;
             baseDamagePerShot = 2;
-            damagePerShot = baseDamagePerShot * powerLevel;
+            SetDamagePerShot(powerLevel);
             fireTimer = new Timer(1500);
             
         }

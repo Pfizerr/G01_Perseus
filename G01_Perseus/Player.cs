@@ -9,13 +9,42 @@ namespace G01_Perseus
     public class Player : Ship, CollissionListener, PlanetInteractionListener, MouseEnterPlanetListener, MouseExitPlanetListener
     {
         private bool hasFocusOnPlanet;
+        private float baseMaxHealth;
+        private float baseMaxShields;
+        private float basePowerLevel;
+        public bool uppdatePowerlevel;
+        public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
+        
+        /// <summary>
+        /// Constructor
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="velocity"></param>
+        /// <param name="scale"></param>
+        /// <param name="health"></param>
+        /// <param name="shield"></param>
         public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield) : base(position, velocity, scale, health, shield)
         {
+            baseMaxHealth = health;
+            baseMaxShields = shield;
+            basePowerLevel = 1; //This could be an input parameter for the constructor
+            uppdatePowerlevel = false;
             EventManager.Register(this);
         }
 
         public override void Update(GameTime gameTime)
         {
+            //These if statements should be moved perhaps?
+            if(Shields > MaxShields)
+            {
+                Shields = MaxShields;
+            }
+
+            if(Health > MaxHealth)
+            {
+                Health = MaxHealth;
+            }
+
             base.Update(gameTime);
 
             ShieldRegeneration(gameTime);
@@ -24,6 +53,10 @@ namespace G01_Perseus
             HandleInput(gameTime);
 
             Movement(gameTime);
+            if (uppdatePowerlevel)
+            {
+                UpdateWeapons();
+            }
             equipedWeapon.Update(gameTime);
 
             if (Status.Missions.Count > 0)
@@ -45,6 +78,10 @@ namespace G01_Perseus
             //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
 
+        /// <summary>
+        /// This handles all the inputs the player can made with movement, change weapon, fire etc.
+        /// </summary>
+        /// <param name="gameTime"></param>
         public void HandleInput(GameTime gameTime)
         {
             direction = Vector2.Zero;
@@ -67,19 +104,6 @@ namespace G01_Perseus
             ChangeWeapon();
         }
 
-        public override void HandleCollision(Entity other)
-        {
-            if (other is Enemy enemy)
-            {
-                //RecieveDamage(enemy.damage);
-            }
-            else if (other is Bullet bullet)
-            {
-                RecieveDamage(other, bullet.damage);
-                bullet.timeToLive = 0;
-            }            
-        }
-
         /// <summary>
         /// If you press the 1 or 2 key you will change the wepon type that you're using.
         /// </summary>
@@ -96,6 +120,10 @@ namespace G01_Perseus
             }
         }
 
+        /// <summary>
+        /// This sets the direction of the ship in the game world through the mouse position
+        /// </summary>
+        /// <returns>A vector2 for the orientation and bullet direction</returns>
         public Vector2 FindMousePosition()
         {
             Vector2 mousePosition = new Vector2(KeyMouseReader.mouseState.X, KeyMouseReader.mouseState.Y);
@@ -113,17 +141,6 @@ namespace G01_Perseus
         protected override void DefaultTexture()
         {
             texture = AssetManager.TextureAsset("player_ship");
-        }
-
-        public void Collision(CollissionEvent e)
-        {
-            HandleCollision(e.OtherEntity);
-        }
-
-        public override void Destroy(Event e)
-        {
-            base.Destroy(e);
-            return;
         }
 
         public PlayerStatus Status
@@ -156,6 +173,37 @@ namespace G01_Perseus
         public void OnMouseExit(MouseExitPlanetEvent e)
         {
             hasFocusOnPlanet = false;
+        /// <summary>
+        /// Updates the power level of all the weapons the player has
+        /// </summary>
+        public void UpdateWeapons()
+        {
+            foreach (Weapon weapon in weapons)
+            {
+                weapon.SetDamagePerShot(PowerLevel);
+            }
+            uppdatePowerlevel = false;
+        }
+
+        /// <summary>
+        /// Below here are only properties of the player class
+        /// </summary>
+        public override float MaxHealth
+        {
+            get { return baseMaxHealth + Resources.SpHealth * 10; }
+            protected set => base.MaxHealth = value;
+        }
+
+        public override float MaxShields
+        {
+            get { return baseMaxShields + Resources.SpShields * 10; }
+            protected set => base.MaxShields = value;
+        }
+
+        public override float PowerLevel
+        {
+            get { return basePowerLevel + Resources.SpDamage; }
+            protected set => base.PowerLevel = value;
         }
     }
 }

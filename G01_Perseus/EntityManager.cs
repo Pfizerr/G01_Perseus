@@ -19,7 +19,10 @@ namespace G01_Perseus
 
         public static void CreateEnemy(Vector2 position)
         {
-            entities.Add(new Enemy(position, new Vector2(0, 0), new Vector2(0.2f, 0.2f), 1, 0, new DefaultEnemyBehavior()));
+
+            entities.Add(new Enemy(new Vector2(250, 50), new Vector2(400, 400), new Vector2(0.2f, 0.2f), 25, 10, new DefaultEnemyBehavior()));
+            //entities.Add(new Enemy(new Vector2(50, 50), new Vector2(400, 400), new Vector2(0.2f, 0.2f), null, 0f, 0.8f, true, 20, 25, 0));
+
         }
 
         public static void CreateBullet(TypeOfBullet type, Vector2 start, Vector2 target, bool isLaser, float damage)

@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace G01_Perseus
 {
-    public abstract class Ship : MovingEntity
+    public abstract class Ship : MovingEntity, CollissionListener
     {
         public Vector2 direction;
         protected Vector2 friction;
@@ -17,18 +17,22 @@ namespace G01_Perseus
         //Can use wapon dependinng on the type of enemy
         protected Weapon trippleShot = new WeaponTripleShot(1, 1);
         protected Weapon singleShot = new WeaponSingleShot(1, 1);
-        protected double hitTimer, hitTimerInterval, maxShields;
-        protected List<Weapon> weapons;
-        protected float health, maxHealth;
+        protected double hitTimer, hitTimerInterval;
+        protected List<Weapon> weapons;        
 
         //Components
         protected PlayerStatus playerStatus;
-        public double Shields { get; protected set; }
+        public float Shields { get; protected set; }
+        public float Health { get; protected set; }
+        public float TotalHealth { get; protected set; }
+        public virtual float MaxHealth { get; protected set; }
+        public virtual float MaxShields { get; protected set; }
+        public virtual float PowerLevel { get; protected set; }
 
         public Ship(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield) : base(maxVelocity, position, scale)
         {
-            this.health = health;
-            maxHealth = health;
+            Health = health;
+            MaxHealth = health;
             Origin = Size / 2;
             layerDepth = 0.7f;
             rotation = 0f;
@@ -37,7 +41,8 @@ namespace G01_Perseus
             weapons = new List<Weapon>() { trippleShot, singleShot };
             equipedWeapon = weapons[1];
             Shields = shield;
-            maxShields = Shields;
+            MaxShields = Shields;
+            TotalHealth = health + shield;
             hitTimer = 0;
             hitTimerInterval = 3;
             #region TEMP
@@ -79,21 +84,27 @@ namespace G01_Perseus
                 Shields -= damage;
                 if (Shields < 0)
                 {
-                    damage = Math.Abs((float)Shields);
-                    Shields = 0.0;
+                    damage = Math.Abs(Shields);
+                    Shields = 0f;
                 }
             }
 
             if (Shields <= 0)
             {
-                health -= damage;
+                Health -= damage;
             }
 
             hitTimer = hitTimerInterval;
-            if (health <= 0)
+            if (Health <= 0)
             {
                 Destroy(new EntityKilledEvent(this, other));
+                IsAlive = false;
+                if(this is Enemy)
+                {
+                    Resources.AddXP(1100);
+                }
             }
+            
         }
 
         public virtual void ShieldRegeneration(GameTime gameTime)
@@ -102,14 +113,38 @@ namespace G01_Perseus
             {
                 hitTimer -= gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (hitTimer <= 0 && Shields < maxShields)
+            else if (hitTimer <= 0 && Shields < MaxShields)
             {
-                Shields += 10;
-                if (Shields > maxShields)
+                Shields += 1;
+                if (Shields > MaxShields)
                 {
-                    Shields = maxShields;
+                    Shields = MaxShields;
                 }
             }
         }
+
+        public override void HandleCollision(Entity other)
+        {
+            if (other is Bullet bullet)
+            {
+                RecieveDamage(bullet.damage);
+                bullet.timeToLive = 0;
+            }
+            
+        }
+
+        public void Collision(CollissionEvent e)
+        {
+            HandleCollision(e.OtherEntity);
+        }
+
+        public override void Destroy()
+        {
+            //Code to execute when destroyed..
+
+            //Console.WriteLine("{0} has been killed.", this.ToString());
+            return;
+        }
+        
     }
 }

@@ -25,6 +25,8 @@ namespace G01_Perseus
         public static StateStack stateStack;
 
 
+        //Note: make a class for error messages that takes a string as an input for the player to see what is wrong if there is time left over
+
 
         public Game1()
         {
@@ -86,8 +88,8 @@ namespace G01_Perseus
             //level.AddEntity(enemy);
 
             stateStack = new StateStack();
-            //stateStack.Push(new QuestLogInterface()); // MARKUS, Avkommentera denna raden för att testa quest loggen
-
+            Resources.Initialize(0, 0, 0, 0, 0, 0, 0, 0, 1);
+            stateStack.Push(new HUD(Window)); // MARKUS, Avkommentera denna raden för att testa quest loggen            
             backgroundColor = Color.Black;
 
 
@@ -127,12 +129,6 @@ namespace G01_Perseus
             spriteBatch.End();
 
             stateStack.Draw(spriteBatch, gameTime);
-
-            //Second draw call to make the HUD independant of the camera/world movement
-            spriteBatch.Begin();
-            spriteBatch.Draw(AssetManager.TextureAsset("GradientBar"), new Rectangle(40, Window.ClientBounds.Height - 40, AssetManager.TextureAsset("GradientBar").Width, AssetManager.TextureAsset("GradientBar").Height / 2), Color.Crimson);
-            spriteBatch.Draw(AssetManager.TextureAsset("GradientBar"), new Rectangle(40, Window.ClientBounds.Height - 80, AssetManager.TextureAsset("GradientBar").Width, AssetManager.TextureAsset("GradientBar").Height / 2), Color.Cyan);
-            spriteBatch.End();
             base.Draw(gameTime);
         }
 

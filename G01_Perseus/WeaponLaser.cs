@@ -14,7 +14,7 @@ namespace G01_Perseus
             name = "Laser";
             rateOfFire = 0.1f;
             baseDamagePerShot = 5;
-            damagePerShot = baseDamagePerShot * powerLevel;
+            SetDamagePerShot(powerLevel);
             fireTimer = new Timer(100);
         }
 
