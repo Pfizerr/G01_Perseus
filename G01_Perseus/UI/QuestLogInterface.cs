@@ -71,7 +71,7 @@ namespace G01_Perseus.UI
 
         public void ExitUI()
         {
-            EntityManager.Player.uppdatePowerlevel = true; //Ask about a better way for the weapon uppgrade management
+            EntityManager.Player.UpdateWeapons(); //Ask about a better way for the weapon uppgrade management
             EventManager.Dispatch(new PopStateEvent());
         }
 

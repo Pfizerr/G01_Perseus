@@ -69,7 +69,7 @@ namespace G01_Perseus.UI
             spriteBatch.End();
         }
 
-        public void UpdatePlayerHealth() //Ask about a better way to do this than having it in the update method above
+        public void UpdatePlayerHealth() //Make this an event when the player takes damage and call this method
         {
             //Note for the % version of this part of the HUD. Replace the Entinty.Player.Max... with EntityManager.Player.TotalHealth
             healthbarSize.Width = (int)((EntityManager.Player.Health / EntityManager.Player.MaxHealth) * barTex.Width);

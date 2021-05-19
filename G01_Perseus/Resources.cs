@@ -15,6 +15,7 @@ namespace G01_Perseus
         public static float SpHealth { get; private set; }
         public static float SpShields { get; private set; }
         public static float SpFireRate { get; private set; }
+        public static Test skillPoints;
         public static float MaxPoints { get; private set; } 
         public static int Level { get; private set; }
         public static float XP { get; private set; }
@@ -33,6 +34,7 @@ namespace G01_Perseus
             XP = xp;
             Level = level;
             XPToNextLevel = 1000 + Level * 10;
+            skillPoints = new Test { SpDamage = 7, SpHealth = 1, SpShields = 0, SpFireRate = 4};
         }
 
         public static void AddCurrency(int amount)

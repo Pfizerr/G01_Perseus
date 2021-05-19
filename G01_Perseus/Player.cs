@@ -53,10 +53,6 @@ namespace G01_Perseus
             HandleInput(gameTime);
 
             Movement(gameTime);
-            if (uppdatePowerlevel)
-            {
-                UpdateWeapons();
-            }
             equipedWeapon.Update(gameTime);
 
             if (Status.Missions.Count > 0)
