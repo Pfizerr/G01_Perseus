@@ -10,7 +10,7 @@ namespace G01_Perseus
     public class Camera
     {
 
-        private Matrix translationMatrix;
+        private Matrix translationMatrix; // This was mentioned as "not needed", however, it is. Else you will have to recreate the matrix every time you update its' translation (bad performance).
         private Rectangle viewport;
 
         public Camera()
@@ -38,14 +38,14 @@ namespace G01_Perseus
         {
             get
             {
-                return EntityManager.Player.Position;
+                return FollowTarget.Position;
             }
         }
 
 
         public void Update()
         {
-            this.translationMatrix.Translation = new Vector3(-EntityManager.Player.Position.X+(Viewport.Width * 0.5f)-25, -EntityManager.Player.Position.Y + (Viewport.Height * 0.5f)-25, 0.0f);
+            this.translationMatrix.Translation = new Vector3(-FollowTarget.Position.X+(Viewport.Width * 0.5f)-25, -FollowTarget.Position.Y + (Viewport.Height * 0.5f)-25, 0.0f);
         }
 
     }

@@ -10,22 +10,32 @@ namespace G01_Perseus
 {
     public class InGameState : GameState
     {
-        private Sprite sprite;
 
-        public InGameState()
+        private Camera camera;
+        private Level level;
+
+        public InGameState(Camera camera)
         {
-            this.sprite = new Sprite(Util.CreateFilledRectangleTexture(Color.Red, 1, 1));
+            this.camera = camera;
+
+            int tileWidth = 1180;
+            int tileHeight = 1080;
+            level = new Level(10, 10, tileWidth, tileHeight);
         }
 
         public override void Update(GameTime gameTime)
         {
-            
+
+            EntityManager.Update(gameTime);
+            camera.Update();
+
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
-            spriteBatch.Begin();
-            sprite.Draw(spriteBatch, Vector2.Zero, new Vector2(800, 600), Vector2.Zero, 0.0f, 0.0f);
+            spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, null, null, null, null, camera.Translation);
+            level.Draw(spriteBatch, camera);
+            EntityManager.Draw(spriteBatch);
             spriteBatch.End();
         }
         
