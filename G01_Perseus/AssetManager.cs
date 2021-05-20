@@ -79,7 +79,7 @@ namespace G01_Perseus
             loadedTextures.Add("planet3", content.Load<Texture2D>(@"textures\planet3"));
             loadedTextures.Add("resource_currency", content.Load<Texture2D>(@"textures\Currency"));
             loadedTextures.Add("gradient_bar", content.Load<Texture2D>(@"textures\GradientBar"));
-            loadedTextures.Add("skill_UI", content.Load<Texture2D>(@"textures\SkillMonitor"));
+            loadedTextures.Add("skill_UI", content.Load<Texture2D>(@"textures\SkillMonitorBackground"));
             loadedTextures.Add("space_background", content.Load<Texture2D>(@"textures\Space"));
             loadedTextures.Add("sun", content.Load<Texture2D>(@"textures\Sun"));
             loadedTextures.Add("smokeParticle_sprite", content.Load<Texture2D>(@"textures\SmokeSpriteSheet"));
@@ -93,6 +93,15 @@ namespace G01_Perseus
             loadedTextures.Add("button_background_available_transparent", content.Load<Texture2D>(@"textures\ButtonBackgroundAvailableTransparent"));
             loadedTextures.Add("button_background_unavailable_transparent", content.Load<Texture2D>(@"textures\ButtonBackgroundUnavailableTransparent"));
             loadedTextures.Add("button_background_hovered_transparent", content.Load<Texture2D>(@"textures\ButtonBackgroundHoveredTransparent"));
+
+            loadedTextures.Add("button_green", content.Load<Texture2D>(@"textures\ButtonGreen"));
+            loadedTextures.Add("damage_icon", content.Load<Texture2D>(@"textures\DamageIconSmall"));
+            loadedTextures.Add("health_icon", content.Load<Texture2D>(@"textures\HeartIconSmall"));
+            loadedTextures.Add("shield_icon", content.Load<Texture2D>(@"textures\ShieldIconSmall"));
+            loadedTextures.Add("fire_rate_icon", content.Load<Texture2D>(@"textures\TimerIconSmall"));
+            loadedTextures.Add("skill_button_blue", content.Load<Texture2D>(@"textures\SkillButtonBlue"));
+            loadedTextures.Add("skill_button_red", content.Load<Texture2D>(@"textures\SkillButtonRed"));
+            loadedTextures.Add("start_menu_background_UI", content.Load<Texture2D>(@"textures\StartMenuBackground"));
 
             //Fonts
             loadedFonts.Add("default_font", content.Load<SpriteFont>(@"fonts\default_font"));

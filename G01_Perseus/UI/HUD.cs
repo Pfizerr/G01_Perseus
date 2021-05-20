@@ -107,6 +107,7 @@ namespace G01_Perseus.UI
             this.btnSkillUI = new UIButton(new Rectangle((int)(window.ClientBounds.Width - 60), (int)(window.ClientBounds.Height - 60), 50, 50), AssetManager.TextureAsset("button_blue"), OpenSkillUI);
             this.btnQuestUI = new UIButton(new Rectangle((int)(btnSkillUI.Hitbox.X - 60), (int)(btnSkillUI.Hitbox.Y), 50, 50), AssetManager.TextureAsset("button_blue"), OpenSkillUI);
             btnSkillUI.HoveredTexture = AssetManager.TextureAsset("button_red");
+            btnQuestUI.HoveredTexture = AssetManager.TextureAsset("button_green");
         }
     }
 }
