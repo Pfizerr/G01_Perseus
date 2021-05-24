@@ -78,7 +78,7 @@ namespace G01_Perseus
                     spriteBatch.DrawString(font, option.Text, textPosition, color);
                 }
 
-                spriteBatch.Draw(debugTexture, rect, color);
+                //spriteBatch.Draw(debugTexture, rect, color);
             }
         }
     }
