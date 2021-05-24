@@ -59,7 +59,6 @@
     <Compile Include="EventSystem\Listeners\MissionAcceptedClickListener.cs" />
     <Compile Include="EventSystem\Listeners\MissionDeniedClickListener.cs" />
     <Compile Include="EventSystem\Events\MissionDeniedClickEvent.cs" />
-    <Compile Include="Test.cs" />
     <Compile Include="UI\MissionInterface.cs" />
     <Compile Include="EventSystem\Events\MissionSelectedEvent.cs" />
     <Compile Include="EventSystem\Listeners\MissionSelectedListener.cs" />
