@@ -12,7 +12,7 @@ namespace G01_Perseus.UI
     class HUD : GameState
     {
         private UIButton btnSkillUI, btnQuestUI;
-        private QuestLogInterface questLogInterface;
+        private SkillInterface skillInterface;
         private GameWindow window;
         private float healthbarWidth;
         private float shieldbarWidth;
@@ -30,7 +30,7 @@ namespace G01_Perseus.UI
 
             //Buttons on UI
             SetButtons();
-            this.questLogInterface = new QuestLogInterface(window);           
+            this.skillInterface = new SkillInterface(window);           
 
             //Healthbar portion
             barTex = AssetManager.TextureAsset("gradient_bar");
@@ -41,7 +41,7 @@ namespace G01_Perseus.UI
 
         public void OpenSkillUI()
         {
-            EventManager.Dispatch(new PushStateEvent(questLogInterface));
+            EventManager.Dispatch(new PushStateEvent(skillInterface));
             Console.WriteLine("Skill menu has been closed"); //Only for testing
         }
 

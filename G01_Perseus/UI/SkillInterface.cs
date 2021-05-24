@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace G01_Perseus.UI
 {
-    public class QuestLogInterface : GameState
+    public class SkillInterface : GameState
     {
 
         private Rectangle bounds;
@@ -25,7 +25,7 @@ namespace G01_Perseus.UI
         private string[] statLables;
         private List<Vector2> labelPosition;
 
-        public QuestLogInterface(GameWindow window)
+        public SkillInterface(GameWindow window)
         {
             this.Transparent = true;
 
