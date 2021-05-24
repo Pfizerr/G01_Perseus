@@ -103,7 +103,7 @@
     <Compile Include="Level.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="UI\HUD.cs" />
-    <Compile Include="UI\QuestLogInterface.cs" />
+    <Compile Include="UI\SkillInterface.cs" />
     <Compile Include="UI\UIButton.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

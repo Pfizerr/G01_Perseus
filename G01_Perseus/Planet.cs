@@ -94,7 +94,8 @@ namespace G01_Perseus
                 {
                     timer.Reset(Game1.random.Next(minMissionCooldown, maxMissionCooldown), false);
                     missions[i] = MissionManager.LoadMission(MissionManager.GetRandomMissionId());
-                    missions[i].Contractor = this;
+                    missions[i].Contractor = this; //There is an error here when you close the game. Could be handles with a save and load function
+                    //Though note that this error doesn't happen all the time
                     missions[i].State = Mission.EState.Offered;
                 }
                 else
