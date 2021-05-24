@@ -94,7 +94,6 @@ namespace G01_Perseus.UI
         {
             Resources.AddSpHealth();
             CalculateBarWidth(1, Resources.SpHealth);
-
         }
 
         public void IncreaseShields()

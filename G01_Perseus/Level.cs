@@ -18,7 +18,6 @@ namespace G01_Perseus
         
         private Background background;
 
-
         // This code is only for debugging purpose
         #region
         private Texture2D tileTexture;
@@ -33,7 +32,7 @@ namespace G01_Perseus
 
             background = new Background();
             
-            this.tileTexture = Util.CreateRectangleTexture(tileWidth, tileHeight, Color.Green, Color.White);    
+            this.tileTexture = Util.CreateRectangleTexture(tileWidth, tileHeight, Color.Cyan, Color.Transparent);    
         }
         
         public Point GetSectorCoordinates(int x, int y)
@@ -60,7 +59,7 @@ namespace G01_Perseus
             {
                 for (int x = startX; x <= endX; x++)
                 {
-                    //spriteBatch.Draw(tileTexture, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), null, color, 0.0f, Vector2.Zero, SpriteEffects.None, 0f);
+                    spriteBatch.Draw(tileTexture, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.8f);
                     background.Draw(spriteBatch, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight));
                 }
             }

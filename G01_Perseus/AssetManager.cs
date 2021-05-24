@@ -4,6 +4,7 @@ using System.Collections.Generic;
 
 namespace G01_Perseus
 {
+    
     public static class AssetManager
     {
         /// <summary>

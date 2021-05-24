@@ -25,10 +25,8 @@ namespace G01_Perseus
 
         public override void Update(GameTime gameTime)
         {
-
             EntityManager.Update(gameTime);
             camera.Update();
-
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)

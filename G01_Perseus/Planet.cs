@@ -8,6 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace G01_Perseus
 {
     public class Planet : EventListener, MissionAcceptedClickListener, MissionDeniedClickListener
@@ -57,7 +58,7 @@ namespace G01_Perseus
                 radius = (float)Math.Floor((decimal)sprite.Width / 2);
             }
             else { throw new NotImplementedException(); }
-
+            
             highlightedSpriteOrigin = new Vector2(highlightedSprite.Width * 0.5f, highlightedSprite.Height * 0.5f);
             highlightedSpriteOffset = new Vector2((highlightedSprite.Width - sprite.Width) * 0.5f, (highlightedSprite.Height - sprite.Height) * 0.5f);
 

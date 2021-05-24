@@ -15,9 +15,7 @@ namespace G01_Perseus
         int frontSpace, middleSpace, backSpace;
         float frontSpeed, middleSpeed, backSpeed;
         Texture2D[] tex;
-        GameWindow window;
-
-        
+        GameWindow window;        
 
         public Background()
         {

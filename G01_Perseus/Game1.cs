@@ -19,7 +19,7 @@ namespace G01_Perseus
 
         public static Camera camera;
         public static Random random = new Random(1);
-        public static StateStack stateStack;
+        private StateStack stateStack;
 
 
         //Note: make a class for error messages that takes a string as an input for the player to see what is wrong if there is time left over
@@ -68,7 +68,7 @@ namespace G01_Perseus
 
             stateStack = new StateStack();
             stateStack.Push(new InGameState(camera));
-            stateStack.Push(new HUD(Window)); // MARKUS, Avkommentera denna raden för att testa quest loggen            
+            stateStack.Push(new HUD(Window));     
             backgroundColor = Color.Black;
         }
 
