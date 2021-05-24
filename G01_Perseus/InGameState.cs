@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using G01_Perseus.EventSystem.Events;
+using G01_Perseus.UI;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -21,6 +23,8 @@ namespace G01_Perseus
             int tileWidth = 1180;
             int tileHeight = 1080;
             level = new Level(10, 10, tileWidth, tileHeight);
+
+            camera.FollowTarget = EntityManager.Player;            
         }
 
         public override void Update(GameTime gameTime)
