@@ -22,7 +22,7 @@ namespace G01_Perseus
 
             int tileWidth = 1180;
             int tileHeight = 1080;
-            level = new Level(10, 10, tileWidth, tileHeight);
+            level = new Level(10, 10, tileWidth, tileHeight, AssetManager.FontAsset("sector_font"));
 
             camera.FollowTarget = EntityManager.Player;            
         }

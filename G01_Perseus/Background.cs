@@ -56,7 +56,7 @@ namespace G01_Perseus
         public void Draw(SpriteBatch sb, Rectangle bounds)
         {
             
-             sb.Draw(tex[0], bounds, Color.White);
+             sb.Draw(tex[0], bounds, null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.0f);
             
             //foreach (Vector2 v in middle)
             //{
