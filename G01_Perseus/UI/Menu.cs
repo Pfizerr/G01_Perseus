@@ -12,19 +12,24 @@ namespace G01_Perseus
     {
         private Texture2D debugTexture;
 
-        private Rectangle bounds;
 
         private SpriteFont font;
         private MenuOption hoveredOption;
 
         public Menu(Rectangle bounds, SpriteFont font)
         {
-            this.bounds = bounds;
+            this.Bounds = bounds;
             this.font = font;
             this.Options = new List<MenuOption>();
             this.debugTexture = Util.CreateRectangleTexture(600, 100, Color.White, Color.Transparent);
         }
         
+        public Rectangle Bounds
+        {
+            get;
+            private set;
+        }
+
         public List<MenuOption> Options
         {
             get;
@@ -33,10 +38,10 @@ namespace G01_Perseus
 
         private Rectangle GetBounds(int option)
         {
-            int width = bounds.Width;
-            int height = bounds.Height / Options.Count;
-            int x = bounds.X;
-            int y = bounds.Y + option * height;
+            int width = Bounds.Width;
+            int height = Bounds.Height / Options.Count;
+            int x = Bounds.X;
+            int y = Bounds.Y + option * height;
             return new Rectangle(x, y, width, height);
         }
 
@@ -66,7 +71,7 @@ namespace G01_Perseus
                 MenuOption option = Options[i];
                 Rectangle rect = GetBounds(i);
 
-                Color color = hoveredOption == option ? Color.Green : Color.Red;
+                Color color = hoveredOption == option ? Color.White : Color.Gray;
                 if(option.Texture != null)
                 {
                     spriteBatch.Draw(option.Texture, rect, Color.White);

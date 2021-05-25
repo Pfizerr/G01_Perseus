@@ -107,6 +107,7 @@ namespace G01_Perseus
             //Fonts
             loadedFonts.Add("default_font", content.Load<SpriteFont>(@"fonts\default_font"));
             loadedFonts.Add("sector_font", content.Load<SpriteFont>(@"fonts\sector_font"));
+            loadedFonts.Add("main_menu_font", content.Load<SpriteFont>(@"fonts\main_menu_font"));
             //Sprite sheets
 
         }
