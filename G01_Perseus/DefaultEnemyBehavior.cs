@@ -15,21 +15,21 @@ namespace G01_Perseus
 
         public override void Update(GameTime gameTime, float rotation)
         {
-            enemy.FireWeapon(gameTime);
-            enemy.AdjustAngleTowardsTarget(EntityManager.Player.Position);
-            Vector2 position = enemy.Position;
+            Enemy.FireWeapon(gameTime);
+            Enemy.AdjustAngleTowardsTarget(EntityManager.Player.Position);
+            Vector2 position = Enemy.Position;
 
             if (Vector2.Distance(position, EntityManager.Player.Position) > 500)
             {
-                enemy.direction = Pursue(position);
+                Enemy.direction = Pursue(position);
             }
             else if (Vector2.Distance(position, EntityManager.Player.Position) < 100)
             {
-                enemy.direction = Retreat(rotation);
+                Enemy.direction = Retreat(rotation);
             }
             else
             {
-                enemy.direction = Strafe(gameTime, rotation);
+                Enemy.direction = Strafe(gameTime, rotation);
             }
         }
 

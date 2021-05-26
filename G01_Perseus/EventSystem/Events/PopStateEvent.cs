@@ -9,13 +9,6 @@ namespace G01_Perseus.EventSystem.Events
 {
     public class PopStateEvent : Event
     {
-
-        public GameState State
-        {
-            get;
-            private set;
-        }
-
         public override void Dispatch(EventListener listener)
         {
             if (!(listener is PopStateListener))
@@ -24,8 +17,6 @@ namespace G01_Perseus.EventSystem.Events
             }
 
             PopStateListener l = (PopStateListener)listener;
-
-            State = Game1.stateStack.Peek();
             l.OnPopState(this);
         }
     }

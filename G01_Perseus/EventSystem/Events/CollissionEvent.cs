@@ -26,11 +26,6 @@ namespace G01_Perseus
 
             this.entity = entity;
             this.otherEntity = otherEntity;
-
-            //Debug.WriteLine(entity.ToString() + " " + otherEntity.ToString());
-            //entity.HandleCollision(otherEntity);
-            //otherEntity.HandleCollision(entity);
-
         }
 
         public Entity Entity => entity;
@@ -62,9 +57,7 @@ namespace G01_Perseus
                 else if (bullet.Type == TypeOfBullet.Enemy && otherEntity is Enemy)
                 {
                     return true;
-                }
-
-               
+                }               
             }
 
             return false;

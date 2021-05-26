@@ -42,8 +42,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Background.cs" />
-    <Compile Include="CollissionEvent.cs" />
-    <Compile Include="CollissionListener.cs" />
+    <Compile Include="EventSystem\Events\CollissionEvent.cs" />
+    <Compile Include="EventSystem\Listeners\CollissionListener.cs" />
     <Compile Include="EnemyBehavior.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
@@ -103,7 +103,7 @@
     <Compile Include="Level.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="UI\HUD.cs" />
-    <Compile Include="UI\QuestLogInterface.cs" />
+    <Compile Include="UI\SkillInterface.cs" />
     <Compile Include="UI\UIButton.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
