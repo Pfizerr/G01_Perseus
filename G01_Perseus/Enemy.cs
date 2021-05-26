@@ -39,17 +39,13 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            /*spriteBatch.Draw(texture, hitbox, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, SpriteEffects.None, 0.8f);
-            //Vector2 drawPosition = new Vector2((tileX * tileWidth) + position.X - (ix * tileWidth), (tileY * tileWidth) + position.Y - (iy * tileHeight));
-            //spriteBatch.Draw(texture, drawPosition, null, Color.White, rotation, size / 2, Vector2.One, SpriteEffects.None, 0.5f);*/
-
             spriteBatch.Draw(AssetManager.TextureAsset("GradientBar"), healthPos, null, Color.Blue, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
         }
 
         public override void Update(GameTime gameTime)
         {
-            //this.behavior.Update(gameTime, rotation);
+            this.behavior.Update(gameTime);
 
             Movement(gameTime);
 
@@ -82,10 +78,7 @@ namespace G01_Perseus
                 RecieveDamage(other, bullet.damage);
                 bullet.timeToLive = 0;
             }
-            else if (other is Laser laser)
-            {
-                RecieveDamage(other, laser.damage);
-            }
+            
 
         }
 

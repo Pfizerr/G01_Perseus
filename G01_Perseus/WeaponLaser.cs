@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace G01_Perseus
 {
-    class WeaponLaser : Weapon
+    class WeaponLaser : Weapon // Currently non-functional
     {
-        private TypeOfLaser laserType;
+        //private TypeOfLaser laserType;
         public WeaponLaser(int iD, float powerLevel) : base(iD, powerLevel)
         {
             name = "Laser";
@@ -20,17 +20,17 @@ namespace G01_Perseus
 
         public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type, GameTime gameTime)
         {
-            if (fireTimer.IsDone(gameTime))
-            {
-                if (type == TypeOfBullet.Enemy)
-                    laserType = TypeOfLaser.Enemy;
-                else
-                    laserType = TypeOfLaser.Player;
+            //if (fireTimer.IsDone(gameTime))
+            //{
+            //    if (type == TypeOfBullet.Enemy)
+            //        laserType = TypeOfLaser.Enemy;
+            //    else
+            //        laserType = TypeOfLaser.Player;
 
-                EntityManager.CreateLaser(laserType, center, target, damagePerShot);
+            //    EntityManager.CreateLaser(laserType, center, target, damagePerShot);
 
-                fireTimer.Reset(gameTime);
-            }
+            //    fireTimer.Reset(gameTime);
+            //}
         }
     }
 }

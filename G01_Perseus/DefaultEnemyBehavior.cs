@@ -12,8 +12,14 @@ namespace G01_Perseus
         Timer timer = new Timer(2000);
         private Vector2 strafeVector = Vector2.Zero;
         private bool returning = false;
+        
+        public DefaultEnemyBehavior()
+        {
+            pursueDistance = 100;
+            retreatDistance = 20;
+        }
 
-        public override void Update(GameTime gameTime, float rotation)
+        public override void Update(GameTime gameTime)
         {
             enemy.FireWeapon(gameTime);
             enemy.AdjustAngleTowardsTarget(EntityManager.Player.Position);
@@ -34,17 +40,17 @@ namespace G01_Perseus
             else
             {
 
-                if (Vector2.Distance(position, EntityManager.Player.Position) > 500)
+                if (Vector2.Distance(position, EntityManager.Player.Position) > pursueDistance)
                 {
                     enemy.direction = Pursue(position);
                 }
-                else if (Vector2.Distance(position, EntityManager.Player.Position) < 100)
+                else if (Vector2.Distance(position, EntityManager.Player.Position) < retreatDistance)
                 {
-                    enemy.direction = Retreat(rotation);
+                    enemy.direction = Retreat(enemy.Rotation);
                 }
                 else
                 {
-                    enemy.direction = Strafe(gameTime, rotation);
+                    enemy.direction = Strafe(gameTime, enemy.Rotation);
                 }
             }
         }

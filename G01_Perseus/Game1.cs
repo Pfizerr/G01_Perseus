@@ -59,8 +59,8 @@ namespace G01_Perseus
             EntityManager.factions[0].CreatePlanet("planet name one", new Vector2(0, 0), 3);
             EntityManager.CreatePlayer();
             EntityManager.CreateEnemyOrbital(new Vector2(250, 250));
-            //EntityManager.CreateEnemyRaptor(new Vector2(500, 500));
-            //EntityManager.CreateEnemyPursuer(new Vector2(1000, 1000));
+            EntityManager.CreateEnemyRaptor(new Vector2(500, 500));
+            EntityManager.CreateEnemyPursuer(new Vector2(1000, 1000));
             camera = new Camera();
             camera.FollowTarget = player;
             camera.Viewport = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);

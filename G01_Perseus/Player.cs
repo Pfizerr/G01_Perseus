@@ -77,10 +77,7 @@ namespace G01_Perseus
                 RecieveDamage(other, bullet.damage);
                 bullet.timeToLive = 0;
             }
-            else if (other is Laser laser)
-            {
-                RecieveDamage(other, laser.damage);
-            }
+            
         }
 
         /// <summary>
