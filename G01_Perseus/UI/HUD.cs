@@ -19,8 +19,8 @@ namespace G01_Perseus.UI
         private float healthbarHeight;
         private Rectangle healthbarSize, shieldbarSize, xpBarSize, xpBarOutline;        
         private Texture2D barTex, outlineTex;
-        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos;
-        private string levelText, xpText;
+        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos, btnSkillTextPos, btnShopTextPos;
+        private string levelText, xpText, btnSkillText, btnShopText;
 
         public HUD(GameWindow window)
         {
@@ -66,6 +66,8 @@ namespace G01_Perseus.UI
             spriteBatch.Draw(outlineTex, xpBarOutline, Color.White);
             spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("Level: {0}", Resources.Level), levelTextPos, Color.Yellow);
             spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("{0} / {1}", Resources.XP, Resources.XPToNextLevel), xpTextPos, Color.Yellow);
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnShopText, btnShopTextPos, Color.Green);
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnSkillText, btnSkillTextPos, Color.Blue);
             spriteBatch.End();
         }
 
@@ -104,10 +106,14 @@ namespace G01_Perseus.UI
 
         public void SetButtons()
         {
+            btnSkillText = "Skills";
+            btnShopText = "Shop";
             this.btnSkillUI = new UIButton(new Rectangle((int)(window.ClientBounds.Width - 60), (int)(window.ClientBounds.Height - 60), 50, 50), AssetManager.TextureAsset("button_blue"), OpenSkillUI);
             this.btnQuestUI = new UIButton(new Rectangle((int)(btnSkillUI.Hitbox.X - 60), (int)(btnSkillUI.Hitbox.Y), 50, 50), AssetManager.TextureAsset("button_blue"), OpenSkillUI);
             btnSkillUI.HoveredTexture = AssetManager.TextureAsset("button_red");
             btnQuestUI.HoveredTexture = AssetManager.TextureAsset("button_green");
+            btnSkillTextPos = new Vector2(btnSkillUI.Hitbox.X, btnSkillUI.Hitbox.Y - AssetManager.FontAsset("default_font").MeasureString(btnSkillText).Y);
+            btnShopTextPos = new Vector2(btnQuestUI.Hitbox.X, btnQuestUI.Hitbox.Y - AssetManager.FontAsset("default_font").MeasureString(btnShopText).Y);
         }
     }
 }
