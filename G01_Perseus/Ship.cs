@@ -61,7 +61,7 @@ namespace G01_Perseus
                 velocity = Vector2.Zero;
 
             velocity = (velocity + direction * acceleration) * friction;
-            Util.Clamp(velocity, -maxVelocity, maxVelocity); // clamp velocity to values between min value -maxVelocity and max value -maxVelocity
+            velocity = Util.Clamp(velocity, -maxVelocity, maxVelocity); // clamp velocity to values between min value -maxVelocity and max value -maxVelocity
             Position += velocity * deltaTime;
             hitbox.Location = Position.ToPoint();
         }

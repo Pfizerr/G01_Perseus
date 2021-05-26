@@ -13,7 +13,6 @@ namespace G01_Perseus.UI
     {
         private UIButton missionAcceptButton;
         private UIButton missionDenyButton;
-        private UIButton exitButton;
 
         private Rectangle bounds;
         private Texture2D backgroundTexture;
@@ -57,12 +56,7 @@ namespace G01_Perseus.UI
             
             this.missionSlotSelectButtons = new UIButton[missions.Count()];
 
-            exitButton = new UIButton(new Rectangle(bounds.X + 700, bounds.Y + 100, 50, 59), null, "Exit Menu", AssetManager.FontAsset("default_font"), () =>
-            {
-                EventManager.Dispatch(new PopStateEvent());
-            });
-
-            missionAcceptButton = new UIButton(new Rectangle(bounds.X + 499, bounds.Y + 481, 60, 59), null, "Accept", AssetManager.FontAsset("default_font"), () =>
+            missionAcceptButton = new UIButton(new Rectangle(bounds.X + 499, bounds.Y + 481, 60, 59), null, "", AssetManager.FontAsset("default_font"), () =>
             {
                 if(missions[selectedMission] == null)
                 {
@@ -73,7 +67,7 @@ namespace G01_Perseus.UI
                 EventManager.Dispatch(new MissionAcceptedClickEvent(missions[selectedMission]));
             });
 
-            missionDenyButton = new UIButton(new Rectangle(bounds.X + 600, bounds.Y + 481, 60, 59), null, "Deny", AssetManager.FontAsset("default_font"), () => 
+            missionDenyButton = new UIButton(new Rectangle(bounds.X + 600, bounds.Y + 481, 60, 59), null, "", AssetManager.FontAsset("default_font"), () => 
             {
                 if (missions[selectedMission] == null)
                 {
@@ -114,11 +108,10 @@ namespace G01_Perseus.UI
         public override void Update(GameTime gameTime)
         {
             UpdateFocus();
-            HandleMouse();
+            HandleInput();
 
             missionAcceptButton.Update(gameTime);
             missionDenyButton.Update(gameTime);
-            exitButton.Update(gameTime);
 
             for (int i = 0; i < missionSlotSelectButtons.Count(); i++)
             {
@@ -148,6 +141,7 @@ namespace G01_Perseus.UI
                     {
                         missionSlotSelectButtons[i].Texture = TrySwitchTexture(missionButtonAvailableTexture, isOutOfFocus); // : set to .."Available"..
                         missionSlotSelectButtons[i].HoveredTexture = TrySwitchTexture(missionButtonUnavailableTexture, isOutOfFocus); // : set to .."Available"..
+                        missionSlotSelectButtons[i].Text = missions[i].Presentation(); // To get rid of the timer text and get the mission description back.
                     }
                     else if (missionSlotSelectButtons[i] == missionSlotSelectButtons[selectedMission]) // If the associated mission is the selected mission
                     {
@@ -200,8 +194,12 @@ namespace G01_Perseus.UI
             return texture;
         }
 
-        private void HandleMouse()
+        private void HandleInput()
         {
+            if(KeyMouseReader.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Escape))
+            {
+                ExitUserInterface();
+            }
             if(isOutOfFocus)
             {
                 if(backgroundTexture != AssetManager.TextureAsset("monitor_not_focused"))
@@ -233,6 +231,11 @@ namespace G01_Perseus.UI
 
             isOutOfFocus = false;
         }
+
+        public void ExitUserInterface()
+        {
+            EventManager.Dispatch(new PopStateEvent());
+        }
         
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
@@ -240,7 +243,6 @@ namespace G01_Perseus.UI
 
             spriteBatch.Draw(backgroundTexture, bounds, null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
 
-            exitButton.Draw(spriteBatch, gameTime);
             missionAcceptButton.Draw(spriteBatch, gameTime);
             missionDenyButton.Draw(spriteBatch, gameTime);
             

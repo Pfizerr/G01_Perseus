@@ -1,12 +1,11 @@
-﻿using G01_Perseus.EventSystem.Events;
-using G01_Perseus.UI;
+﻿using Microsoft.Xna.Framework.Graphics;
+using G01_Perseus.EventSystem.Events;
+using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
+using G01_Perseus.UI;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using System;
+
 
 
 namespace G01_Perseus
@@ -29,6 +28,7 @@ namespace G01_Perseus
         private Vector2 position;
         private Vector2 origin;
         private Vector2 scale;
+        private SpriteFont font;
 
         public Player Customer { get; set; }
 
@@ -40,6 +40,7 @@ namespace G01_Perseus
             this.sprite = sprite;
             this.position = position;
 
+            font = AssetManager.FontAsset("default_font");
             isHighlighted = false;
 
             missions = new Mission[maxNrOfMissions];
@@ -92,7 +93,6 @@ namespace G01_Perseus
                 }
                 else if (timer.IsDoneCounting)
                 {
-                    timer.Reset(Game1.random.Next(minMissionCooldown, maxMissionCooldown), false);
                     missions[i] = MissionManager.LoadMission(MissionManager.GetRandomMissionId());
                     missions[i].Contractor = this; //There is an error here when you close the game. Could be handles with a save and load function
                     //Though note that this error doesn't happen all the time
@@ -115,7 +115,9 @@ namespace G01_Perseus
                 isHighlighted = true;
                 EventManager.Dispatch(new MouseEnterPlanetEvent(this));
 
-                if (KeyMouseReader.LeftClick() /* && !isDisplayingUserInterface */)
+                // Display open menu text
+
+                if (KeyMouseReader.KeyHold(Keys.E))
                 {
                     EventManager.Dispatch(new PlanetInteractionEvent(this));
 
@@ -139,6 +141,9 @@ namespace G01_Perseus
             if(isHighlighted)
             {
                 highlightedSprite.Draw(spriteBatch, Center - (highlightedSpriteOffset / 75), scale, highlightedSpriteOrigin, 0f, 0.6f);
+                string text = "Press 'e' to browse new missions";
+                Vector2 textSize = font.MeasureString(text);
+                spriteBatch.DrawString(font, "Press 'e' to browse new missions", KeyMouseReader.MouseWorldPosition, Color.Yellow, 0f, Vector2.Zero, 1, SpriteEffects.None, 0.9f);
             }
         }
 

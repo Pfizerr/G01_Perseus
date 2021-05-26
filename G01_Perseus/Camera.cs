@@ -28,7 +28,7 @@ namespace G01_Perseus
         {
             get{ return Window.ClientBounds; }
         }
-        
+
 
         public Player FollowTarget
         {
@@ -49,7 +49,7 @@ namespace G01_Perseus
 
         public void Update()
         {
-            this.translationMatrix.Translation = new Vector3(-FollowTarget.Position.X+(Viewport.Width * 0.5f)-25, -FollowTarget.Position.Y + (Viewport.Height * 0.5f)-25, 0.0f);
+            this.translationMatrix.Translation = new Vector3(-FollowTarget.Position.X + (Viewport.Width * 0.5f) - 25, -FollowTarget.Position.Y + (Viewport.Height * 0.5f) - 25, 0.0f);
         }
 
     }

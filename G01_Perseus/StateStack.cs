@@ -31,10 +31,10 @@ namespace G01_Perseus
 
         public void Update(GameTime gameTime)
         {
-            foreach(GameState state in stack.ToList())
+            foreach (GameState state in stack.ToList())
             {
                 state.Update(gameTime);
-                if(!state.Transparent)
+                if (!state.Transparent)
                 {
                     break;
                 }
@@ -44,15 +44,15 @@ namespace G01_Perseus
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             Stack<GameState> statesToDraw = new Stack<GameState>();
-            foreach(GameState state in stack)
+            foreach (GameState state in stack)
             {
                 statesToDraw.Push(state);
-                if(!state.Transparent)
+                if (!state.Transparent)
                 {
                     break;
                 }
             }
-            foreach(GameState state in statesToDraw)
+            foreach (GameState state in statesToDraw)
             {
                 state.Draw(spriteBatch, gameTime);
             }

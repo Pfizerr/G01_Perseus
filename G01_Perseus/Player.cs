@@ -1,3 +1,4 @@
+using G01_Perseus.EventSystem.Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,11 +19,11 @@ namespace G01_Perseus
         /// Constructor
         /// </summary>
         /// <param name="position"></param>
-        /// <param name="velocity"></param>
+        /// <param name="maxVelocity"></param>
         /// <param name="scale"></param>
         /// <param name="health"></param>
         /// <param name="shield"></param>
-        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield) : base(position, velocity, scale, health, shield)
+        public Player(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield) : base(position, maxVelocity, scale, health, shield)
         {
             baseMaxHealth = health;
             baseMaxShields = shield;
@@ -66,8 +67,8 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
-            Status.Draw(spriteBatch);
+
+            spriteBatch.Draw(texture, Center, source, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f); Status.Draw(spriteBatch);
             
             //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
@@ -86,6 +87,11 @@ namespace G01_Perseus
             direction.X += KeyMouseReader.KeyHold(Keys.D) ? 1 : 0;
 
             direction = direction.LengthSquared() > 1 ? Vector2.Normalize(direction) : direction;
+
+            if(KeyMouseReader.KeyPressed(Keys.K))
+            {
+                this.Destroy(null);
+            }
 
             if(KeyMouseReader.LeftClick() && !hasFocusOnPlanet)
             {
@@ -135,6 +141,12 @@ namespace G01_Perseus
         protected override void DefaultTexture()
         {
             texture = AssetManager.TextureAsset("player_ship");
+        }
+
+        public override void Destroy(Event e)
+        {
+            EventManager.Dispatch(new PushStateEvent(new RespawnMenu(null)));
+            base.Destroy(e);
         }
 
         public PlayerStatus Status

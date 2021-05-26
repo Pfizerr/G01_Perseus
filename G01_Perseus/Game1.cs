@@ -107,7 +107,7 @@ namespace G01_Perseus
 
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(backgroundColor);           
+            GraphicsDevice.Clear(backgroundColor);
 
             stateStack.Draw(spriteBatch, gameTime);
         }

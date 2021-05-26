@@ -36,7 +36,8 @@ namespace G01_Perseus
                 bool leftOrRight = (x == 0) || (x == width - 1);
                 bool topOrBottom = (y == 0) || (y == height - 1);
 
-                data[px] = (leftOrRight || topOrBottom) ? borderColor : filledColor;
+                //data[px] = (leftOrRight || topOrBottom) ? borderColor : filledColor;
+                data[px] = (leftOrRight || topOrBottom) ? borderColor : Color.Transparent;
             }
             texture.SetData(data);
             return texture;
@@ -86,12 +87,13 @@ namespace G01_Perseus
             return texture;
         }
 
-        public static void Clamp(Vector2 subject, Vector2 min, Vector2 max)
+        public static Vector2 Clamp(Vector2 subject, Vector2 min, Vector2 max)
         {
-            subject.X = subject.X > max.X ? max.X : subject.X;
-            subject.X = subject.X < -min.X ? -min.X : subject.X;
-            subject.Y = subject.Y > max.Y ? max.Y : subject.Y;
-            subject.Y = subject.Y < -min.Y ? -min.Y : subject.Y;
+            subject.X = subject.X < max.X ? subject.X : max.X;
+            subject.X = subject.X > min.X ? subject.X : min.X;
+            subject.Y = subject.Y < max.Y ? subject.Y : max.Y;
+            subject.Y = subject.Y > min.Y ? subject.Y : min.Y;
+            return subject;
         }
 
     }

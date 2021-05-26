@@ -29,7 +29,6 @@ namespace G01_Perseus.EventSystem.Events
             }
 
             PushStateListener l = (PushStateListener)listener;
-
             l.OnPushState(this);
         }
     }
