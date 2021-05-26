@@ -5,6 +5,7 @@ namespace G01_Perseus
 {
     public abstract class Entity
     {
+        protected Rectangle? source;
         protected Rectangle hitbox;
         protected float rotation, layerDepth;
         protected Vector2 scale;

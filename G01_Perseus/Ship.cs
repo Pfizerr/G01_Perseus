@@ -36,6 +36,7 @@ namespace G01_Perseus
             Origin = Size / 2;
             layerDepth = 0.7f;
             rotation = 0f;
+            source = null;
             playerStatus = new PlayerStatus(health, 0f);
             weapons = new List<Weapon>() { trippleShot, singleShot };
             equipedWeapon = weapons[1];

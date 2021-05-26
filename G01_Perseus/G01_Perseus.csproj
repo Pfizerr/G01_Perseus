@@ -42,8 +42,8 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Background.cs" />
-    <Compile Include="EventSystem\Events\CollissionEvent.cs" />
-    <Compile Include="EventSystem\Listeners\CollissionListener.cs" />
+    <Compile Include="CollissionEvent.cs" />
+    <Compile Include="CollissionListener.cs" />
     <Compile Include="EnemyBehavior.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
@@ -52,6 +52,7 @@
     <Compile Include="ExtendedTimer.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="KeyMouseReader.cs" />
+    <Compile Include="MainMenu.cs" />
     <Compile Include="MovingEntity.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="Ship.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="EventSystem\Listeners\MissionAcceptedClickListener.cs" />
     <Compile Include="EventSystem\Listeners\MissionDeniedClickListener.cs" />
     <Compile Include="EventSystem\Events\MissionDeniedClickEvent.cs" />
+    <Compile Include="UI\Menu.cs" />
     <Compile Include="UI\MissionInterface.cs" />
     <Compile Include="EventSystem\Events\MissionSelectedEvent.cs" />
     <Compile Include="EventSystem\Listeners\MissionSelectedListener.cs" />
@@ -103,7 +105,7 @@
     <Compile Include="Level.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="UI\HUD.cs" />
-    <Compile Include="UI\SkillInterface.cs" />
+    <Compile Include="UI\QuestLogInterface.cs" />
     <Compile Include="UI\UIButton.cs" />
     <Compile Include="Util.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

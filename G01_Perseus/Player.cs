@@ -12,6 +12,7 @@ namespace G01_Perseus
         private float baseMaxHealth;
         private float baseMaxShields;
         private float basePowerLevel;
+        public bool uppdatePowerlevel;
         public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
         
         /// <summary>
@@ -27,6 +28,7 @@ namespace G01_Perseus
             baseMaxHealth = health;
             baseMaxShields = shield;
             basePowerLevel = 1; //This could be an input parameter for the constructor
+            uppdatePowerlevel = false;
             EventManager.Register(this);
         }
 
@@ -51,6 +53,10 @@ namespace G01_Perseus
             HandleInput(gameTime);
 
             Movement(gameTime);
+            if (uppdatePowerlevel)
+            {
+                UpdateWeapons();
+            }
             equipedWeapon.Update(gameTime);
 
             if (Status.Missions.Count > 0)
@@ -171,12 +177,13 @@ namespace G01_Perseus
         /// <summary>
         /// Updates the power level of all the weapons the player has
         /// </summary>
-        public void UpdateWeaponPower()
+        public void UpdateWeapons()
         {
             foreach (Weapon weapon in weapons)
             {
                 weapon.SetDamagePerShot(PowerLevel);
             }
+            uppdatePowerlevel = false;
         }
 
         /// <summary>

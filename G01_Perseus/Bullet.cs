@@ -21,6 +21,7 @@ namespace G01_Perseus
             Origin = Size / 2;
             rotation = 0f;
             layerDepth = 0.8f;
+            source = null;
             direction = Vector2.Normalize(targetPosition - position);
         }
 
@@ -40,7 +41,7 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
+            spriteBatch.Draw(texture, Center, source, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
             //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
 
