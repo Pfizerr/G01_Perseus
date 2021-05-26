@@ -13,8 +13,8 @@ namespace G01_Perseus
 
         public PursuerEnemyBehavior()
         {
-            pursueDistance = 300;
             pursueDistance = 100;
+            pursueDistance = 50;
         }
 
         

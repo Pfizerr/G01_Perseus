@@ -15,7 +15,7 @@ namespace G01_Perseus
         public RaptorEnemyBehavior()
         {
             pursueDistance = 200;
-            retreatDistance = 100;
+            retreatDistance = 50;
         }
        
     }

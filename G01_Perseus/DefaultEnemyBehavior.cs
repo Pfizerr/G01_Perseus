@@ -15,8 +15,8 @@ namespace G01_Perseus
         
         public DefaultEnemyBehavior()
         {
-            pursueDistance = 100;
-            retreatDistance = 20;
+            pursueDistance = 500;
+            retreatDistance = 100;
         }
 
         public override void Update(GameTime gameTime)
