@@ -52,6 +52,7 @@
     <Compile Include="ExtendedTimer.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="KeyMouseReader.cs" />
+    <Compile Include="MainMenu.cs" />
     <Compile Include="MovingEntity.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="Ship.cs" />
@@ -59,6 +60,7 @@
     <Compile Include="EventSystem\Listeners\MissionAcceptedClickListener.cs" />
     <Compile Include="EventSystem\Listeners\MissionDeniedClickListener.cs" />
     <Compile Include="EventSystem\Events\MissionDeniedClickEvent.cs" />
+    <Compile Include="UI\Menu.cs" />
     <Compile Include="UI\MissionInterface.cs" />
     <Compile Include="EventSystem\Events\MissionSelectedEvent.cs" />
     <Compile Include="EventSystem\Listeners\MissionSelectedListener.cs" />
