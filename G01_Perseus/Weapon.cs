@@ -6,7 +6,7 @@ using System.Text;
 
 namespace G01_Perseus
 {
-    public class Weapon : Equipment
+    public abstract class Weapon : Equipment
     {
         protected float baseDamagePerShot;
         protected float powerLevel;
@@ -19,11 +19,7 @@ namespace G01_Perseus
             damagePerShot = powerLevel * baseDamagePerShot;
         }
 
-       
-
-        public virtual void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet typeOfBullet, GameTime gameTime)
-        {
-
-        }
+        public abstract void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet typeOfBullet, GameTime gameTime);
+        
     }
 }
