@@ -94,11 +94,6 @@ namespace G01_Perseus
             e.GraphicsDeviceInformation.PresentationParameters.MultiSampleCount = 8;
         }
 
-        //public static void Shutdown()
-        //{
-        //    shouldQuit = true;
-        //}
-
         protected override void Update(GameTime gameTime)
         {
             if (shouldQuit)
