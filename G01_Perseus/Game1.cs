@@ -32,6 +32,10 @@ namespace G01_Perseus
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+            graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            graphics.PreparingDeviceSettings += Graphics_PreparingDeviceSettings;
+            graphics.ApplyChanges();
+
             EventManager.Register(this);
         }
 
@@ -64,7 +68,6 @@ namespace G01_Perseus
             camera = new Camera(Window);
 
             random = new Random(1);
-
            
 
             stateStack = new StateStack();
@@ -77,6 +80,12 @@ namespace G01_Perseus
         protected override void UnloadContent()
         {
 
+        }
+
+        private void Graphics_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
+        {
+            graphics.PreferMultiSampling = true;
+            e.GraphicsDeviceInformation.PresentationParameters.MultiSampleCount = 8;
         }
 
         public static void Shutdown()

@@ -41,6 +41,50 @@ namespace G01_Perseus
             texture.SetData(data);
             return texture;
         }
+               
+
+        public static Texture2D CreateSpaceTexture(int seed, int width, int height, int starCount, int minSize, int maxSize)
+        {
+            Random random = new Random(seed);
+            Texture2D texture = new Texture2D(device, width, height);
+            Color[] data = new Color[width * height];
+            for(int i = 0; i < data.Length; i++)
+            {
+                data[i] = Color.Transparent;
+            }
+
+            for(int i = 0; i < starCount; i++)
+            {
+                int size = random.Next(minSize, maxSize);
+                Point point = new Point(random.Next(0, width), random.Next(0, width));
+                if(point.X-size < 0 || point.X+size >= width || point.Y-size < 0 || point.Y+size >= width)
+                {
+                    i--;
+                    continue;
+                }
+
+                float diameter = size / 2f;
+                float diameterSquared = diameter * diameter;
+
+                for (int x = point.X-size; x < point.X + size; x++)
+                {
+                    for (int y = point.Y-size; y < point.Y + size; y++)
+                    {
+                        int index = x * width + (y);
+                        Vector2 pos = new Vector2(point.X - x , point.Y - y);
+                        if (pos.LengthSquared() <= diameterSquared && index >= 0 && index < width * height)
+                        {
+                            int alpha = (int)(((diameterSquared*100 + 1) / (pos.LengthSquared()*100 + 1)) * 100);
+                            data[index] = new Color(255,255,255, data[index].A + alpha);
+                        }
+                    }
+                }
+            }
+
+
+            texture.SetData(data);
+            return texture;
+        }
 
         public static void Clamp(Vector2 subject, Vector2 min, Vector2 max)
         {
