@@ -12,9 +12,7 @@ namespace G01_Perseus
     {
 
         private Stack<GameState> stack = new Stack<GameState>();
-
-        private int amountToPop;
-
+        
         public void Push(GameState gameState)
         {
             stack.Push(gameState);
@@ -22,7 +20,6 @@ namespace G01_Perseus
 
         public void Pop()
         {
-            //amountToPop++;
             stack.Pop();
         }
 
@@ -42,17 +39,6 @@ namespace G01_Perseus
                     break;
                 }
             }
-
-            /*for(int i = 0; i < amountToPop;i++)
-            {
-                if(stack.Count <= 0)
-                {
-                    amountToPop = 0;
-                    break;
-                }
-                stack.Pop();
-                amountToPop--;
-            }*/
         }
 
         public void Draw(SpriteBatch spriteBatch, GameTime gameTime)

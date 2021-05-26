@@ -28,18 +28,16 @@ namespace G01_Perseus
             EventManager.Register(this);
 
             this.behavior = behavior;
-            behavior.enemy = this;            
+            behavior.Enemy = this;            
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-
             spriteBatch.Draw(texture, hitbox, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), healthPos, null, Color.Crimson, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), shieldPos, null, Color.Cyan, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
             //Vector2 drawPosition = new Vector2((tileX * tileWidth) + position.X - (ix * tileWidth), (tileY * tileWidth) + position.Y - (iy * tileHeight));
             //spriteBatch.Draw(texture, drawPosition, null, Color.White, rotation, size / 2, Vector2.One, SpriteEffects.None, 0.5f);*/
-
         }
 
         public override void Update(GameTime gameTime)
