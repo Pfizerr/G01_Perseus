@@ -59,17 +59,6 @@ namespace G01_Perseus
                     return true;
                 }               
             }
-            //if (entity is Laser laser)
-            //{
-            //    if (laser.Type == TypeOfLaser.Player && otherEntity is Player)
-            //    {
-            //        return true;
-            //    }
-            //    else if (laser.Type == TypeOfLaser.Enemy && otherEntity is Enemy)
-            //    {
-            //        return true;
-            //    }
-            //}
 
             return false;
         }

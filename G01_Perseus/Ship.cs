@@ -17,10 +17,8 @@ namespace G01_Perseus
         //Can use wapon dependinng on the type of enemy
         protected Weapon trippleShot = new WeaponTripleShot(1, 1);
         protected Weapon singleShot = new WeaponSingleShot(1, 1);
-        protected Weapon laser = new WeaponLaser(1, 1);
-        protected double hitTimer, hitTimerInterval, maxShields;
-        protected List<Weapon> weapons;
-        protected float health, maxHealth;
+        protected double hitTimer, hitTimerInterval;
+        protected List<Weapon> weapons;        
 
         //Components
         protected PlayerStatus playerStatus;
@@ -39,7 +37,7 @@ namespace G01_Perseus
             layerDepth = 0.7f;
             rotation = 0f;
             playerStatus = new PlayerStatus(health, 0f);
-            weapons = new List<Weapon>() { trippleShot, singleShot, laser };
+            weapons = new List<Weapon>() { trippleShot, singleShot };
             equipedWeapon = weapons[1];
             Shields = shield;
             MaxShields = Shields;

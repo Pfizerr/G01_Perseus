@@ -9,7 +9,6 @@ namespace G01_Perseus
         protected float rotation, layerDepth;
         protected Vector2 scale;
         protected Texture2D texture;
-        public float Rotation { get; protected set; }
 
         //Could maybe remove source and rotation as input parameters
         //Consider changing Roattion to a property that is initiated to 0f for all Entity objects to avoid redundancy

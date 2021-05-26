@@ -8,7 +8,7 @@ namespace G01_Perseus
     {
         public float timeToLive;
         public float damage;
-        protected Vector2 direction;
+        private Vector2 direction;
         public TypeOfBullet Type { get; private set; }
 
         public Bullet(Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale, TypeOfBullet type, float damage, float timeToLive) 

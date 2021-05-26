@@ -55,10 +55,6 @@
     <Compile Include="MainMenu.cs" />
     <Compile Include="MovingEntity.cs" />
     <Compile Include="Resources.cs" />
-    <Compile Include="Laser.cs" />
-    <Compile Include="MovingEntity.cs" />
-    <Compile Include="PursuerEnemyBehavior.cs" />
-    <Compile Include="RaptorEnemyBehavior.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="EventSystem\Events\MissionAcceptedClickEvent.cs" />
     <Compile Include="EventSystem\Listeners\MissionAcceptedClickListener.cs" />

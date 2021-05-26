@@ -12,6 +12,7 @@ namespace G01_Perseus
         public WeaponSingleShot(int iD, float powerLevel) : base(iD, powerLevel)
         {
             name = "Singleshot";
+            rateOfFire = 1f;
             baseDamagePerShot = 5;
             SetDamagePerShot(powerLevel);
             fireTimer = new Timer(1000);
@@ -22,7 +23,7 @@ namespace G01_Perseus
             if (fireTimer.IsDone(gameTime))
             {
 
-                EntityManager.CreateBullet(type, center, target, damagePerShot);
+                EntityManager.CreateBullet(type, center, target, false, damagePerShot);
 
                 fireTimer.Reset(gameTime);
             }

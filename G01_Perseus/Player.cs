@@ -51,6 +51,7 @@ namespace G01_Perseus
             HandleInput(gameTime);
 
             Movement(gameTime);
+            equipedWeapon.Update(gameTime);
 
             if (Status.Missions.Count > 0)
             {
@@ -97,20 +98,6 @@ namespace G01_Perseus
             ChangeWeapon();
         }
 
-        public override void HandleCollision(Entity other)
-        {
-            if (other is Enemy enemy)
-            {
-                //RecieveDamage(enemy.damage);
-            }
-            else if (other is Bullet bullet)
-            {
-                RecieveDamage(other, bullet.damage);
-                bullet.timeToLive = 0;
-            }
-            
-        }
-
         /// <summary>
         /// If you press the 1 or 2 key you will change the wepon type that you're using.
         /// </summary>
@@ -124,11 +111,6 @@ namespace G01_Perseus
             if (KeyMouseReader.KeyPressed(Keys.D2))
             {
                 equipedWeapon = weapons[1];
-            }
-
-            if (KeyMouseReader.KeyPressed(Keys.D3))
-            {
-                equipedWeapon = weapons[2];
             }
         }
 

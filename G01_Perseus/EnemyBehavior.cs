@@ -11,15 +11,8 @@ namespace G01_Perseus
     {
         public Enemy Enemy { get; set; }
 
-        protected int pursueDistance, retreatDistance;
 
-        public EnemyBehavior()
-        {
-
-        }
-        
-
-        public abstract void Update(GameTime gameTime);
+        public abstract void Update(GameTime gameTime, float rotation);
     }
 
 
