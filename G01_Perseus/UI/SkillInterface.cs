@@ -21,11 +21,11 @@ namespace G01_Perseus.UI
         private List<Rectangle> skillBarPos;
         private List<Rectangle> skillBarPosOutline;
         private List<Rectangle> skillIconPos;
-        private Action[] actions; //This is just for an automated system of the "add" buttons. It is not used currently
+        //private Action[] actions; //This is just for an automated system of the "add" buttons. It is not used currently
         private float skillBarMaxWidth;
         private string[] statLables;
         private Texture2D[] skillIcons;
-        private List<Vector2> labelPosition;
+        //private List<Vector2> labelPosition;
 
         public SkillInterface(GameWindow window)
         {
