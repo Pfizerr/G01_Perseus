@@ -23,6 +23,7 @@ namespace G01_Perseus
             tex[0] = AssetManager.TextureAsset("space_background");
             tex[1] = AssetManager.TextureAsset("space_background");
             tex[2] = AssetManager.TextureAsset("space_background");
+            tex[0] = Util.CreateSpaceTexture(0, tex[1].Width, tex[1].Height, 10000, 1, 10);
 
             front = new List<Vector2>();
             frontSpace = tex[0].Width / 5;

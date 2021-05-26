@@ -31,6 +31,10 @@ namespace G01_Perseus
             Content.RootDirectory = "Content";
             IsMouseVisible = true;
 
+            graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            graphics.PreparingDeviceSettings += Graphics_PreparingDeviceSettings;
+            graphics.ApplyChanges();
+
             EventManager.Register(this);
         }
 
@@ -66,6 +70,7 @@ namespace G01_Perseus
 
             random = new Random(1);
 
+
             stateStack = new StateStack();
             stateStack.Push(new InGameState(camera));
             stateStack.Push(new HUD(Window)); // MARKUS, Avkommentera denna raden för att testa quest loggen            
@@ -78,6 +83,17 @@ namespace G01_Perseus
 
         }
 
+
+        private void Graphics_PreparingDeviceSettings(object sender, PreparingDeviceSettingsEventArgs e)
+        {
+            graphics.PreferMultiSampling = true;
+            e.GraphicsDeviceInformation.PresentationParameters.MultiSampleCount = 8;
+        }
+
+        public static void Shutdown()
+        {
+            shouldQuit = true;
+        }
 
         protected override void Update(GameTime gameTime)
         {            
