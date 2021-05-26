@@ -67,15 +67,15 @@ namespace G01_Perseus
             EntityManager.CreateEnemyOrbital(new Vector2(250, 250));
             EntityManager.CreateEnemyRaptor(new Vector2(500, 500));
             EntityManager.CreateEnemyPursuer(new Vector2(1000, 1000));
-            camera = new Camera();
-            camera.FollowTarget = player;
-            camera.Viewport = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
+            
+            //camera.FollowTarget = player;
+            //camera.Viewport = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
 
             random = new Random(1);
 
             int tileWidth = 1180;
             int tileHeight = 1080;
-            level = new Level(10, 10, tileWidth, tileHeight);
+            //level = new Level(10, 10, tileWidth, tileHeight);
 
             camera = new Camera(Window);
 

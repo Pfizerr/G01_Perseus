@@ -23,8 +23,8 @@ namespace G01_Perseus
         {
             Enemy.FireWeapon(gameTime);
             Enemy.AdjustAngleTowardsTarget(EntityManager.Player.Position);
-            Vector2 position = enemy.Position;
-            if (Vector2.Distance(position, enemy.startingPosition) > enemy.leashDistance)
+            Vector2 position = Enemy.Position;
+            if (Vector2.Distance(position, Enemy.startingPosition) > Enemy.leashDistance)
             {
                 returning = true;
             }

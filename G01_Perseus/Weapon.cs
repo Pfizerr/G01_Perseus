@@ -17,7 +17,6 @@ namespace G01_Perseus
         {
             this.powerLevel = powerLevel;
             //damagePerShot = powerLevel * baseDamagePerShot;
-            timeSinceLastFire = 0;
         }
 
         
@@ -28,8 +27,7 @@ namespace G01_Perseus
         {
             damagePerShot = powerLevel * baseDamagePerShot;
         }
-            damagePerShot = powerLevel * baseDamagePerShot;
-        }
+            
 
         public abstract void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet typeOfBullet, GameTime gameTime);
         

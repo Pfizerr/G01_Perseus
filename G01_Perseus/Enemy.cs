@@ -88,6 +88,7 @@ namespace G01_Perseus
                 RecieveDamage(other, bullet.damage);
                 bullet.timeToLive = 0;
             }
+        }
             
 
         

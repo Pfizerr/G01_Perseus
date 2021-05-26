@@ -53,7 +53,6 @@
     <Compile Include="Game1.cs" />
     <Compile Include="KeyMouseReader.cs" />
     <Compile Include="MainMenu.cs" />
-    <Compile Include="MovingEntity.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="Laser.cs" />
     <Compile Include="MovingEntity.cs" />
