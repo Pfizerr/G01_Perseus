@@ -8,7 +8,6 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-
 namespace G01_Perseus
 {
     public class Planet : EventListener, MissionAcceptedClickListener, MissionDeniedClickListener
@@ -58,7 +57,7 @@ namespace G01_Perseus
                 radius = (float)Math.Floor((decimal)sprite.Width / 2);
             }
             else { throw new NotImplementedException(); }
-            
+
             highlightedSpriteOrigin = new Vector2(highlightedSprite.Width * 0.5f, highlightedSprite.Height * 0.5f);
             highlightedSpriteOffset = new Vector2((highlightedSprite.Width - sprite.Width) * 0.5f, (highlightedSprite.Height - sprite.Height) * 0.5f);
 
@@ -94,8 +93,7 @@ namespace G01_Perseus
                 {
                     timer.Reset(Game1.random.Next(minMissionCooldown, maxMissionCooldown), false);
                     missions[i] = MissionManager.LoadMission(MissionManager.GetRandomMissionId());
-                    missions[i].Contractor = this; //There is an error here when you close the game. Could be handles with a save and load function
-                    //Though note that this error doesn't happen all the time
+                    missions[i].Contractor = this;
                     missions[i].State = Mission.EState.Offered;
                 }
                 else

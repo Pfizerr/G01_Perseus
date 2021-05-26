@@ -32,19 +32,18 @@ namespace G01_Perseus
             set;
         }
 
-        public bool IsCompleted
-        {
-            get;
-            protected set;
-        }
-
         public MissionTracker(int tasksToComplete)
         {
             this.TasksToComplete = tasksToComplete;
 
             this.IsCompleted = false;
         }
-              
+
+        public bool IsCompleted
+        {
+            get;
+            protected set;
+        }
 
         protected virtual void TaskComplete()
         {

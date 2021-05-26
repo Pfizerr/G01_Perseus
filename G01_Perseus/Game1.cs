@@ -19,9 +19,8 @@ namespace G01_Perseus
 
         public static Camera camera;
         public static Random random = new Random(1);
-        private static StateStack stateStack;
+        public static StateStack stateStack;
 
-        private static bool shouldQuit;
 
         //Note: make a class for error messages that takes a string as an input for the player to see what is wrong if there is time left over
 
@@ -61,39 +60,31 @@ namespace G01_Perseus
             EntityManager.CreateEnemy(new Vector2(250, 250));
             Resources.Initialize(0, 0, 0, 0, 0, 0, 0, 0, 1);
 
-            camera = new Camera(Window);
+            camera = new Camera();
+            camera.FollowTarget = EntityManager.Player;
+            camera.Viewport = new Rectangle(0, 0, Window.ClientBounds.Width, Window.ClientBounds.Height);
 
             random = new Random(1);
 
-           
-
             stateStack = new StateStack();
-            stateStack.Push(new MainMenu(Window));
-            //stateStack.Push(new InGameState(camera));
-            //stateStack.Push(new HUD(Window));     
+            stateStack.Push(new InGameState(camera));
+            stateStack.Push(new HUD(Window)); // MARKUS, Avkommentera denna raden för att testa quest loggen            
             backgroundColor = Color.Black;
         }
+
 
         protected override void UnloadContent()
         {
 
         }
 
-        public static void Shutdown()
-        {
-            shouldQuit = true;
-        }
 
         protected override void Update(GameTime gameTime)
-        {
-            if (shouldQuit)
-            {
-                Exit();
-            }
-
+        {            
             KeyMouseReader.Update();
             stateStack.Update(gameTime);
         }
+
 
         protected override void Draw(GameTime gameTime)
         {
@@ -111,7 +102,7 @@ namespace G01_Perseus
         public void OnPushState(PushStateEvent e)
         {
             stateStack.Push(e.State);
-            Console.WriteLine("Pushed State: " + e.State);
+            Console.WriteLine("Pushed State: " + e);
         }
     }
 }

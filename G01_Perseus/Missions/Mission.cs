@@ -11,7 +11,7 @@ namespace G01_Perseus
             Accepted,
             Completed,
             NotInUse
-        }        
+        }
 
         public int Id { get; set; }
         public string Name { get; set; }

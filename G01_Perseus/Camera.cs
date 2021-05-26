@@ -11,22 +11,18 @@ namespace G01_Perseus
     {
 
         private Matrix translationMatrix; // This was mentioned as "not needed", however, it is. Else you will have to recreate the matrix every time you update its' translation (bad performance).
+        private Rectangle viewport;
 
-        public Camera(GameWindow window)
+        public Camera()
         {
-            this.Window = window;
             this.translationMatrix = Matrix.Identity;
-        }
-
-        public GameWindow Window
-        {
-            get;
-            private set;
+            this.viewport = new Rectangle(0, 0, 0, 0);
         }
 
         public Rectangle Viewport
         {
-            get{ return Window.ClientBounds; }
+            get{ return viewport; }
+            set{ viewport = value; }
         }
         
 

@@ -17,7 +17,10 @@ namespace G01_Perseus
             this.iD = iD;
         }
 
-        public abstract void Update(GameTime gameTime);
+        public virtual void Update(GameTime gameTime)
+        {
+
+        }
 
     }
 }

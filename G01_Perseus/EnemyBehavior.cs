@@ -9,8 +9,12 @@ namespace G01_Perseus
 {
     public abstract class EnemyBehavior
     {
-        public Enemy Enemy { get; set; }
+        public Enemy enemy;
 
+        public EnemyBehavior()
+        {
+
+        }
 
         public abstract void Update(GameTime gameTime, float rotation);
     }

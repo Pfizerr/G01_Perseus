@@ -12,7 +12,7 @@ namespace G01_Perseus.UI
     class HUD : GameState
     {
         private UIButton btnSkillUI, btnQuestUI;
-        private SkillInterface skillInterface;
+        private QuestLogInterface questLogInterface;
         private GameWindow window;
         private float healthbarWidth;
         private float shieldbarWidth;
@@ -30,7 +30,7 @@ namespace G01_Perseus.UI
 
             //Buttons on UI
             SetButtons();
-            this.skillInterface = new SkillInterface(window);           
+            this.questLogInterface = new QuestLogInterface(window);           
 
             //Healthbar portion
             barTex = AssetManager.TextureAsset("gradient_bar");
@@ -41,7 +41,7 @@ namespace G01_Perseus.UI
 
         public void OpenSkillUI()
         {
-            EventManager.Dispatch(new PushStateEvent(skillInterface));
+            EventManager.Dispatch(new PushStateEvent(questLogInterface));
             Console.WriteLine("Skill menu has been closed"); //Only for testing
         }
 
@@ -69,7 +69,7 @@ namespace G01_Perseus.UI
             spriteBatch.End();
         }
 
-        public void UpdatePlayerHealth() //Make this an event when the player takes damage and call this method
+        public void UpdatePlayerHealth() //Ask about a better way to do this than having it in the update method above
         {
             //Note for the % version of this part of the HUD. Replace the Entinty.Player.Max... with EntityManager.Player.TotalHealth
             healthbarSize.Width = (int)((EntityManager.Player.Health / EntityManager.Player.MaxHealth) * barTex.Width);
@@ -107,7 +107,6 @@ namespace G01_Perseus.UI
             this.btnSkillUI = new UIButton(new Rectangle((int)(window.ClientBounds.Width - 60), (int)(window.ClientBounds.Height - 60), 50, 50), AssetManager.TextureAsset("button_blue"), OpenSkillUI);
             this.btnQuestUI = new UIButton(new Rectangle((int)(btnSkillUI.Hitbox.X - 60), (int)(btnSkillUI.Hitbox.Y), 50, 50), AssetManager.TextureAsset("button_blue"), OpenSkillUI);
             btnSkillUI.HoveredTexture = AssetManager.TextureAsset("button_red");
-            btnQuestUI.HoveredTexture = AssetManager.TextureAsset("button_green");
         }
     }
 }
