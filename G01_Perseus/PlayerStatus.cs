@@ -14,63 +14,15 @@ namespace G01_Perseus
     public class PlayerStatus
     {
         private SpriteFont font;
-        public float MaxHealth
-        {
-            get;
-            set;
-        }
-        public float Health
-        {
-            get;
-            set;
-        }
-        public float MaxShields
-        {
-            get;
-            set;
-        }
-        public float Shields
-        {
-            get;
-            set;
-        }
-        public int SkillPoints
-        {
-            get;
-            set;
-        }
-        public int Level
-        {
-            get;
-            set;
-        }
-        public int Experience
-        {
-            get;
-            set;
-        }
-        public int Resources
-        {
-            get;
-            set;
-        }
-        public int Dust
-        {
-            get;
-            set;
-        }
+        public float MaxHealth { get; set;}
+        public float Health { get; set;}
+        public float MaxShields { get; set;}
+        public float Shields { get; set;}
+        public int Resources { get; set;}
 
-        public List<Mission> Missions
-        {
-            get;
-            set;
-        }
+        public List<Mission> Missions { get; set;}
 
-        public List<Mission> CompletedMissions
-        {
-            get;
-            set;
-        }
+        public List<Mission> CompletedMissions { get; set;}
 
         /*private float maxShields;
         private float shields;
@@ -102,15 +54,11 @@ namespace G01_Perseus
         /// <param name="experience"></param>
         /// <param name="resources"></param>
         /// <param name="dust"></param>
-        public PlayerStatus(float maxHealth, float maxShields, int skillPoints, int level, int experience, int resources, int dust) : this()
+        public PlayerStatus(float maxHealth, float maxShields, int resources) : this()
         {
             MaxHealth = maxHealth;
             MaxShields = maxShields;
-            SkillPoints = skillPoints;
-            Level = level;
-            Experience = experience;
             Resources = resources;
-            Dust = dust;
         }
 
         /// <summary>
@@ -154,19 +102,19 @@ namespace G01_Perseus
                 spriteBatch.DrawString(font, str, position, Color.White);
             }
 
-            string[] strs = new string[]
-            {
-                "Resources: " + Resources,
-                "Dust: " + Dust,
-                "Skillpoints: " + SkillPoints
-            };
+            //string[] strs = new string[]
+            //{
+            //    "Resources: " + Resources,
+            //    "Dust: " + Dust,
+            //    "Skillpoints: " + SkillPoints
+            //};
 
-            for (int i = 0; i < strs.Count(); i++)
-            {
-                size = font.MeasureString(strs[i]);
-                position = new Vector2(playerPosition.X - viewport.Width * 0.5f + 5, playerPosition.Y + viewport.Height * 0.5f  - 100 - (size.Y + 20) * i);
-                spriteBatch.DrawString(font, strs[i], position, Color.White);
-            }
+            //for (int i = 0; i < strs.Count(); i++)
+            //{
+            //    size = font.MeasureString(strs[i]);
+            //    position = new Vector2(playerPosition.X - viewport.Width * 0.5f + 5, playerPosition.Y + viewport.Height * 0.5f  - 100 - (size.Y + 20) * i);
+            //    spriteBatch.DrawString(font, strs[i], position, Color.White);
+            //}
             #endregion
         }
     }
