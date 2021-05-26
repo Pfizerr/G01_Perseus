@@ -25,6 +25,7 @@ namespace G01_Perseus.UI
         private float skillBarMaxWidth;
         private string[] statLables;
         private string btnExitText, btnResetText, skillPointsText;
+        private Vector2 btnExitTextPos, btnResetTextPos, skillPointsTextPos;
         private Texture2D[] skillIcons;
         //private List<Vector2> labelPosition;
 
@@ -41,6 +42,13 @@ namespace G01_Perseus.UI
             CreateUiButtons();
 
             SetIconsAndSkillBars();
+
+            btnExitText = "Exit";
+            btnResetText = "Reset skill points";
+            skillPointsText = string.Format("Skill Points: {0}", Resources.SkillPoints);
+            btnExitTextPos = new Vector2(exit.Hitbox.X + exit.Hitbox.Width + 5, exit.Hitbox.Y);
+            btnResetTextPos = new Vector2(resetSP.Hitbox.X + resetSP.Hitbox.Width + 5, resetSP.Hitbox.Y);
+            skillPointsTextPos = new Vector2(btnResetTextPos.X - 200, btnResetTextPos.Y);
         }        
 
         public override void Update(GameTime gameTime)
@@ -71,6 +79,10 @@ namespace G01_Perseus.UI
                 spriteBatch.Draw(skillbarOutlineTex, skillBarPosOutline[i], Color.White);
                 spriteBatch.Draw(skillIcons[i], skillIconPos[i], Color.White);
             }
+
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnExitText, btnExitTextPos, Color.Red);
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnResetText, btnResetTextPos, Color.Red);
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("Skill points: {0}", Resources.SkillPoints), skillPointsTextPos, Color.Yellow);
             spriteBatch.End();
         }
 
