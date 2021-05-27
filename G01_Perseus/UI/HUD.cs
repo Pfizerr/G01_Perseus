@@ -9,7 +9,7 @@ using G01_Perseus.EventSystem.Events;
 
 namespace G01_Perseus.UI
 {
-    class HUD : GameState
+    class HUD : GameState, HealthChangeListener
     {
         private UIButton btnSkillUI, btnShopUI;
         private SkillInterface skillInterface;
@@ -20,8 +20,8 @@ namespace G01_Perseus.UI
         private float healthbarHeight;
         private Rectangle healthbarSize, shieldbarSize, xpBarSize, xpBarOutline;        
         private Texture2D barTex, outlineTex;
-        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos, btnSkillTextPos, btnShopTextPos;
-        private string levelText, xpText, btnSkillText, btnShopText;
+        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos, btnSkillTextPos, btnShopTextPos, weponTextPos, weaponIconPos;
+        private string levelText, xpText, btnSkillText, btnShopText, weaponText;
 
         public HUD(GameWindow window)
         {
@@ -39,6 +39,8 @@ namespace G01_Perseus.UI
             SetHealthBarPositions(offsett);
 
             SetLevelAndXpBar(offsett);
+
+            weaponText = "Weapon in use: ";
         }
 
         public void OpenSkillUI()
@@ -57,7 +59,7 @@ namespace G01_Perseus.UI
         {
             btnSkillUI.Update(gameTime);
             btnShopUI.Update(gameTime);
-            UpdatePlayerHealth();
+            //UpdatePlayerHealth();
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -122,6 +124,12 @@ namespace G01_Perseus.UI
             btnShopUI.HoveredTexture = AssetManager.TextureAsset("button_red");
             btnSkillTextPos = new Vector2(btnSkillUI.Hitbox.X, btnSkillUI.Hitbox.Y - AssetManager.FontAsset("default_font").MeasureString(btnSkillText).Y);
             btnShopTextPos = new Vector2(btnShopUI.Hitbox.X, btnShopUI.Hitbox.Y - AssetManager.FontAsset("default_font").MeasureString(btnShopText).Y);
+        }
+
+        public void HealthChange(HealthChangeEvent e)
+        {
+            healthbarSize.Width = (int)((EntityManager.Player.Health / EntityManager.Player.MaxHealth) * barTex.Width);
+            shieldbarSize.Width = (int)((EntityManager.Player.Shields / EntityManager.Player.MaxShields) * barTex.Width);
         }
     }
 }

@@ -47,10 +47,7 @@ namespace G01_Perseus
             Movement(gameTime);
                        
             hitbox.Location = Center.ToPoint();
-            if(Shields < MaxShields)
-            {
-                ShieldRegeneration(gameTime);
-            }                       
+                                 
             SetHealthPosition();
             base.Update(gameTime);
 

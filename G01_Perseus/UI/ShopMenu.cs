@@ -19,7 +19,7 @@ namespace G01_Perseus.UI
         public ShopMenu(GameWindow window)
         {
             this.window = window;
-
+            this.Transparent = true;
             this.panelTexture = AssetManager.TextureAsset("shop_menu_background_UI");
 
             menu = new Menu(new Rectangle((int)(window.ClientBounds.Width / 2 - ((panelTexture.Width * 1.5f) / 2)) + 50, (int)(window.ClientBounds.Height * 0.3f) + 50, (int)(panelTexture.Width * 1.5f) - 100, (int)(panelTexture.Height * 1.5f) - 100), AssetManager.FontAsset("main_menu_font"));

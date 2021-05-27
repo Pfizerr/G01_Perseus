@@ -83,7 +83,7 @@ namespace G01_Perseus
                     spriteBatch.DrawString(font, option.Text, textPosition, color);
                 }
 
-                //spriteBatch.Draw(debugTexture, rect, color);
+                spriteBatch.Draw(debugTexture, rect, color); //Remove when finished
             }
         }
     }
@@ -104,7 +104,7 @@ namespace G01_Perseus
             this.Action = action;
         }
 
-        public string Text //Added a set here
+        public string Text
         {
             get;
             set;

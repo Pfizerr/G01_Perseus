@@ -50,19 +50,19 @@ namespace G01_Perseus
 
             base.Update(gameTime);
 
-            ShieldRegeneration(gameTime);
+            //ShieldRegeneration(gameTime);
 
             AdjustAngleTowardsTarget(FindMousePosition());
             HandleInput(gameTime);
 
-            Movement(gameTime);
+            Movement(gameTime); //Could be in Ships update?
             equipedWeapon.Update(gameTime);
 
             if (Status.Missions.Count > 0)
             {
                 foreach (Mission mission in Status.Missions)
                 {
-                Console.WriteLine(String.Format("ID: {0} Contractor: {1} Owner: {2}", mission.Id, mission.Contractor, mission.Owner));
+                    Console.WriteLine(String.Format("ID: {0} Contractor: {1} Owner: {2}", mission.Id, mission.Contractor, mission.Owner));
                 }
             }
 
@@ -182,6 +182,12 @@ namespace G01_Perseus
             {
                 weapon.SetDamagePerShot(PowerLevel);
             }
+        }
+
+        public override void RecieveDamage(Entity other, float damage)
+        {
+            base.RecieveDamage(other, damage);
+            EventManager.Dispatch(new HealthChangeEvent());
         }
 
         /// <summary>

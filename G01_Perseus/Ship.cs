@@ -50,6 +50,10 @@ namespace G01_Perseus
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (Shields < MaxShields)
+            {
+                ShieldRegeneration(gameTime);
+            }
         }
 
         public virtual void Movement(GameTime gameTime)
@@ -109,7 +113,7 @@ namespace G01_Perseus
             {
                 hitTimer -= gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (hitTimer <= 0 && Shields < MaxShields)
+            else if (hitTimer <= 0)
             {
                 Shields += 1;
                 if (Shields > MaxShields)
