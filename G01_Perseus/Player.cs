@@ -190,6 +190,12 @@ namespace G01_Perseus
             EventManager.Dispatch(new HealthChangeEvent());
         }
 
+        public override void ShieldRegeneration(GameTime gameTime)
+        {
+            base.ShieldRegeneration(gameTime);
+            EventManager.Dispatch(new HealthChangeEvent());
+        }
+
         /// <summary>
         /// Below here are only properties of the player class
         /// </summary>

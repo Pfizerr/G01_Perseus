@@ -8,11 +8,6 @@ namespace G01_Perseus
 {
     public class HealthChangeEvent : Event
     {
-        public HealthChangeEvent()
-        {
-
-        }
-
         public override void Dispatch(EventListener listener)
         {
             // This if statement should be present in every Dispatch-method

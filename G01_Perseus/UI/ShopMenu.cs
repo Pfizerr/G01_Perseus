@@ -68,8 +68,9 @@ namespace G01_Perseus.UI
                 {
                     //EntityManager.Player.Health += 10;
                 }
-
+                EventManager.Dispatch(new HealthChangeEvent());
             }
+            
         }
     }
 }
