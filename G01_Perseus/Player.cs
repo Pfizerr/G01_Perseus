@@ -13,7 +13,10 @@ namespace G01_Perseus
         private float baseMaxShields;
         private float basePowerLevel;
         public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
-        
+        public enum WeaponStatus { Available, NotAvailable };
+        public WeaponStatus[] weaponStatuses;
+        protected List<Weapon> weapons;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -27,6 +30,8 @@ namespace G01_Perseus
             baseMaxHealth = health;
             baseMaxShields = shield;
             basePowerLevel = 1; //This could be an input parameter for the constructor
+            weaponStatuses = new WeaponStatus[] { WeaponStatus.Available, WeaponStatus.NotAvailable };
+            weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, 1) };
             EventManager.Register(this);
         }
 
@@ -103,12 +108,12 @@ namespace G01_Perseus
         /// </summary>
         private void ChangeWeapon()
         {
-            if (KeyMouseReader.KeyPressed(Keys.D1))
+            if (KeyMouseReader.KeyPressed(Keys.D1) && weaponStatuses[0] == WeaponStatus.Available) //KeyMouseReader.KeyPressed(Keys.None)
             {
                 equipedWeapon = weapons[0];
             }
 
-            if (KeyMouseReader.KeyPressed(Keys.D2))
+            if (KeyMouseReader.KeyPressed(Keys.D2) && weaponStatuses[1] == WeaponStatus.Available)
             {
                 equipedWeapon = weapons[1];
             }

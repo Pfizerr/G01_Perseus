@@ -104,9 +104,10 @@ namespace G01_Perseus
             this.Action = action;
         }
 
-        public string Text
+        public string Text //Added a set here
         {
             get;
+            set;
         }
 
         public Texture2D Texture

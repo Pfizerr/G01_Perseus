@@ -13,6 +13,7 @@ namespace G01_Perseus.UI
     {
         private UIButton btnSkillUI, btnShopUI;
         private SkillInterface skillInterface;
+        private ShopMenu shopMenu;
         private GameWindow window;
         private float healthbarWidth;
         private float shieldbarWidth;
@@ -30,7 +31,8 @@ namespace G01_Perseus.UI
 
             //Buttons on UI
             SetButtons();
-            this.skillInterface = new SkillInterface(window);           
+            this.skillInterface = new SkillInterface(window);
+            this.shopMenu = new ShopMenu(window);
 
             //Healthbar portion
             barTex = AssetManager.TextureAsset("gradient_bar");
@@ -42,7 +44,13 @@ namespace G01_Perseus.UI
         public void OpenSkillUI()
         {
             EventManager.Dispatch(new PushStateEvent(skillInterface));
-            Console.WriteLine("Skill menu has been closed"); //Only for testing
+            Console.WriteLine("Skill menu has been opened"); //Only for testing
+        }
+
+        public void OpenShopMenu()
+        {
+            EventManager.Dispatch(new PushStateEvent(shopMenu));
+            Console.WriteLine("Shop menu has been opened"); //Only for testing
         }
 
         public override void Update(GameTime gameTime)
@@ -66,8 +74,8 @@ namespace G01_Perseus.UI
             spriteBatch.Draw(outlineTex, xpBarOutline, Color.White);
             spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("Level: {0}", Resources.Level), levelTextPos, Color.Yellow);
             spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("{0} / {1}", Resources.XP, Resources.XPToNextLevel), xpTextPos, Color.Yellow);
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnShopText, btnShopTextPos, Color.Green);
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnSkillText, btnSkillTextPos, Color.Blue);
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnShopText, btnShopTextPos, Color.LightGreen);
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnSkillText, btnSkillTextPos, Color.LightBlue);
             spriteBatch.End();
         }
 
@@ -109,7 +117,7 @@ namespace G01_Perseus.UI
             btnSkillText = "Skills";
             btnShopText = "Shop";
             this.btnSkillUI = new UIButton(new Rectangle((int)(window.ClientBounds.Width - 60), (int)(window.ClientBounds.Height - 60), 50, 50), AssetManager.TextureAsset("button_blue"), OpenSkillUI);
-            this.btnShopUI = new UIButton(new Rectangle((int)(btnSkillUI.Hitbox.X - 60), (int)(btnSkillUI.Hitbox.Y), 50, 50), AssetManager.TextureAsset("button_green"), OpenSkillUI);
+            this.btnShopUI = new UIButton(new Rectangle((int)(btnSkillUI.Hitbox.X - 60), (int)(btnSkillUI.Hitbox.Y), 50, 50), AssetManager.TextureAsset("button_green"), OpenShopMenu);
             btnSkillUI.HoveredTexture = AssetManager.TextureAsset("button_red");
             btnShopUI.HoveredTexture = AssetManager.TextureAsset("button_red");
             btnSkillTextPos = new Vector2(btnSkillUI.Hitbox.X, btnSkillUI.Hitbox.Y - AssetManager.FontAsset("default_font").MeasureString(btnSkillText).Y);

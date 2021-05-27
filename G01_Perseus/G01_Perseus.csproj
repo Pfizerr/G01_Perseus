@@ -86,6 +86,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="UI\ShopMenu.cs" />
     <Compile Include="WeaponTripleShot.cs" />
     <Compile Include="WeaponSingleShot.cs" />
     <Compile Include="PlayerStatus.cs" />
