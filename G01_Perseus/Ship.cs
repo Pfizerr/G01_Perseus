@@ -21,7 +21,7 @@ namespace G01_Perseus
         //Components
         protected PlayerStatus playerStatus;
         public float Shields { get; protected set; }
-        public float Health { get; protected set; }
+        public float Health { get; set; } //Removed the protected set here :/ To make the shop able to give the player health. Should use the event system
         public float TotalHealth { get; protected set; }
         public virtual float MaxHealth { get; protected set; }
         public virtual float MaxShields { get; protected set; }
