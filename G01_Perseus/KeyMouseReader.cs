@@ -24,6 +24,12 @@ namespace G01_Perseus
         {
             return mouseState.LeftButton == ButtonState.Pressed && oldMouseState.LeftButton == ButtonState.Released;
         }
+
+        public static bool LeftHold()
+        {
+            return mouseState.LeftButton == ButtonState.Pressed;
+        }
+
         public static bool RightClick()
         {
             return mouseState.RightButton == ButtonState.Pressed && oldMouseState.RightButton == ButtonState.Released;

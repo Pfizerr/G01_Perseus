@@ -41,6 +41,7 @@ namespace G01_Perseus.UI
             SetLevelAndXpBar(offsett);
 
             weaponText = "Weapon in use: ";
+            EventManager.Register(this);
         }
 
         public void OpenSkillUI()

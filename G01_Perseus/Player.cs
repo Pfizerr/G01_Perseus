@@ -12,6 +12,7 @@ namespace G01_Perseus
         private float baseMaxHealth;
         private float baseMaxShields;
         private float basePowerLevel;
+        private float baseFireRate;
         public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
         public enum WeaponStatus { Available, NotAvailable };
         public WeaponStatus[] weaponStatuses;
@@ -30,8 +31,9 @@ namespace G01_Perseus
             baseMaxHealth = health;
             baseMaxShields = shield;
             basePowerLevel = 1; //This could be an input parameter for the constructor
+            baseFireRate = 0;
             weaponStatuses = new WeaponStatus[] { WeaponStatus.Available, WeaponStatus.NotAvailable };
-            weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, 1) };
+            weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, (int)baseFireRate) };
             EventManager.Register(this);
         }
 
@@ -92,7 +94,7 @@ namespace G01_Perseus
 
             direction = direction.LengthSquared() > 1 ? Vector2.Normalize(direction) : direction;
 
-            if(KeyMouseReader.LeftClick() && !hasFocusOnPlanet)
+            if(KeyMouseReader.LeftHold() && !hasFocusOnPlanet)
             {
                 //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
 
@@ -176,13 +178,15 @@ namespace G01_Perseus
         /// <summary>
         /// Updates the power level of all the weapons the player has
         /// </summary>
-        public void UpdateWeaponPower()
+        public void UpdateWeapons()
         {
             foreach (Weapon weapon in weapons)
             {
                 weapon.SetDamagePerShot(PowerLevel);
+                weapon.SetFireTimer((int)FireRate);
             }
         }
+
 
         public override void RecieveDamage(Entity other, float damage)
         {
@@ -215,6 +219,12 @@ namespace G01_Perseus
         {
             get { return basePowerLevel + Resources.SpDamage; }
             protected set => base.PowerLevel = value;
+        }
+
+        public override float FireRate
+        {
+            get { return baseFireRate + Resources.SpFireRate * 10; }
+            protected set => base.FireRate = value;
         }
     }
 }

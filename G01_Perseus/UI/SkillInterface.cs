@@ -88,7 +88,7 @@ namespace G01_Perseus.UI
 
         public void ExitUI()
         {
-            EntityManager.Player.UpdateWeaponPower();
+            EntityManager.Player.UpdateWeapons();
             EventManager.Dispatch(new PopStateEvent());
         }
 

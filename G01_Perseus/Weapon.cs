@@ -14,11 +14,12 @@ namespace G01_Perseus
         protected float powerLevel;
         protected float damagePerShot;
         protected Timer fireTimer;
+        protected int baseFireTimer;
 
-        public Weapon(int iD, float powerLevel) : base(iD)
+        public Weapon(int iD, float powerLevel, int fireRate) : base(iD)
         {
             this.powerLevel = powerLevel;
-            //damagePerShot = powerLevel * baseDamagePerShot;
+            this.fireTimer = new Timer(baseFireTimer);           
             timeSinceLastFire = 0;
         }
 
@@ -38,6 +39,19 @@ namespace G01_Perseus
         public void SetDamagePerShot(float powerLevel)
         {
             damagePerShot = powerLevel * baseDamagePerShot;
+        }
+
+        public void SetFireTimer(int fireRate)
+        {
+            if (baseFireTimer - fireRate < 0)
+            {
+                this.fireTimer = new Timer(0);
+            }
+            else
+            {                
+                this.fireTimer = new Timer((int)(baseFireTimer - baseFireTimer / 100 * fireRate));
+            }
+            
         }
     }
 }

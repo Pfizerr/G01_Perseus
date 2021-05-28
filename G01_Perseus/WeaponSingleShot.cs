@@ -9,13 +9,15 @@ namespace G01_Perseus
 {
     public class WeaponSingleShot : Weapon
     {
-        public WeaponSingleShot(int iD, float powerLevel) : base(iD, powerLevel)
+        public WeaponSingleShot(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
         {
             name = "Singleshot";
             rateOfFire = 1f;
             baseDamagePerShot = 5;
+            baseFireTimer = 1000;
             SetDamagePerShot(powerLevel);
-            fireTimer = new Timer(1000);
+            SetFireTimer(fireRate);
+            
         }
 
         public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type, GameTime gameTime)
