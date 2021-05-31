@@ -102,6 +102,7 @@ namespace G01_Perseus
                 if(this is Enemy)
                 {
                     Resources.AddXP(1100);
+                    EventManager.Dispatch(new GainXpEvent());
                 }
             }
             

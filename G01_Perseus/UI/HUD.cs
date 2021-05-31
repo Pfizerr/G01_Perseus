@@ -9,7 +9,7 @@ using G01_Perseus.EventSystem.Events;
 
 namespace G01_Perseus.UI
 {
-    class HUD : GameState, HealthChangeListener
+    class HUD : GameState, HealthChangeListener, GainXpListener
     {
         private UIButton btnSkillUI, btnShopUI;
         private SkillInterface skillInterface;
@@ -60,7 +60,6 @@ namespace G01_Perseus.UI
         {
             btnSkillUI.Update(gameTime);
             btnShopUI.Update(gameTime);
-            //UpdatePlayerHealth();
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -80,15 +79,6 @@ namespace G01_Perseus.UI
             spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnShopText, btnShopTextPos, Color.LightGreen);
             spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnSkillText, btnSkillTextPos, Color.LightBlue);
             spriteBatch.End();
-        }
-
-        public void UpdatePlayerHealth() //Make this an event when the player takes damage and call this method
-        {
-            //Note for the % version of this part of the HUD. Replace the Entinty.Player.Max... with EntityManager.Player.TotalHealth
-            healthbarSize.Width = (int)((EntityManager.Player.Health / EntityManager.Player.MaxHealth) * barTex.Width);
-            shieldbarSize.Width = (int)((EntityManager.Player.Shields / EntityManager.Player.MaxShields) * barTex.Width);
-
-            xpBarSize.Width = (int)((Resources.XP / Resources.XPToNextLevel) * barTex.Width);
         }
 
         public void SetHealthBarPositions(float offsett)
@@ -129,8 +119,14 @@ namespace G01_Perseus.UI
 
         public void HealthChange(HealthChangeEvent e)
         {
+            //Note for the % version of this part of the HUD. Replace the Entinty.Player.Max... with EntityManager.Player.TotalHealth
             healthbarSize.Width = (int)((EntityManager.Player.Health / EntityManager.Player.MaxHealth) * barTex.Width);
             shieldbarSize.Width = (int)((EntityManager.Player.Shields / EntityManager.Player.MaxShields) * barTex.Width);
+        }
+
+        public void XpChange(GainXpEvent e)
+        {
+            xpBarSize.Width = (int)((Resources.XP / Resources.XPToNextLevel) * barTex.Width);
         }
     }
 }

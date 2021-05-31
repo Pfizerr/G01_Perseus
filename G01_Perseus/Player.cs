@@ -34,6 +34,8 @@ namespace G01_Perseus
             baseFireRate = 0;
             weaponStatuses = new WeaponStatus[] { WeaponStatus.Available, WeaponStatus.NotAvailable };
             weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, (int)baseFireRate) };
+            this.texture = AssetManager.TextureAsset("player_ship");
+            SetSizeAndHitbox(this.texture);
             EventManager.Register(this);
         }
 
@@ -159,10 +161,10 @@ namespace G01_Perseus
             Status.Missions.Add(mission);
         }
 
-        protected override void DefaultTexture()
-        {
-            texture = AssetManager.TextureAsset("player_ship");
-        }
+        //protected override void DefaultTexture()
+        //{
+        //    texture = AssetManager.TextureAsset("player_ship");
+        //}
 
         public PlayerStatus Status
         {

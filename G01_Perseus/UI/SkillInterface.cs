@@ -29,6 +29,7 @@ namespace G01_Perseus.UI
             this.Transparent = true;
             this.buttonTex = AssetManager.TextureAsset("skill_button_blue");
             this.buttonHoveredTex = AssetManager.TextureAsset("skill_button_red");
+            this.backgroundTex = AssetManager.TextureAsset("skill_UI");
             this.skillIcons = new Texture2D[] { AssetManager.TextureAsset("damage_icon"), AssetManager.TextureAsset("health_icon"), AssetManager.TextureAsset("shield_icon"), AssetManager.TextureAsset("fire_rate_icon") };
             this.bounds = new Rectangle(window.ClientBounds.Width / 2 - (int)(backgroundTex.Width * 1.7f / 2), window.ClientBounds.Height / 2 - (int)(backgroundTex.Height * 1.7f / 2), (int)(backgroundTex.Width * 1.7f), (int)(backgroundTex.Height * 1.7f));
             CreateUiButtons();

@@ -15,6 +15,8 @@ namespace G01_Perseus
             : base(maxVelocity, position, scale)
         {
             Type = type;
+            SetTexture();
+            SetSizeAndHitbox(this.texture);
             this.damage = damage;
             this.timeToLive = timeToLive;
             Center = position;
@@ -44,7 +46,7 @@ namespace G01_Perseus
             //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
 
-        protected override void DefaultTexture() //This doesn't work, see comments in the Entity constructor as to why
+        protected void SetTexture() //This doesn't work, see comments in the Entity constructor as to why
         {
             if(Type == TypeOfBullet.Player) //This will always default to the same type because of Entity
             {

@@ -22,7 +22,9 @@ namespace G01_Perseus
 
         public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, EnemyBehavior behavior, float leashDistance, Texture2D texture, float acceleration) : base(position, maxVelocity, scale, health, shield) 
         {
-            healthBarHeight = 10;            
+            healthBarHeight = 10;
+            this.texture = texture;
+            SetSizeAndHitbox(this.texture);
             healthPos = new Rectangle((int)position.X, (int)position.Y - healthBarHeight, (int)((Health / TotalHealth) * hitbox.Width), healthBarHeight);
             shieldPos = new Rectangle(healthPos.X + healthPos.Width, healthPos.Y, (int)((Shields / TotalHealth) * hitbox.Width), healthBarHeight);
             EventManager.Register(this);
@@ -35,17 +37,19 @@ namespace G01_Perseus
             
 
             this.leashDistance = leashDistance;
-            this.texture = texture;
+            
 
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
+            spriteBatch.Draw(AssetManager.TextureAsset("projectile_yellow"), new Rectangle(Position.ToPoint(), Size.ToPoint()), Color.White);
             spriteBatch.Draw(texture, hitbox, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), healthPos, null, Color.Crimson, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), shieldPos, null, Color.Cyan, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
             //Vector2 drawPosition = new Vector2((tileX * tileWidth) + position.X - (ix * tileWidth), (tileY * tileWidth) + position.Y - (iy * tileHeight));
             //spriteBatch.Draw(texture, drawPosition, null, Color.White, rotation, size / 2, Vector2.One, SpriteEffects.None, 0.5f);*/
+            
         }
 
         public override void Update(GameTime gameTime)
@@ -54,7 +58,7 @@ namespace G01_Perseus
 
             Movement(gameTime);
                        
-            hitbox.Location = Center.ToPoint();
+            hitbox.Location = Center.ToPoint(); //Should this be Center.ToPoint()??
                                  
             SetHealthPosition();
             base.Update(gameTime);
@@ -66,11 +70,11 @@ namespace G01_Perseus
             equipedWeapon.Fire(Center, EntityManager.Player.Center, rotation, TypeOfBullet.Enemy, gameTime);
         }
 
-        private void SetHealthPosition() //This is a bit clunky
+        private void SetHealthPosition()
         {
-            healthPos.Location = Position.ToPoint();
+            healthPos.Location = hitbox.Location;
             healthPos.Y -= healthBarHeight;
-            shieldPos.Location = healthPos.Location;
+            shieldPos.Location = hitbox.Location;
             shieldPos.X += healthPos.Width;
         }
 
@@ -105,10 +109,10 @@ namespace G01_Perseus
             shieldPos.Width = (int)((Shields / TotalHealth) * hitbox.Width);
         }
 
-        protected override void DefaultTexture()
-        {
-            texture = AssetManager.TextureAsset("enemy_ship");
-        }
+        //protected override void DefaultTexture()
+        //{
+        //    texture = AssetManager.TextureAsset("enemy_ship");
+        //}
 
         public void PlayerFired(PlayerShootEvent e)
         {
