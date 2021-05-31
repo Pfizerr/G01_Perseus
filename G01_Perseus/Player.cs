@@ -40,15 +40,15 @@ namespace G01_Perseus
         public override void Update(GameTime gameTime)
         {
             //These if statements should be moved perhaps?
-            if(Shields > MaxShields)
-            {
-                Shields = MaxShields;
-            }
+            //if(Shields > MaxShields)
+            //{
+            //    Shields = MaxShields;
+            //}
 
-            if(Health > MaxHealth)
-            {
-                Health = MaxHealth;
-            }
+            //if(Health > MaxHealth)
+            //{
+            //    Health = MaxHealth;
+            //}
 
             base.Update(gameTime);
 
