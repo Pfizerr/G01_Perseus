@@ -19,7 +19,7 @@ namespace G01_Perseus
             this.powerLevel = powerLevel;
 
             this.fireTimer = new Timer(baseFireTimer);           
-            timeSinceLastFire = 0;
+            //timeSinceLastFire = 0;
         }  
         
         public void SetDamagePerShot(float powerLevel)

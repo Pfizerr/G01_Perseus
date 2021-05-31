@@ -59,7 +59,7 @@ namespace G01_Perseus
 
 
             Movement(gameTime); //Could be in Ships update?
-            equipedWeapon.Update(gameTime);
+            //equipedWeapon.Update(gameTime);
 
             if (Status.Missions.Count > 0)
             {
