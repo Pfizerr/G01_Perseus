@@ -10,13 +10,14 @@ namespace G01_Perseus
     class WeaponTripleShot : Weapon
     {
         private Vector2 secondBulletTarget, thirdBulletTarget;
-        public WeaponTripleShot(int iD, float powerLevel) : base(iD, powerLevel)
+        public WeaponTripleShot(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
         {
             name = "Tripleshot";
             baseDamagePerShot = 2;
+            baseFireTimer = 1500;
             SetDamagePerShot(powerLevel);
-            fireTimer = new Timer(1500);
-            
+            SetFireTimer(fireRate);
+
         }
 
         public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type, GameTime gameTime)

@@ -12,8 +12,12 @@ namespace G01_Perseus
         private float baseMaxHealth;
         private float baseMaxShields;
         private float basePowerLevel;
+        private float baseFireRate;
         public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
-        
+        public enum WeaponStatus { Available, NotAvailable };
+        public WeaponStatus[] weaponStatuses;
+        protected List<Weapon> weapons;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -27,6 +31,9 @@ namespace G01_Perseus
             baseMaxHealth = health;
             baseMaxShields = shield;
             basePowerLevel = 1; //This could be an input parameter for the constructor
+            baseFireRate = 0;
+            weaponStatuses = new WeaponStatus[] { WeaponStatus.Available, WeaponStatus.NotAvailable };
+            weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, (int)baseFireRate) };
             EventManager.Register(this);
         }
 
@@ -45,18 +52,20 @@ namespace G01_Perseus
 
             base.Update(gameTime);
 
-            ShieldRegeneration(gameTime);
+            //ShieldRegeneration(gameTime);
 
             AdjustAngleTowardsTarget(FindMousePosition());
             HandleInput(gameTime);
 
-            Movement(gameTime);
+
+            Movement(gameTime); //Could be in Ships update?
+            equipedWeapon.Update(gameTime);
 
             if (Status.Missions.Count > 0)
             {
                 foreach (Mission mission in Status.Missions)
                 {
-                Console.WriteLine(String.Format("ID: {0} Contractor: {1} Owner: {2}", mission.Id, mission.Contractor, mission.Owner));
+                    Console.WriteLine(String.Format("ID: {0} Contractor: {1} Owner: {2}", mission.Id, mission.Contractor, mission.Owner));
                 }
             }
 
@@ -86,7 +95,7 @@ namespace G01_Perseus
 
             direction = direction.LengthSquared() > 1 ? Vector2.Normalize(direction) : direction;
 
-            if(KeyMouseReader.LeftClick() && !hasFocusOnPlanet)
+            if(KeyMouseReader.LeftHold() && !hasFocusOnPlanet)
             {
                 //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
 
@@ -116,12 +125,12 @@ namespace G01_Perseus
         /// </summary>
         private void ChangeWeapon()
         {
-            if (KeyMouseReader.KeyPressed(Keys.D1))
+            if (KeyMouseReader.KeyPressed(Keys.D1) && weaponStatuses[0] == WeaponStatus.Available) //KeyMouseReader.KeyPressed(Keys.None)
             {
                 equipedWeapon = weapons[0];
             }
 
-            if (KeyMouseReader.KeyPressed(Keys.D2))
+            if (KeyMouseReader.KeyPressed(Keys.D2) && weaponStatuses[1] == WeaponStatus.Available)
             {
                 equipedWeapon = weapons[1];
             }
@@ -189,12 +198,26 @@ namespace G01_Perseus
         /// <summary>
         /// Updates the power level of all the weapons the player has
         /// </summary>
-        public void UpdateWeaponPower()
+        public void UpdateWeapons()
         {
             foreach (Weapon weapon in weapons)
             {
                 weapon.SetDamagePerShot(PowerLevel);
+                weapon.SetFireTimer((int)FireRate);
             }
+        }
+
+
+        public override void RecieveDamage(Entity other, float damage)
+        {
+            base.RecieveDamage(other, damage);
+            EventManager.Dispatch(new HealthChangeEvent());
+        }
+
+        public override void ShieldRegeneration(GameTime gameTime)
+        {
+            base.ShieldRegeneration(gameTime);
+            EventManager.Dispatch(new HealthChangeEvent());
         }
 
         /// <summary>
@@ -216,6 +239,12 @@ namespace G01_Perseus
         {
             get { return basePowerLevel + Resources.SpDamage; }
             protected set => base.PowerLevel = value;
+        }
+
+        public override float FireRate
+        {
+            get { return baseFireRate + Resources.SpFireRate * 10; }
+            protected set => base.FireRate = value;
         }
     }
 }

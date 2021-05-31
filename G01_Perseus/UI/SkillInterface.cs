@@ -13,7 +13,7 @@ namespace G01_Perseus.UI
     {
 
         private Rectangle bounds;
-        private Texture2D backgroundTexture, skillbarTex, buttonTex, buttonHoveredTex;
+        private Texture2D backgroundTex, skillbarOutlineTex, buttonTex, buttonHoveredTex;
 
         private UIButton exit, addDamage, addShields, addHealth, addFireRate, resetSP;
         //private List<UIButton> buttons;
@@ -24,6 +24,8 @@ namespace G01_Perseus.UI
         private Action[] actions; //This is just for an automated system of the "add" buttons. It is not used currently
         private float skillBarMaxWidth;
         private string[] statLables;
+        private string btnExitText, btnResetText, skillPointsText;
+        private Vector2 btnExitTextPos, btnResetTextPos, skillPointsTextPos;
         private Texture2D[] skillIcons;
         private List<Vector2> labelPosition;
 
@@ -35,11 +37,18 @@ namespace G01_Perseus.UI
             this.skillIcons = new Texture2D[] { AssetManager.TextureAsset("damage_icon"), AssetManager.TextureAsset("health_icon"), AssetManager.TextureAsset("shield_icon"), AssetManager.TextureAsset("fire_rate_icon") };
             //Can use this to make a for loop automated for the buttons
             //actions = new Action[] { IncreaseDamage, IncreaseHealth, IncreaseShields, IncreaseFireRate }; 
-            this.backgroundTexture = AssetManager.TextureAsset("skill_UI"); //Util.CreateFilledRectangleTexture(new Color(255, 255, 255, 255), 1, 1);
-            this.bounds = new Rectangle(window.ClientBounds.Width / 2 - (int)(backgroundTexture.Width * 1.7f / 2), window.ClientBounds.Height / 2 - (int)(backgroundTexture.Height * 1.7f / 2), (int)(backgroundTexture.Width * 1.7f), (int)(backgroundTexture.Height * 1.7f));
+            this.backgroundTex = AssetManager.TextureAsset("skill_UI"); //Util.CreateFilledRectangleTexture(new Color(255, 255, 255, 255), 1, 1);
+            this.bounds = new Rectangle(window.ClientBounds.Width / 2 - (int)(backgroundTex.Width * 1.7f / 2), window.ClientBounds.Height / 2 - (int)(backgroundTex.Height * 1.7f / 2), (int)(backgroundTex.Width * 1.7f), (int)(backgroundTex.Height * 1.7f));
             CreateUiButtons();
 
             SetIconsAndSkillBars();
+
+            btnExitText = "Exit";
+            btnResetText = "Reset skill points";
+            skillPointsText = string.Format("Skill Points: {0}", Resources.SkillPoints);
+            btnExitTextPos = new Vector2(exit.Hitbox.X + exit.Hitbox.Width + 5, exit.Hitbox.Y);
+            btnResetTextPos = new Vector2(resetSP.Hitbox.X + resetSP.Hitbox.Width + 5, resetSP.Hitbox.Y);
+            skillPointsTextPos = new Vector2(btnResetTextPos.X - 200, btnResetTextPos.Y);
         }        
 
         public override void Update(GameTime gameTime)
@@ -55,7 +64,7 @@ namespace G01_Perseus.UI
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(backgroundTexture, bounds, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 1f);
+            spriteBatch.Draw(backgroundTex, bounds, null, Color.White, 0f, Vector2.Zero, SpriteEffects.None, 1f);
             exit.Draw(spriteBatch, gameTime);
             resetSP.Draw(spriteBatch, gameTime);
             foreach(UIButton button in buttonsArray)
@@ -67,15 +76,19 @@ namespace G01_Perseus.UI
             {
                 spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), skillBarPos[i], Color.Green);
                 //spriteBatch.DrawString(AssetManager.FontAsset("default_font"), statLables[i], labelPosition[i], Color.Black);
-                spriteBatch.Draw(skillbarTex, skillBarPosOutline[i], Color.White);
+                spriteBatch.Draw(skillbarOutlineTex, skillBarPosOutline[i], Color.White);
                 spriteBatch.Draw(skillIcons[i], skillIconPos[i], Color.White);
             }
+
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnExitText, btnExitTextPos, Color.Red);
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnResetText, btnResetTextPos, Color.Red);
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("Skill points: {0}", Resources.SkillPoints), skillPointsTextPos, Color.Yellow);
             spriteBatch.End();
         }
 
         public void ExitUI()
         {
-            EntityManager.Player.UpdateWeaponPower(); //Ask about a better way for the weapon uppgrade management
+            EntityManager.Player.UpdateWeapons();
             EventManager.Dispatch(new PopStateEvent());
         }
 
@@ -160,7 +173,7 @@ namespace G01_Perseus.UI
             //Skillbar lables
             statLables = new string[] { "Damage", "Health", "Shields", "Fire rate" };
 
-            skillbarTex = Util.CreateRectangleTexture((int)skillBarMaxWidth, buttonsArray[0].Hitbox.Height, Color.Black, Color.Transparent);
+            skillbarOutlineTex = Util.CreateRectangleTexture((int)skillBarMaxWidth, buttonsArray[0].Hitbox.Height, Color.Black, Color.Transparent);
         }
     }
 }

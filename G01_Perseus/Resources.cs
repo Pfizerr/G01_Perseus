@@ -28,7 +28,7 @@ namespace G01_Perseus
             SpHealth = spHealth;
             SpShields = spShields;
             SpFireRate = spFireRate;
-            SkillPoints = 5; //Replace with sp from the parameters
+            SkillPoints = 10; //Replace with sp from the parameters
             MaxPoints = 10;
             XP = xp;
             Level = level;

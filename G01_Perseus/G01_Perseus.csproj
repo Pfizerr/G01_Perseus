@@ -43,12 +43,14 @@
   <ItemGroup>
     <Compile Include="Background.cs" />
     <Compile Include="EventSystem\Events\CollissionEvent.cs" />
+    <Compile Include="EventSystem\Events\HealthChangeEvent.cs" />
     <Compile Include="EventSystem\Listeners\CollissionListener.cs" />
     <Compile Include="EnemyBehavior.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
     <Compile Include="EventSystem\Listeners\MouseEnterPlanetListener.cs" />
     <Compile Include="EventSystem\Listeners\MouseExitPlanetListener.cs" />
+    <Compile Include="EventSystem\Listeners\HealthChangeListener.cs" />
     <Compile Include="ExtendedTimer.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="KeyMouseReader.cs" />
@@ -89,6 +91,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="UI\ShopMenu.cs" />
     <Compile Include="WeaponTripleShot.cs" />
     <Compile Include="WeaponSingleShot.cs" />
     <Compile Include="PlayerStatus.cs" />

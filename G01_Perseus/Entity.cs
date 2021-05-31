@@ -22,7 +22,7 @@ namespace G01_Perseus
             //this.layerDepth = layerDepth;
             IsCollidable = true;
 
-            if (texture == null)
+            if (texture == null) //Could this be moved somewhere else?
             {
                 DefaultTexture();
             }

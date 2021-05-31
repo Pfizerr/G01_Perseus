@@ -9,13 +9,13 @@ namespace G01_Perseus
 {
     class WeaponLaser : Weapon // Currently non-functional
     {
-        //private TypeOfLaser laserType;
-        public WeaponLaser(int iD, float powerLevel) : base(iD, powerLevel)
+
+        public WeaponLaser(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
         {
             name = "Laser";
             baseDamagePerShot = 5;
             SetDamagePerShot(powerLevel);
-            fireTimer = new Timer(100);
+            this.fireTimer = new Timer(100);
         }
 
         public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type, GameTime gameTime)
