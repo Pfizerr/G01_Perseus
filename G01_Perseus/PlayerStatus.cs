@@ -20,7 +20,6 @@ namespace G01_Perseus
         public float Health { get; set;}
         public float MaxShields { get; set;}
         public float Shields { get; set;}
-        //public int Resources { get; set;}
 
         public List<Mission> Missions { get; set;}
 
@@ -108,7 +107,7 @@ namespace G01_Perseus
         {
             Resources.AddDust(e.Mission.Dust);
             Resources.AddCurrency(e.Mission.Currency);
-            Resources.AddSkillPoint(e.Mission.SkillPoints);
+            Resources.AddXP(e.Mission.SkillPoints);
             Missions.Remove(e.Mission);
         }
 

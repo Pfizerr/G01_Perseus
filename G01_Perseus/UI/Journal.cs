@@ -12,6 +12,8 @@ namespace G01_Perseus.UI
         private Texture2D background;
         private Rectangle bounds;
         private float Opacity;
+        private int buttonWidth;
+        private int buttonHeight;
 
         public Journal(List<Mission> missions)
         {
@@ -22,15 +24,20 @@ namespace G01_Perseus.UI
             this.bounds = new Rectangle(Game1.camera.Viewport.Width / 2 - background.Width / 2, Game1.camera.Viewport.Height / 2 - background.Height / 2, background.Width, background.Height);
             this.buttons = new List<JournalMissionButton>();
 
-            int bWidth = 500;
-            int bHeight = 75;
+            buttonWidth = 500;
+            buttonHeight = 75;
 
             for (int i = 0; i < missions.Count; i++)
             {
-                int y = (bounds.Y + 35) + (i * bHeight) + (i * 10);
-                Rectangle bBounds = new Rectangle(bounds.Center.X - bWidth / 2, y, bWidth, bHeight);
+                int y = (bounds.Y + 35) + (i * buttonHeight) + (i * 10);
+                Rectangle bBounds = new Rectangle(bounds.Center.X - buttonWidth / 2, y, buttonWidth, buttonHeight);
                 buttons.Add(new JournalMissionButton(missions[i], bBounds));
             }
+        }
+
+        public void OffsetAlongY(int offset, bool lerpToTarget)
+        {
+            bounds.Y += offset;
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
@@ -74,6 +81,16 @@ namespace G01_Perseus.UI
 
                 buttons[i].Opacity = Opacity;
                 buttons[i].Update(gameTime);
+            }
+        }
+
+        public void UpdatePositions()
+        {
+            int emptySlots = 0;
+            for(int i = 0; i < buttons.Count; i++)
+            {
+                int y = (bounds.Y + 35) + (i - emptySlots * buttonHeight) + ((i - emptySlots) * 10);
+                buttons[i].
             }
         }
 
