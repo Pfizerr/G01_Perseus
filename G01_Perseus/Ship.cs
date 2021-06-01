@@ -28,13 +28,15 @@ namespace G01_Perseus
         public virtual float PowerLevel { get; protected set; }
         public virtual float FireRate { get; protected set; }
 
-        public Ship(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, Texture2D texture) : base(maxVelocity, position, scale, texture)
+        public Ship(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, Texture2D texture, float powerLevel, int fireRate) : base(maxVelocity, position, scale, texture)
         {
             Health = health;
             MaxHealth = health;
             
             layerDepth = 0.7f;
             rotation = 0f;
+            FireRate = fireRate;
+            PowerLevel = powerLevel;
             playerStatus = new PlayerStatus(health, 0f);
             equipedWeapon = new WeaponSingleShot(1, 1, 0); //Make the power lvl a input parameter
             Shields = shield;

@@ -15,12 +15,13 @@ namespace G01_Perseus.UI
         private SkillInterface skillInterface;
         private ShopMenu shopMenu;
         private GameWindow window;
+        private SpriteFont fontHUD;
         private float healthbarWidth;
         private float shieldbarWidth;
         private float healthbarHeight;
         private Rectangle healthbarSize, shieldbarSize, xpBarSize, xpBarOutline;        
-        private Texture2D barTex, outlineTex;
-        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos, btnSkillTextPos, btnShopTextPos, weponTextPos, weaponIconPos;
+        private Texture2D barTex, outlineTex, equipedWeaponIcon;
+        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos, btnSkillTextPos, btnShopTextPos, weaponTextPos, weaponIconPos;
         private string levelText, xpText, btnSkillText, btnShopText, weaponText;
 
         public HUD(GameWindow window)
@@ -28,7 +29,8 @@ namespace G01_Perseus.UI
             float offsett = 10;
             this.window = window;
             this.Transparent = true;
-
+            this.fontHUD = AssetManager.FontAsset("default_font");
+            this.equipedWeaponIcon = AssetManager.TextureAsset("projectile_green"); 
             //Buttons on UI
             SetButtons();
             this.skillInterface = new SkillInterface(window);
@@ -41,6 +43,9 @@ namespace G01_Perseus.UI
             SetLevelAndXpBar(offsett);
 
             weaponText = "Weapon in use: ";
+            weaponIconPos = new Vector2(window.ClientBounds.Width / 2, window.ClientBounds.Height - equipedWeaponIcon.Height * 0.5f - offsett);
+            weaponTextPos = new Vector2(weaponIconPos.X - fontHUD.MeasureString(weaponText).X - offsett, weaponIconPos.Y + (equipedWeaponIcon.Height * 0.5f) / 2 - fontHUD.MeasureString(weaponText).Y / 2);
+            
             EventManager.Register(this);
         }
 
@@ -69,15 +74,17 @@ namespace G01_Perseus.UI
             btnShopUI.Draw(spriteBatch, gameTime);
             spriteBatch.Draw(barTex, healthbarSize, Color.Crimson);
             spriteBatch.Draw(barTex, shieldbarSize, Color.Cyan);
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), EntityManager.Player.Health.ToString(), healthNrPos, Color.Crimson);
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), EntityManager.Player.Shields.ToString(), shieldNrPos, Color.Cyan);
+            spriteBatch.DrawString(fontHUD, EntityManager.Player.Health.ToString(), healthNrPos, Color.Crimson);
+            spriteBatch.DrawString(fontHUD, EntityManager.Player.Shields.ToString(), shieldNrPos, Color.Cyan);
 
             spriteBatch.Draw(barTex, xpBarSize, Color.Yellow);
             spriteBatch.Draw(outlineTex, xpBarOutline, Color.White);
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("Level: {0}", Resources.Level), levelTextPos, Color.Yellow);
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("{0} / {1}", Resources.XP, Resources.XPToNextLevel), xpTextPos, Color.Yellow);
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnShopText, btnShopTextPos, Color.LightGreen);
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnSkillText, btnSkillTextPos, Color.LightBlue);
+            spriteBatch.DrawString(fontHUD, string.Format("Level: {0}", Resources.Level), levelTextPos, Color.Yellow);
+            spriteBatch.DrawString(fontHUD, string.Format("{0} / {1}", Resources.XP, Resources.XPToNextLevel), xpTextPos, Color.Yellow);
+            spriteBatch.DrawString(fontHUD, btnShopText, btnShopTextPos, Color.LightGreen);
+            spriteBatch.DrawString(fontHUD, btnSkillText, btnSkillTextPos, Color.LightBlue);
+            spriteBatch.DrawString(fontHUD, weaponText, weaponTextPos, Color.LimeGreen);
+            spriteBatch.Draw(equipedWeaponIcon, weaponIconPos, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0.9f);
             spriteBatch.End();
         }
 
@@ -100,9 +107,9 @@ namespace G01_Perseus.UI
             xpBarOutline = new Rectangle(xpBarSize.X, xpBarSize.Y, barTex.Width, xpBarSize.Height);
             outlineTex = Util.CreateRectangleTexture(xpBarOutline.Width, xpBarOutline.Height, Color.White, Color.Transparent);
             levelText = string.Format("Level: {0}", Resources.Level);
-            levelTextPos = new Vector2(xpBarSize.X - AssetManager.FontAsset("default_font").MeasureString(levelText).X - offsett, xpBarSize.Y);
+            levelTextPos = new Vector2(xpBarSize.X - fontHUD.MeasureString(levelText).X - offsett, xpBarSize.Y);
             xpText = string.Format("{0} / {1}", Resources.XP, Resources.XPToNextLevel);
-            xpTextPos = new Vector2(xpBarSize.X + barTex.Width / 2 - AssetManager.FontAsset("default_font").MeasureString(xpText).X / 2, xpBarSize.Y + AssetManager.FontAsset("default_font").MeasureString(xpText).Y + offsett);
+            xpTextPos = new Vector2(xpBarSize.X + barTex.Width / 2 - fontHUD.MeasureString(xpText).X / 2, xpBarSize.Y + fontHUD.MeasureString(xpText).Y + offsett);
         }
 
         public void SetButtons()
@@ -113,8 +120,8 @@ namespace G01_Perseus.UI
             this.btnShopUI = new UIButton(new Rectangle((int)(btnSkillUI.Hitbox.X - 60), (int)(btnSkillUI.Hitbox.Y), 50, 50), AssetManager.TextureAsset("button_green"), OpenShopMenu);
             btnSkillUI.HoveredTexture = AssetManager.TextureAsset("button_red");
             btnShopUI.HoveredTexture = AssetManager.TextureAsset("button_red");
-            btnSkillTextPos = new Vector2(btnSkillUI.Hitbox.X, btnSkillUI.Hitbox.Y - AssetManager.FontAsset("default_font").MeasureString(btnSkillText).Y);
-            btnShopTextPos = new Vector2(btnShopUI.Hitbox.X, btnShopUI.Hitbox.Y - AssetManager.FontAsset("default_font").MeasureString(btnShopText).Y);
+            btnSkillTextPos = new Vector2(btnSkillUI.Hitbox.X, btnSkillUI.Hitbox.Y - fontHUD.MeasureString(btnSkillText).Y);
+            btnShopTextPos = new Vector2(btnShopUI.Hitbox.X, btnShopUI.Hitbox.Y - fontHUD.MeasureString(btnShopText).Y);
         }
 
         public void HealthChange(HealthChangeEvent e)

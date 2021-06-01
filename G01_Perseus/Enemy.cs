@@ -20,7 +20,7 @@ namespace G01_Perseus
 
         private EnemyBehavior behavior;
 
-        public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, EnemyBehavior behavior, float leashDistance, Texture2D texture, float acceleration) : base(position, maxVelocity, scale, health, shield, texture) 
+        public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, EnemyBehavior behavior, float leashDistance, Texture2D texture, float acceleration, float powerLevel, int fireRate) : base(position, maxVelocity, scale, health, shield, texture, powerLevel, fireRate) 
         {
             healthBarHeight = 10;
             
@@ -34,10 +34,7 @@ namespace G01_Perseus
             this.behavior = behavior;
             behavior.Enemy = this;            
             
-
-            this.leashDistance = leashDistance;
-            
-
+            this.leashDistance = leashDistance;            
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)

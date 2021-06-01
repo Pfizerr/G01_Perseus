@@ -26,12 +26,12 @@ namespace G01_Perseus
         /// <param name="scale"></param>
         /// <param name="health"></param>
         /// <param name="shield"></param>
-        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield, Texture2D texture) : base(position, velocity, scale, health, shield, texture)
+        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield, Texture2D texture, float powerLevel, int fireRate) : base(position, velocity, scale, health, shield, texture, powerLevel, fireRate)
         {
             baseMaxHealth = health;
             baseMaxShields = shield;
-            basePowerLevel = 1; //This could be an input parameter for the constructor
-            baseFireRate = 0;
+            basePowerLevel = powerLevel; //This could be an input parameter for the constructor
+            baseFireRate = fireRate;
             weaponStatuses = new WeaponStatus[] { WeaponStatus.Available, WeaponStatus.NotAvailable };
             weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, (int)baseFireRate) };
             EventManager.Register(this);
