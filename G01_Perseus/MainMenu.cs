@@ -14,15 +14,14 @@ namespace G01_Perseus
     {
 
         private GameWindow window;
-        private Texture2D background;
         private Texture2D panelTexture;
         private Menu menu;
-
+        private Background background;
         public MainMenu(GameWindow window)
         {
             this.window = window;
 
-            this.background = AssetManager.TextureAsset("space_background");
+            this.background = new Background(2000, 2000, 5);
             this.panelTexture = AssetManager.TextureAsset("start_menu_background_UI");
 
             menu = new Menu(new Rectangle((int)(window.ClientBounds.Width / 2 - ((panelTexture.Width * 1.5f) / 2)) + 50, (int)(window.ClientBounds.Height * 0.3f) + 50, (int)(panelTexture.Width * 1.5f) - 100, (int)(panelTexture.Height * 1.5f) - 100), AssetManager.FontAsset("main_menu_font"));
@@ -47,7 +46,8 @@ namespace G01_Perseus
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(background, new Rectangle(0, 0, window.ClientBounds.Width, window.ClientBounds.Height), Color.White);
+            //spriteBatch.Draw(background, new Rectangle(0, 0, window.ClientBounds.Width, window.ClientBounds.Height), Color.White);
+            background.Draw(spriteBatch, new Rectangle(0,0,window.ClientBounds.Width, window.ClientBounds.Height), new Vector2(0,0));
             spriteBatch.Draw(panelTexture, new Vector2(window.ClientBounds.Width / 2 - ((panelTexture.Width * 1.5f) / 2), window.ClientBounds.Height * 0.3f), null, Color.White, 0.0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0.5f);
             menu.Draw(spriteBatch, gameTime);
             spriteBatch.End();
