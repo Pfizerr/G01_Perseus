@@ -13,12 +13,12 @@ namespace G01_Perseus
     {
         private Texture2D[] tex;
 
-        public Background(int tileWidth, int tileHeight)
+        public Background(int tileWidth, int tileHeight, int multiplier = 1)
         {
             this.tex = new Texture2D[3];
-            tex[0] = Util.CreateSpaceTexture(0, tileWidth, tileHeight, 100, 10,15);
-            tex[1] = Util.CreateSpaceTexture(0, tileWidth, tileHeight, 1000, 1, 5);
-            tex[2] = Util.CreateSpaceTexture(1, tileWidth, tileHeight, 100, 5, 7);
+            tex[0] = Util.CreateSpaceTexture(0, tileWidth, tileHeight, 100 * multiplier, 10,15);
+            tex[1] = Util.CreateSpaceTexture(0, tileWidth, tileHeight, 1000 * multiplier, 1, 5);
+            tex[2] = Util.CreateSpaceTexture(1, tileWidth, tileHeight, 100 * multiplier, 5, 7);
 
         }
 
