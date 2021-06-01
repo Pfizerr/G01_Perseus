@@ -63,11 +63,6 @@ namespace G01_Perseus
 
         public static void Update(GameTime gameTime)
         {
-            if(!Player.IsAlive)
-            {
-                EventManager.Dispatch(new PushStateEvent(new RespawnMenu(null)));
-            }
-
             for (int i = 0; i < entities.Count; i++)
             {
                 if (!entities[i].IsAlive)

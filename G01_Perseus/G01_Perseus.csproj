@@ -69,7 +69,6 @@
     <Compile Include="UI\MainMenu.cs" />
     <Compile Include="MovingEntity.cs" />
     <Compile Include="Resources.cs" />
-    <Compile Include="UI\GameOverMenu.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="EventSystem\Events\MissionAcceptedClickEvent.cs" />
     <Compile Include="EventSystem\Listeners\MissionAcceptedClickListener.cs" />
