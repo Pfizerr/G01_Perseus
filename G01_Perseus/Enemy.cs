@@ -20,13 +20,10 @@ namespace G01_Perseus
 
         private EnemyBehavior behavior;
 
-        public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, EnemyBehavior behavior, float leashDistance, Texture2D texture, float acceleration) : base(position, maxVelocity, scale, health, shield) 
+        public Enemy(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, EnemyBehavior behavior, float leashDistance, Texture2D texture, float acceleration) : base(position, maxVelocity, scale, health, shield, texture) 
         {
             healthBarHeight = 10;
-            this.texture = texture;
-
-            SetSizeAndHitbox(this.texture);
-            Origin = Size / 2;
+            
             healthPos = new Rectangle((int)position.X, (int)position.Y - healthBarHeight, (int)((Health / TotalHealth) * hitbox.Width), healthBarHeight);
             shieldPos = new Rectangle(healthPos.X + healthPos.Width, healthPos.Y, (int)((Shields / TotalHealth) * hitbox.Width), healthBarHeight);
             EventManager.Register(this);
@@ -46,7 +43,7 @@ namespace G01_Perseus
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
             spriteBatch.Draw(AssetManager.TextureAsset("projectile_yellow"), hitbox, Color.White); //Debugging new Rectangle(Position.ToPoint(), Size.ToPoint())
-            spriteBatch.Draw(texture, hitbox, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, SpriteEffects.None, 0.8f);
+            spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, scale, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), healthPos, null, Color.Crimson, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), shieldPos, null, Color.Cyan, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
             //Vector2 drawPosition = new Vector2((tileX * tileWidth) + position.X - (ix * tileWidth), (tileY * tileWidth) + position.Y - (iy * tileHeight));

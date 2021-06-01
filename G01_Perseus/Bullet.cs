@@ -11,16 +11,14 @@ namespace G01_Perseus
         protected Vector2 direction;
         public TypeOfBullet Type { get; private set; }
 
-        public Bullet(Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale, TypeOfBullet type, float damage, float timeToLive) 
-            : base(maxVelocity, position, scale)
+        public Bullet(Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale, TypeOfBullet type, float damage, float timeToLive, Texture2D texture) 
+            : base(maxVelocity, position, scale, texture)
         {
             Type = type;
             SetTexture();
-            SetSizeAndHitbox(this.texture);
             this.damage = damage;
             this.timeToLive = timeToLive;
-            Center = position;
-            Origin = Size / 2;
+            Center = position; //This makes no sense???
             rotation = 0f;
             layerDepth = 0.8f;
             direction = Vector2.Normalize(targetPosition - position);

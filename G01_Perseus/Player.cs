@@ -26,7 +26,7 @@ namespace G01_Perseus
         /// <param name="scale"></param>
         /// <param name="health"></param>
         /// <param name="shield"></param>
-        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield) : base(position, velocity, scale, health, shield)
+        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield, Texture2D texture) : base(position, velocity, scale, health, shield, texture)
         {
             baseMaxHealth = health;
             baseMaxShields = shield;
@@ -34,9 +34,8 @@ namespace G01_Perseus
             baseFireRate = 0;
             weaponStatuses = new WeaponStatus[] { WeaponStatus.Available, WeaponStatus.NotAvailable };
             weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, (int)baseFireRate) };
-            this.texture = AssetManager.TextureAsset("player_ship");
-            SetSizeAndHitbox(this.texture);
-            Origin = Size / 2;
+            //this.texture = AssetManager.TextureAsset("player_ship");
+            //Origin = Size / 2;
             EventManager.Register(this);
         }
 
