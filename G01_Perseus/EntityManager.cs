@@ -17,19 +17,30 @@ namespace G01_Perseus
             entities.Add(Player);
         }
 
-        public static void CreateEnemyOrbital(Vector2 position)
+        public static Enemy CreateEnemyOrbital(Vector2 position)
         {
-            entities.Add(new Enemy(position, new Vector2(0, 0), new Vector2(0.2f, 0.2f), 10, 0, new DefaultEnemyBehavior(), 1000, AssetManager.TextureAsset("enemy_ship"), 4));
+            Enemy enemy = new Enemy(position, new Vector2(0, 0), new Vector2(0.2f, 0.2f), 10, 0, new DefaultEnemyBehavior(), 1000, AssetManager.TextureAsset("enemy_ship"), 4);
+            entities.Add(enemy);
+            return enemy;
         }
 
-        public static void CreateEnemyRaptor(Vector2 position)
+        public static Enemy CreateEnemyRaptor(Vector2 position)
         {
-            entities.Add(new Enemy(position, new Vector2(0, 0), new Vector2(0.3f, 0.3f), 20, 0, new RaptorEnemyBehavior(), 3000, AssetManager.TextureAsset("enemy_ship2"), 10));
+            Enemy enemy = new Enemy(position, new Vector2(0, 0), new Vector2(0.3f, 0.3f), 20, 0, new RaptorEnemyBehavior(), 3000, AssetManager.TextureAsset("enemy_ship2"), 10);
+            entities.Add(enemy);
+            return enemy;
         }
 
-        public static void CreateEnemyPursuer(Vector2 position)
+        public static Enemy CreateEnemyPursuer(Vector2 position)
         {
-            entities.Add(new Enemy(position, new Vector2(0, 0), new Vector2(0.4f, 0.4f), 40, 0, new DefaultEnemyBehavior(), 10000, AssetManager.TextureAsset("enemy_ship3"), 5));
+            Enemy enemy = new Enemy(position, new Vector2(0, 0), new Vector2(0.4f, 0.4f), 40, 0, new DefaultEnemyBehavior(), 10000, AssetManager.TextureAsset("enemy_ship3"), 5);
+            entities.Add(enemy);
+            return enemy;
+        }
+
+        public static void CreateEnemySpawner(Vector2 position, EnemySpawner.Type type, int spawnTimerMs)
+        {
+            entities.Add(new EnemySpawner(type, position, spawnTimerMs));
         }
 
         public static void CreateBullet(TypeOfBullet type, Vector2 start, Vector2 target, float damage)
