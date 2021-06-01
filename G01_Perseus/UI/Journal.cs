@@ -89,8 +89,7 @@ namespace G01_Perseus.UI
             int emptySlots = 0;
             for(int i = 0; i < buttons.Count; i++)
             {
-                int y = (bounds.Y + 35) + (i - emptySlots * buttonHeight) + ((i - emptySlots) * 10);
-                buttons[i].
+                //buttons[i].Bounds.Location.Y = (bounds.Y + 35) + (i - emptySlots * buttonHeight) + ((i - emptySlots) * 10);
             }
         }
 

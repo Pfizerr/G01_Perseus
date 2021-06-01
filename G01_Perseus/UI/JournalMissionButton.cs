@@ -75,6 +75,8 @@ namespace G01_Perseus.UI
             set;
         }
 
+        public Rectangle Bounds => bounds;
+
         public void Update(GameTime gameTime)
         {
             if (mission == null)
@@ -89,7 +91,10 @@ namespace G01_Perseus.UI
                 turnInMissionButton.Update(gameTime);
             }
 
-            turnInMissionButton.Update(gameTime);
+            if (isMissionCompleted)
+            {
+                turnInMissionButton.Update(gameTime);
+            }
             removeMissionButton.Update(gameTime);
 
         }

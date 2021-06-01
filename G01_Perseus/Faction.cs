@@ -39,7 +39,6 @@ namespace G01_Perseus
 
         public void CreatePlanet(string name, Vector2 position, int nrOfMissions)
         {
-            //planets.Add(new Planet(planetSprite, planetHighlightSprite, position, this, name, nrOfMissions, 20000/*ms*/, 30000/*ms*/));
             planets.Add(new Planet(name, nrOfMissions, planetHighlightSprite, planetSprite, position));
         }
     }
