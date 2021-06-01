@@ -44,9 +44,12 @@
     <Compile Include="Background.cs" />
     <Compile Include="EnemySpawner.cs" />
     <Compile Include="EventSystem\Events\CollissionEvent.cs" />
+    <Compile Include="EventSystem\Events\GainXpEvent.cs" />
+    <Compile Include="EventSystem\Events\HealthChangeEvent.cs" />
     <Compile Include="EventSystem\Events\MissionRemovedEvent.cs" />
     <Compile Include="EventSystem\Events\MissionTurnedInEvent.cs" />
     <Compile Include="EventSystem\Events\RespawnPlayerEvent.cs" />
+    <Compile Include="EventSystem\Listeners\GainXpListener.cs" />
     <Compile Include="EventSystem\Listeners\GameOverListener.cs" />
     <Compile Include="EventSystem\Listeners\CollissionListener.cs" />
     <Compile Include="EnemyBehavior.cs" />
@@ -59,6 +62,7 @@
     <Compile Include="EventSystem\Listeners\HealthChangeListener.cs" />
     <Compile Include="ExtendedTimer.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="RaptorEnemyBehavior.cs" />
     <Compile Include="UI\JournalMissionButton.cs" />
     <Compile Include="KeyMouseReader.cs" />
     <Compile Include="UI\MissionInterfaceButton.cs" />

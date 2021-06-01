@@ -29,7 +29,7 @@ namespace G01_Perseus
         /// <param name="scale"></param>
         /// <param name="health"></param>
         /// <param name="shield"></param>
-        public Player(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield) : base(position, maxVelocity, scale, health, shield)
+        public Player(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, Texture2D texture) : base(position, maxVelocity, scale, health, shield, texture)
         {
             baseMaxHealth = health;
             baseMaxShields = shield;
@@ -97,6 +97,11 @@ namespace G01_Perseus
             direction.X += KeyMouseReader.KeyHold(Keys.D) ? 1 : 0;
 
             direction = direction.LengthSquared() > 1 ? Vector2.Normalize(direction) : direction;
+
+            if(KeyMouseReader.KeyHold(Keys.J))
+            {
+                EventManager.Dispatch(new PushStateEvent(new Journal(Status.Missions)));
+            }
 
             if(KeyMouseReader.LeftHold() && !hasFocusOnPlanet)
             {
@@ -202,7 +207,6 @@ namespace G01_Perseus
                 weapon.SetFireTimer((int)FireRate);
             }
         }
-
 
         public override void RecieveDamage(Entity other, float damage)
         {
