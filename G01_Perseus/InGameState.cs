@@ -24,7 +24,9 @@ namespace G01_Perseus
             int tileHeight = 1080;
             level = new Level(10, 10, tileWidth, tileHeight, AssetManager.FontAsset("sector_font"));
 
-            camera.FollowTarget = EntityManager.Player;            
+            camera.FollowTarget = EntityManager.Player;
+
+            EntityManager.CreateEnemySpawner(new Vector2(200, 200), EnemySpawner.Type.Raptor, 1000);
         }
 
         public override void Update(GameTime gameTime)
