@@ -74,6 +74,7 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
+            spriteBatch.Draw(AssetManager.TextureAsset("projectile_yellow"), hitbox, Color.White);
             spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
             Status.Draw(spriteBatch);
             
