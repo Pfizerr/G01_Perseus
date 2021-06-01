@@ -13,7 +13,7 @@ namespace G01_Perseus
 
         public static void CreatePlayer()
         {
-            Player = new Player(new Vector2(250, 250), new Vector2(500, 500), new Vector2(0.2f, 0.2f), 100, 100);
+            Player = new Player(new Vector2(250, 250), new Vector2(500, 500), new Vector2(0.2f, 0.2f), 100, 100, AssetManager.TextureAsset("player_ship"));
             entities.Add(Player);
         }
 
@@ -45,7 +45,7 @@ namespace G01_Perseus
 
         public static void CreateBullet(TypeOfBullet type, Vector2 start, Vector2 target, float damage)
         {
-            AddBullet(new Bullet(start, target, new Vector2(7, 7), new Vector2(0.1f, 0.1f), type, damage, 10));
+            AddBullet(new Bullet(start, target, new Vector2(7, 7), new Vector2(0.1f, 0.1f), type, damage, 10, AssetManager.TextureAsset("projectile_green")));
         }
 
         //public static void CreateLaser(TypeOfLaser type, Vector2 start, Vector2 target, float damage)

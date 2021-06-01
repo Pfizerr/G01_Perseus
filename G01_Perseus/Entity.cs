@@ -13,22 +13,24 @@ namespace G01_Perseus
 
         //Could maybe remove source and rotation as input parameters
         //Consider changing Roattion to a property that is initiated to 0f for all Entity objects to avoid redundancy
-        public Entity(Vector2 position, Vector2 scale)
+        public Entity(Vector2 position, Vector2 scale, Texture2D texture)
         {
             Position = position;
             this.scale = scale;
+            this.texture = texture;
             //this.source = source;
             //this.rotation = rotation;
             //this.layerDepth = layerDepth;
             IsCollidable = true;
 
-            if (texture == null) //Could this be moved somewhere else?
-            {
-                DefaultTexture();
-            }
+            //if (texture == null) //Could this be moved somewhere else?
+            //{
+            //    DefaultTexture();
+            //}
 
             Size = texture.Bounds.Size.ToVector2() * this.scale;
             hitbox = new Rectangle(Position.ToPoint(), Size.ToPoint());
+            Origin = Size / 2;
 
             IsAlive = true;
         }
@@ -38,6 +40,12 @@ namespace G01_Perseus
         public abstract void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight);
 
         public abstract void HandleCollision(Entity other);
+
+        //public virtual void SetSizeAndHitbox(Texture2D texture)
+        //{
+        //    Size = texture.Bounds.Size.ToVector2() * this.scale;
+        //    hitbox = new Rectangle(Position.ToPoint(), Size.ToPoint());
+        //}
 
         public virtual void Destroy(Event e)
         {
@@ -51,7 +59,7 @@ namespace G01_Perseus
         /// <summary>
         /// if a null value was passed at instantiation, then use this texture.
         /// </summary>
-        protected abstract void DefaultTexture();
+        //protected abstract void DefaultTexture();
 
         public virtual bool IsCollidable { get; protected set; }
         public virtual bool IsAlive { get; protected set; } //Maybe move this to the MovingEntity class???

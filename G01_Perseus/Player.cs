@@ -26,7 +26,7 @@ namespace G01_Perseus
         /// <param name="scale"></param>
         /// <param name="health"></param>
         /// <param name="shield"></param>
-        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield) : base(position, velocity, scale, health, shield)
+        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield, Texture2D texture) : base(position, velocity, scale, health, shield, texture)
         {
             baseMaxHealth = health;
             baseMaxShields = shield;
@@ -34,21 +34,23 @@ namespace G01_Perseus
             baseFireRate = 0;
             weaponStatuses = new WeaponStatus[] { WeaponStatus.Available, WeaponStatus.NotAvailable };
             weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, (int)baseFireRate) };
+            //this.texture = AssetManager.TextureAsset("player_ship");
+            //Origin = Size / 2;
             EventManager.Register(this);
         }
 
         public override void Update(GameTime gameTime)
         {
             //These if statements should be moved perhaps?
-            if(Shields > MaxShields)
-            {
-                Shields = MaxShields;
-            }
+            //if(Shields > MaxShields)
+            //{
+            //    Shields = MaxShields;
+            //}
 
-            if(Health > MaxHealth)
-            {
-                Health = MaxHealth;
-            }
+            //if(Health > MaxHealth)
+            //{
+            //    Health = MaxHealth;
+            //}
 
             base.Update(gameTime);
 
@@ -160,10 +162,10 @@ namespace G01_Perseus
             Status.Missions.Add(mission);
         }
 
-        protected override void DefaultTexture()
-        {
-            texture = AssetManager.TextureAsset("player_ship");
-        }
+        //protected override void DefaultTexture()
+        //{
+        //    texture = AssetManager.TextureAsset("player_ship");
+        //}
 
         public PlayerStatus Status
         {
