@@ -16,8 +16,8 @@ namespace G01_Perseus
 
         private Rectangle bounds;
         private Texture2D backgroundTexture;
-        private UIButton respawnPlayerButton;
-        private UIButton returnToMenuButton;
+        private UIButton playerRespawnButton;
+        private UIButton openMainMenuButton;
         private UIButton exitGameButton;
 
         public RespawnMenu(Texture2D backgroundTexture)
@@ -26,19 +26,19 @@ namespace G01_Perseus
             this.backgroundTexture = backgroundTexture;
 
             SpriteFont font = AssetManager.FontAsset("default_font");
-            Texture2D btnTexture = Util.CreateFilledRectangleTexture(Color.DarkGray, 350, 70);
+            Texture2D buttonTexture = Util.CreateFilledRectangleTexture(Color.DarkGray, 350, 70);
 
-            respawnPlayerButton = new UIButton(new Rectangle(new Point(bounds.Center.X - 350 / 2, bounds.Center.Y - 100), new Point(350, 70)), btnTexture, "Respawn Player", font, () =>
+            playerRespawnButton = new UIButton(new Rectangle(new Point(bounds.Center.X - 350 / 2, bounds.Center.Y - 100), new Point(350, 70)), buttonTexture, "Respawn Player", font, () =>
             {
                 RespawnPlayerButton(); 
             });
 
-            returnToMenuButton = new UIButton(new Rectangle(new Point(bounds.Center.X - 350 / 2, bounds.Center.Y + 0), new Point(350, 70)), btnTexture, "Return To Menu", font, () =>
+            openMainMenuButton = new UIButton(new Rectangle(new Point(bounds.Center.X - 350 / 2, bounds.Center.Y + 0), new Point(350, 70)), buttonTexture, "Return To Menu", font, () =>
             {
                 ReturnToMenuButton();
             });
 
-            exitGameButton = new UIButton(new Rectangle(new Point(bounds.Center.X - 350 / 2, bounds.Center.Y + 100), new Point(350, 70)), btnTexture, "Exit Game", font, () =>
+            exitGameButton = new UIButton(new Rectangle(new Point(bounds.Center.X - 350 / 2, bounds.Center.Y + 100), new Point(350, 70)), buttonTexture, "Exit Game", font, () =>
             {
                 ExitGameButton();
             });
@@ -53,8 +53,8 @@ namespace G01_Perseus
             #endregion
 
             spriteBatch.Draw(/*backgroundTexture*/ tempTexture, bounds, null, Color.DarkSlateGray, 0f, Vector2.Zero, SpriteEffects.None, 0f);
-            respawnPlayerButton.Draw(spriteBatch, gameTime);
-            returnToMenuButton.Draw(spriteBatch, gameTime);
+            playerRespawnButton.Draw(spriteBatch, gameTime);
+            openMainMenuButton.Draw(spriteBatch, gameTime);
             exitGameButton.Draw(spriteBatch, gameTime);
 
             spriteBatch.End();
@@ -62,16 +62,15 @@ namespace G01_Perseus
 
         public override void Update(GameTime gameTime)
         {
-            respawnPlayerButton.Update(gameTime);
-            returnToMenuButton.Update(gameTime);
+            playerRespawnButton.Update(gameTime);
+            openMainMenuButton.Update(gameTime);
             exitGameButton.Update(gameTime);
         }
 
         private void RespawnPlayerButton()
         {
             Debug.WriteLine("Player respawned");
-            EntityManager.CreatePlayer();
-            Game1.camera.FollowTarget = EntityManager.Player;
+            PlayerRespawn();
             EventManager.Dispatch(new PopStateEvent());
         }   
         
@@ -79,11 +78,23 @@ namespace G01_Perseus
         {
             Debug.WriteLine("Returned to menu");
             EventManager.Dispatch(new PopStateEvent());
+            EventManager.Dispatch(new PopStateEvent());
+            PlayerRespawn();
         }
 
         private void ExitGameButton()
         {
             Debug.WriteLine("Game exits");
+        }
+
+
+        /// <summary>
+        /// MOVE THIS SOMEWHERE.
+        /// </summary>
+        private void PlayerRespawn()
+        {
+            EntityManager.CreatePlayer();
+            Game1.camera.FollowTarget = EntityManager.Player;
         }
     }
 }

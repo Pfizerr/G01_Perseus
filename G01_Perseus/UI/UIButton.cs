@@ -49,6 +49,7 @@ namespace G01_Perseus.UI
             this.Action = onClick;
             this.Font = font;
 
+            this.Font = AssetManager.FontAsset("default_font");
             this.TextLocation = new Vector2(rectangle.Center.X + textPositionOffset.X, rectangle.Center.Y + textPositionOffset.Y);
         }
 
@@ -100,6 +101,12 @@ namespace G01_Perseus.UI
             set;
         }
 
+        public float Opacity
+        {
+            get;
+            set;
+        }
+
         public void Update(GameTime gameTime)
         {
             Vector2 mousePosition = KeyMouseReader.MouseScreenPosition;            
@@ -116,19 +123,17 @@ namespace G01_Perseus.UI
             if(Texture != null)
             {
                 if(IsMouseHovered && HoveredTexture != null)
-
                 {
-                    spriteBatch.Draw(HoveredTexture, Hitbox, null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
+                    spriteBatch.Draw(HoveredTexture, Hitbox, null, Color.White * Opacity, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
                 }
                 else
                 {
-                    spriteBatch.Draw(Texture, Hitbox, null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
+                    spriteBatch.Draw(Texture, Hitbox, null, Color.White * Opacity, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
                 }
             }
 
             if(Text != null)
             {
-                //DRAW TEXT
                 Vector2 textSize = Font.MeasureString(Text);
                 spriteBatch.DrawString(Font, Text, new Vector2(TextLocation.X - textSize.X / 2, TextLocation.Y - textSize.Y / 2), Color.White);
             }

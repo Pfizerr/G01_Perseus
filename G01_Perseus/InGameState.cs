@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace G01_Perseus
 {
-    public class InGameState : GameState
+    public class InGameState : GameState, GameOverListener
     {
 
         private Camera camera;
@@ -40,6 +40,10 @@ namespace G01_Perseus
             EntityManager.Draw(spriteBatch);
             spriteBatch.End();
         }
-        
+
+        public void OnRespawnPlayer()
+        {
+            EntityManager.CreatePlayer();
+        }
     }
 }

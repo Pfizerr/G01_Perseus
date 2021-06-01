@@ -2,6 +2,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
 using System;
+using G01_Perseus.EventSystem.Events;
 
 namespace G01_Perseus
 {
@@ -36,6 +37,11 @@ namespace G01_Perseus
 
         public static void Update(GameTime gameTime)
         {
+            if(!Player.IsAlive)
+            {
+                EventManager.Dispatch(new PushStateEvent(new RespawnMenu(null)));
+            }
+
             for (int i = 0; i < entities.Count; i++)
             {
                 if (!entities[i].IsAlive)
@@ -103,6 +109,5 @@ namespace G01_Perseus
                 factions[i].Draw(spriteBatch);
             }
         }
-
     }
 }

@@ -1,6 +1,7 @@
 ﻿using G01_Perseus.EventSystem.Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,103 +10,8 @@ using System.Threading.Tasks;
 
 namespace G01_Perseus.UI
 {
-    public class MissionInterface : GameState
-    {
-        private UIButton missionAcceptButton;
-        private UIButton missionDenyButton;
 
-        private Rectangle bounds;
-        private Texture2D backgroundTexture;
-
-        private Texture2D missionButtonUnavailableTexture;
-        private Texture2D missionButtonUnavailableTransparentTexture;
-
-        private Texture2D missionButtonAvailableTexture;
-        private Texture2D missionButtonAvailableTransparentTexture;
-
-        private Texture2D missionButtonHoveredTexture;
-        private Texture2D missionButtonHoveredTransparentTexture;
-
-        private Mission[] missions;
-        private ExtendedTimer[] missionCooldowns;
-        private UIButton[] missionSlotSelectButtons;
-
-        private int selectedMission;
-        private int hoveredMission;
-        private bool isOutOfFocus;
-
-        public MissionInterface(Mission[] missions, ExtendedTimer[] missionSlotTimers)
-        {
-            this.missionCooldowns = missionSlotTimers;
-            this.missions = missions;
-
-            this.missionButtonUnavailableTexture = AssetManager.TextureAsset("button_background_unavailable");
-            this.missionButtonUnavailableTransparentTexture = AssetManager.TextureAsset("button_background_unavailable_transparent");
-
-            this.missionButtonAvailableTexture = AssetManager.TextureAsset("button_background_available");
-            this.missionButtonAvailableTransparentTexture = AssetManager.TextureAsset("button_background_available_transparent");
-
-            this.missionButtonHoveredTexture = AssetManager.TextureAsset("button_background_hovered");           
-            this.missionButtonHoveredTransparentTexture = AssetManager.TextureAsset("button_background_hovered_transparent");
-
-            this.backgroundTexture = AssetManager.TextureAsset("monitor_focused");
-            
-            this.Transparent = true;
-
-            this.bounds = new Rectangle(Game1.camera.Viewport.Width / 2 - 780 / 2, Game1.camera.Viewport.Height / 2 - 580 / 2, 780, 580);
-            
-            this.missionSlotSelectButtons = new UIButton[missions.Count()];
-
-            missionAcceptButton = new UIButton(new Rectangle(bounds.X + 499, bounds.Y + 481, 60, 59), null, "", AssetManager.FontAsset("default_font"), () =>
-            {
-                if(missions[selectedMission] == null)
-                {
-                    Console.WriteLine("Selected mission was NULL!");
-                    return;
-                }
-
-                EventManager.Dispatch(new MissionAcceptedClickEvent(missions[selectedMission]));
-            });
-
-            missionDenyButton = new UIButton(new Rectangle(bounds.X + 600, bounds.Y + 481, 60, 59), null, "", AssetManager.FontAsset("default_font"), () => 
-            {
-                if (missions[selectedMission] == null)
-                {
-                    Console.WriteLine("Selected mission was NULL!");
-                    return;
-                }
-
-                EventManager.Dispatch(new MissionDeniedClickEvent(missions[selectedMission]));
-            });
-
-            for (int i = 0; i < missions.Count(); i++)
-            {
-                if(missions[i] == null)
-                {
-                    //continue;
-                }
-
-                string missionText = "";
-
-                if (missions[i] != null)
-                {
-                    missionText = missions[i].Presentation();
-                }
-
-                missionSlotSelectButtons[i] = new UIButton(new Rectangle(bounds.X + 125, bounds.Y + 65 + (85 * i), 550, 80), missionButtonAvailableTexture, missionText, AssetManager.FontAsset("default_font"), () =>
-                {
-                    // The mission associated with the button which was being hovered before OnClick was called is set to being the selected mission.
-                    if(missionSlotSelectButtons[hoveredMission].Texture != missionButtonUnavailableTexture)
-                    {
-                        selectedMission = hoveredMission;
-                    }
-                });
-
-                missionSlotSelectButtons[i].HoveredTexture = missionButtonHoveredTexture;
-            }
-        }
-
-        public override void Update(GameTime gameTime)
+/*public override void Update(GameTime gameTime)
         {
             UpdateFocus();
             HandleInput();
@@ -194,30 +100,6 @@ namespace G01_Perseus.UI
             return texture;
         }
 
-        private void HandleInput()
-        {
-            if(KeyMouseReader.KeyPressed(Microsoft.Xna.Framework.Input.Keys.Escape))
-            {
-                ExitUserInterface();
-            }
-            if(isOutOfFocus)
-            {
-                if(backgroundTexture != AssetManager.TextureAsset("monitor_not_focused"))
-                {
-                    backgroundTexture = AssetManager.TextureAsset("monitor_not_focused");
-                }
-
-                if(KeyMouseReader.LeftClick())
-                {
-                    EventManager.Dispatch(new PopStateEvent()); // Leave mission interface.
-                }
-            }
-            else if (backgroundTexture != AssetManager.TextureAsset("monitor_focused"))
-            {
-                backgroundTexture = AssetManager.TextureAsset("monitor_focused");
-            }
-        }
-
         public void UpdateFocus()
         {
             if(KeyMouseReader.MouseScreenPosition.X < bounds.Left
@@ -253,5 +135,5 @@ namespace G01_Perseus.UI
 
             spriteBatch.End();
         }
-    }
+    }*/
 }

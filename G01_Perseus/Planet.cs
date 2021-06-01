@@ -5,12 +5,11 @@ using Microsoft.Xna.Framework;
 using G01_Perseus.UI;
 using System.Linq;
 using System;
-
-
+using G01_Perseus.EventSystem.Listeners;
 
 namespace G01_Perseus
 {
-    public class Planet : EventListener, MissionAcceptedClickListener, MissionDeniedClickListener
+    public class Planet : EventListener, MissionAcceptedClickListener, MissionDeniedClickListener, PopStateListener
     {
         private string name;
         private float radius;
@@ -29,6 +28,7 @@ namespace G01_Perseus
         private Vector2 origin;
         private Vector2 scale;
         private SpriteFont font;
+        private bool isDisplayingUI;
 
         public Player Customer { get; set; }
 
@@ -93,7 +93,10 @@ namespace G01_Perseus
                 }
                 else if (timer.IsDoneCounting)
                 {
-                    missions[i] = MissionManager.LoadMission(MissionManager.GetRandomMissionId());
+                    while(missions[i] == null)
+                    {
+                        missions[i] = MissionManager.LoadMission(MissionManager.GetRandomMissionId());
+                    }
                     missions[i].Contractor = this; //There is an error here when you close the game. Could be handles with a save and load function
                     //Though note that this error doesn't happen all the time
                     missions[i].State = Mission.EState.Offered;
@@ -117,12 +120,13 @@ namespace G01_Perseus
 
                 // Display open menu text
 
-                if (KeyMouseReader.KeyHold(Keys.E))
+                if (KeyMouseReader.KeyHold(Keys.E) && !isDisplayingUI)
                 {
                     EventManager.Dispatch(new PlanetInteractionEvent(this));
 
                     // Open GUI
-                    EventManager.Dispatch(new PushStateEvent(new MissionInterface(missions, missionCooldowns)));
+                    EventManager.Dispatch(new PushStateEvent(new NewMissionInterface(missions, missionCooldowns)));
+                    isDisplayingUI = true;
                 }
             }
             else
@@ -172,6 +176,14 @@ namespace G01_Perseus
                     Console.WriteLine("New timer duration: " + missionCooldowns[i].Duration);
                     break;
                 }
+            }
+        }
+
+        public void OnPopState(PopStateEvent e)
+        {
+            if(isDisplayingUI)
+            {
+                isDisplayingUI = false;
             }
         }
 

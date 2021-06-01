@@ -1,4 +1,5 @@
 using G01_Perseus.EventSystem.Events;
+using G01_Perseus.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -68,7 +69,7 @@ namespace G01_Perseus
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
 
-            spriteBatch.Draw(texture, Center, source, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f); Status.Draw(spriteBatch);
+            spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f); Status.Draw(spriteBatch);
             
             //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
@@ -91,6 +92,11 @@ namespace G01_Perseus
             if(KeyMouseReader.KeyPressed(Keys.K))
             {
                 this.Destroy(null);
+            }
+
+            if(KeyMouseReader.KeyPressed(Keys.M))
+            {
+                EventManager.Dispatch(new PushStateEvent(new NewJournal(Status.Missions)));
             }
 
             if(KeyMouseReader.LeftClick() && !hasFocusOnPlanet)

@@ -42,7 +42,7 @@ namespace G01_Perseus
             Owner = owner;
         }
 
-        public string Presentation() => string.Format("Name: {0}\nDescription: {1}\nRewards: {2}", Name, Description, Resources.ToString());
+        public string Text() => string.Format("Name: {0}\nDescription: {1}\nRewards: {2}", Name, Description, Resources.ToString());
 
         public void Update()
         {
