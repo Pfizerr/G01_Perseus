@@ -44,9 +44,9 @@ namespace G01_Perseus
             //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
 
-        protected void SetTexture() //This doesn't work, see comments in the Entity constructor as to why
+        protected void SetTexture()
         {
-            if(Type == TypeOfBullet.Player) //This will always default to the same type because of Entity
+            if(Type == TypeOfBullet.Player) 
             {
                 texture = AssetManager.TextureAsset("projectile_green");
             }

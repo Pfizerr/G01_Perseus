@@ -34,23 +34,21 @@ namespace G01_Perseus
             baseFireRate = 0;
             weaponStatuses = new WeaponStatus[] { WeaponStatus.Available, WeaponStatus.NotAvailable };
             weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, (int)baseFireRate) };
-            //this.texture = AssetManager.TextureAsset("player_ship");
-            //Origin = Size / 2;
             EventManager.Register(this);
         }
 
         public override void Update(GameTime gameTime)
         {
             //These if statements should be moved perhaps?
-            //if(Shields > MaxShields)
-            //{
-            //    Shields = MaxShields;
-            //}
+            if (Shields > MaxShields)
+            {
+                Shields = MaxShields;
+            }
 
-            //if(Health > MaxHealth)
-            //{
-            //    Health = MaxHealth;
-            //}
+            if (Health > MaxHealth)
+            {
+                Health = MaxHealth;
+            }
 
             base.Update(gameTime);
 
@@ -61,7 +59,7 @@ namespace G01_Perseus
 
 
             Movement(gameTime); //Could be in Ships update?
-            //equipedWeapon.Update(gameTime);
+
 
             if (Status.Missions.Count > 0)
             {
@@ -76,12 +74,9 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(AssetManager.TextureAsset("projectile_yellow"), hitbox, Color.White);
             spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
             Status.Draw(spriteBatch);
-            
-            //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
-        }
+                    }
 
         /// <summary>
         /// This handles all the inputs the player can made with movement, change weapon, fire etc.
@@ -100,8 +95,6 @@ namespace G01_Perseus
 
             if(KeyMouseReader.LeftHold() && !hasFocusOnPlanet)
             {
-                //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
-
                 equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, rotation, TypeOfBullet.Player, gameTime);
                 EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
@@ -161,11 +154,6 @@ namespace G01_Perseus
             mission.SetOwner(this);
             Status.Missions.Add(mission);
         }
-
-        //protected override void DefaultTexture()
-        //{
-        //    texture = AssetManager.TextureAsset("player_ship");
-        //}
 
         public PlayerStatus Status
         {

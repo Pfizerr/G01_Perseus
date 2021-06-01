@@ -42,12 +42,9 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(AssetManager.TextureAsset("projectile_yellow"), hitbox, Color.White); //Debugging new Rectangle(Position.ToPoint(), Size.ToPoint())
             spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, scale, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), healthPos, null, Color.Crimson, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), shieldPos, null, Color.Cyan, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
-            //Vector2 drawPosition = new Vector2((tileX * tileWidth) + position.X - (ix * tileWidth), (tileY * tileWidth) + position.Y - (iy * tileHeight));
-            //spriteBatch.Draw(texture, drawPosition, null, Color.White, rotation, size / 2, Vector2.One, SpriteEffects.None, 0.5f);*/
             
         }
 
@@ -55,9 +52,7 @@ namespace G01_Perseus
         {
             this.behavior.Update(gameTime);
 
-            Movement(gameTime);
-                       
-            //hitbox.Location = Center.ToPoint(); //Should this be Center.ToPoint()??
+            Movement(gameTime);                       
                                  
             SetHealthPosition();
             base.Update(gameTime);
@@ -107,11 +102,6 @@ namespace G01_Perseus
             base.ShieldRegeneration(gameTime);
             shieldPos.Width = (int)((Shields / TotalHealth) * hitbox.Width);
         }
-
-        //protected override void DefaultTexture()
-        //{
-        //    texture = AssetManager.TextureAsset("enemy_ship");
-        //}
 
         public void PlayerFired(PlayerShootEvent e)
         {

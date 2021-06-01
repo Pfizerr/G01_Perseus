@@ -24,7 +24,7 @@ namespace G01_Perseus
 
         private Texture2D debugTexture;
 
-        public EnemySpawner(Type type, Vector2 position, int respawnTimeMs) : base (position, Vector2.One)
+        public EnemySpawner(Type type, Vector2 position, int respawnTimeMs) : base (position, Vector2.One, Util.CreateRectangleTexture(1, 1, Color.Transparent, Color.Transparent))
         {
             this.type = type;
             this.timer = new Timer(respawnTimeMs);
@@ -73,9 +73,6 @@ namespace G01_Perseus
             
         }
 
-        protected override void DefaultTexture()
-        {
-            texture = Util.CreateFilledRectangleTexture(Color.White, 1, 1);
-        }
+       
     }
 }
