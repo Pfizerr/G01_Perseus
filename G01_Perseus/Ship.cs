@@ -1,4 +1,4 @@
-﻿using G01_Perseus.EventSystem.Events;
+using G01_Perseus.EventSystem.Events;
 using G01_Perseus.EventSystem.Listeners;
 using Microsoft.Xna.Framework;
 using System;
@@ -17,30 +17,27 @@ namespace G01_Perseus
         protected Vector2 velocity;
         protected Weapon equipedWeapon;
         //Can use wapon dependinng on the type of enemy
-        protected Weapon trippleShot = new WeaponTripleShot(1, 1);
-        protected Weapon singleShot = new WeaponSingleShot(1, 1);
-        protected double hitTimer, hitTimerInterval;
-        protected List<Weapon> weapons;        
+        protected double hitTimer, hitTimerInterval;                
 
         //Components
         protected PlayerStatus playerStatus;
         public float Shields { get; protected set; }
-        public float Health { get; protected set; }
+        public float Health { get; set; } //Removed the protected set here :/ To make the shop able to give the player health. Should use the event system
         public float TotalHealth { get; protected set; }
         public virtual float MaxHealth { get; protected set; }
         public virtual float MaxShields { get; protected set; }
         public virtual float PowerLevel { get; protected set; }
+        public virtual float FireRate { get; protected set; }
 
-        public Ship(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield) : base(maxVelocity, position, scale)
+        public Ship(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, Texture2D texture) : base(maxVelocity, position, scale, texture)
         {
             Health = health;
             MaxHealth = health;
-            Origin = Size / 2;
+            
             layerDepth = 0.7f;
             rotation = 0f;
             playerStatus = new PlayerStatus(health, 0f);
-            weapons = new List<Weapon>() { trippleShot, singleShot };
-            equipedWeapon = weapons[1];
+            equipedWeapon = new WeaponSingleShot(1, 1, 0); //Make the power lvl a input parameter
             Shields = shield;
             MaxShields = Shields;
             TotalHealth = health + shield;
@@ -55,6 +52,10 @@ namespace G01_Perseus
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
+            if (Shields < MaxShields)
+            {
+                ShieldRegeneration(gameTime);
+            }
         }
 
         public virtual void Movement(GameTime gameTime)
@@ -103,6 +104,7 @@ namespace G01_Perseus
                 if(this is Enemy)
                 {
                     Resources.AddXP(1100);
+                    EventManager.Dispatch(new GainXpEvent());
                 }
             }
             
@@ -114,7 +116,7 @@ namespace G01_Perseus
             {
                 hitTimer -= gameTime.ElapsedGameTime.TotalSeconds;
             }
-            else if (hitTimer <= 0 && Shields < MaxShields)
+            else if (hitTimer <= 0)
             {
                 Shields += 1;
                 if (Shields > MaxShields)

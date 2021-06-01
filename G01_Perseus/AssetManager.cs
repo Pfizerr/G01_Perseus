@@ -105,6 +105,10 @@ namespace G01_Perseus
             loadedTextures.Add("start_menu_background_UI", content.Load<Texture2D>(@"textures\StartMenuBackground"));
             loadedTextures.Add("journal_menu_background", content.Load<Texture2D>(@"textures\JournalMenuBackground"));
 
+            loadedTextures.Add("tripple_shot_icon", content.Load<Texture2D>(@"textures\TrippleShootIcon"));
+            loadedTextures.Add("shop_menu_background_UI", content.Load<Texture2D>(@"textures\ShopMenuBackground"));
+            loadedTextures.Add("quest_menu_background_UI", content.Load<Texture2D>(@"textures\QuestMenuBackground"));
+
             //Fonts
             loadedFonts.Add("default_font", content.Load<SpriteFont>(@"fonts\default_font"));
             loadedFonts.Add("default_font_small", content.Load<SpriteFont>(@"fonts\default_font_small"));

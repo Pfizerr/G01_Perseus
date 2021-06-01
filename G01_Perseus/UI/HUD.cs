@@ -9,18 +9,19 @@ using G01_Perseus.EventSystem.Events;
 
 namespace G01_Perseus.UI
 {
-    class HUD : GameState
+    class HUD : GameState, HealthChangeListener, GainXpListener
     {
-        private UIButton btnSkillUI, btnQuestUI;
+        private UIButton btnSkillUI, btnShopUI;
         private SkillInterface skillInterface;
+        private ShopMenu shopMenu;
         private GameWindow window;
         private float healthbarWidth;
         private float shieldbarWidth;
         private float healthbarHeight;
         private Rectangle healthbarSize, shieldbarSize, xpBarSize, xpBarOutline;        
         private Texture2D barTex, outlineTex;
-        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos;
-        private string levelText, xpText;
+        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos, btnSkillTextPos, btnShopTextPos, weponTextPos, weaponIconPos;
+        private string levelText, xpText, btnSkillText, btnShopText, weaponText;
 
         public HUD(GameWindow window)
         {
@@ -30,33 +31,42 @@ namespace G01_Perseus.UI
 
             //Buttons on UI
             SetButtons();
-            this.skillInterface = new SkillInterface(window);           
+            this.skillInterface = new SkillInterface(window);
+            this.shopMenu = new ShopMenu(window);
 
             //Healthbar portion
             barTex = AssetManager.TextureAsset("gradient_bar");
             SetHealthBarPositions(offsett);
 
             SetLevelAndXpBar(offsett);
+
+            weaponText = "Weapon in use: ";
+            EventManager.Register(this);
         }
 
         public void OpenSkillUI()
         {
             EventManager.Dispatch(new PushStateEvent(skillInterface));
-            Console.WriteLine("Skill menu has been closed"); //Only for testing
+            Console.WriteLine("Skill menu has been opened"); //Only for testing
+        }
+
+        public void OpenShopMenu()
+        {
+            EventManager.Dispatch(new PushStateEvent(shopMenu));
+            Console.WriteLine("Shop menu has been opened"); //Only for testing
         }
 
         public override void Update(GameTime gameTime)
         {
             btnSkillUI.Update(gameTime);
-            btnQuestUI.Update(gameTime);
-            UpdatePlayerHealth();
+            btnShopUI.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
             btnSkillUI.Draw(spriteBatch, gameTime);
-            btnQuestUI.Draw(spriteBatch, gameTime);
+            btnShopUI.Draw(spriteBatch, gameTime);
             spriteBatch.Draw(barTex, healthbarSize, Color.Crimson);
             spriteBatch.Draw(barTex, shieldbarSize, Color.Cyan);
             spriteBatch.DrawString(AssetManager.FontAsset("default_font"), EntityManager.Player.Health.ToString(), healthNrPos, Color.Crimson);
@@ -66,16 +76,9 @@ namespace G01_Perseus.UI
             spriteBatch.Draw(outlineTex, xpBarOutline, Color.White);
             spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("Level: {0}", Resources.Level), levelTextPos, Color.Yellow);
             spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("{0} / {1}", Resources.XP, Resources.XPToNextLevel), xpTextPos, Color.Yellow);
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnShopText, btnShopTextPos, Color.LightGreen);
+            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnSkillText, btnSkillTextPos, Color.LightBlue);
             spriteBatch.End();
-        }
-
-        public void UpdatePlayerHealth() //Make this an event when the player takes damage and call this method
-        {
-            //Note for the % version of this part of the HUD. Replace the Entinty.Player.Max... with EntityManager.Player.TotalHealth
-            healthbarSize.Width = (int)((EntityManager.Player.Health / EntityManager.Player.MaxHealth) * barTex.Width);
-            shieldbarSize.Width = (int)((EntityManager.Player.Shields / EntityManager.Player.MaxShields) * barTex.Width);
-
-            xpBarSize.Width = (int)((Resources.XP / Resources.XPToNextLevel) * barTex.Width);
         }
 
         public void SetHealthBarPositions(float offsett)
@@ -104,10 +107,26 @@ namespace G01_Perseus.UI
 
         public void SetButtons()
         {
+            btnSkillText = "Skills";
+            btnShopText = "Shop";
             this.btnSkillUI = new UIButton(new Rectangle((int)(window.ClientBounds.Width - 60), (int)(window.ClientBounds.Height - 60), 50, 50), AssetManager.TextureAsset("button_blue"), OpenSkillUI);
-            this.btnQuestUI = new UIButton(new Rectangle((int)(btnSkillUI.Hitbox.X - 60), (int)(btnSkillUI.Hitbox.Y), 50, 50), AssetManager.TextureAsset("button_blue"), OpenSkillUI);
+            this.btnShopUI = new UIButton(new Rectangle((int)(btnSkillUI.Hitbox.X - 60), (int)(btnSkillUI.Hitbox.Y), 50, 50), AssetManager.TextureAsset("button_green"), OpenShopMenu);
             btnSkillUI.HoveredTexture = AssetManager.TextureAsset("button_red");
-            btnQuestUI.HoveredTexture = AssetManager.TextureAsset("button_green");
+            btnShopUI.HoveredTexture = AssetManager.TextureAsset("button_red");
+            btnSkillTextPos = new Vector2(btnSkillUI.Hitbox.X, btnSkillUI.Hitbox.Y - AssetManager.FontAsset("default_font").MeasureString(btnSkillText).Y);
+            btnShopTextPos = new Vector2(btnShopUI.Hitbox.X, btnShopUI.Hitbox.Y - AssetManager.FontAsset("default_font").MeasureString(btnShopText).Y);
+        }
+
+        public void HealthChange(HealthChangeEvent e)
+        {
+            //Note for the % version of this part of the HUD. Replace the Entinty.Player.Max... with EntityManager.Player.TotalHealth
+            healthbarSize.Width = (int)((EntityManager.Player.Health / EntityManager.Player.MaxHealth) * barTex.Width);
+            shieldbarSize.Width = (int)((EntityManager.Player.Shields / EntityManager.Player.MaxShields) * barTex.Width);
+        }
+
+        public void XpChange(GainXpEvent e)
+        {
+            xpBarSize.Width = (int)((Resources.XP / Resources.XPToNextLevel) * barTex.Width);
         }
     }
 }

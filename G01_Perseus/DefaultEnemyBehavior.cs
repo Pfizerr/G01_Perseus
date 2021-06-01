@@ -9,27 +9,49 @@ namespace G01_Perseus
 {
     public class DefaultEnemyBehavior : EnemyBehavior
     {
-        private float strafeTimer = 2;
-        private float timeStrafed;
+        Timer timer = new Timer(2000);
         private Vector2 strafeVector = Vector2.Zero;
+        private bool returning = false;
+        
+        public DefaultEnemyBehavior()
+        {
+            pursueDistance = 500;
+            retreatDistance = 100;
+        }
 
-        public override void Update(GameTime gameTime, float rotation)
+        public override void Update(GameTime gameTime)
         {
             Enemy.FireWeapon(gameTime);
             Enemy.AdjustAngleTowardsTarget(EntityManager.Player.Position);
             Vector2 position = Enemy.Position;
-
-            if (Vector2.Distance(position, EntityManager.Player.Position) > 500)
+            if (Vector2.Distance(position, Enemy.startingPosition) > Enemy.leashDistance)
             {
-                Enemy.direction = Pursue(position);
+                returning = true;
             }
-            else if (Vector2.Distance(position, EntityManager.Player.Position) < 100)
+
+            if (returning)
             {
-                Enemy.direction = Retreat(rotation);
+                Enemy.direction = Vector2.Normalize(Enemy.startingPosition - position);
+                if (Vector2.Distance(position, Enemy.startingPosition) <= 10)
+                {
+                    returning = false;
+                }
             }
             else
             {
-                Enemy.direction = Strafe(gameTime, rotation);
+
+                if (Vector2.Distance(position, EntityManager.Player.Position) > pursueDistance)
+                {
+                    Enemy.direction = Pursue(position);
+                }
+                else if (Vector2.Distance(position, EntityManager.Player.Position) < retreatDistance)
+                {
+                    Enemy.direction = Retreat(Enemy.Rotation);
+                }
+                else
+                {
+                    Enemy.direction = Strafe(gameTime, Enemy.Rotation);
+                }
             }
         }
 
@@ -57,7 +79,7 @@ namespace G01_Perseus
         private Vector2 Strafe(GameTime gameTime, float rotation) // Moves horizontally in relation to the facing direction
         {
 
-            if (timeStrafed == 0)
+            if (timer.IsDone(gameTime))
             {
                 //direction = Vector2.Zero;
                 double rand = Game1.random.NextDouble();
@@ -71,20 +93,12 @@ namespace G01_Perseus
                     strafeVector = new Vector2((float)Math.Cos(rotation + (float)Math.PI * 2), (float)Math.Sin(rotation + (float)Math.PI * 2));
                 }
 
-                timeStrafed += (float)gameTime.ElapsedGameTime.TotalSeconds;
                 strafeVector.Normalize();
+                timer.Reset(gameTime);
                 return strafeVector;
             }
 
-            if (timeStrafed < strafeTimer)
-            {
-                timeStrafed += (float)gameTime.ElapsedGameTime.TotalSeconds;
-
-                if (timeStrafed > strafeTimer)
-                {
-                    timeStrafed = 0;
-                }
-            }
+            
             return strafeVector;
         }
     }

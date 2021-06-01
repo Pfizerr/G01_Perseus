@@ -10,14 +10,14 @@ namespace G01_Perseus
     class WeaponTripleShot : Weapon
     {
         private Vector2 secondBulletTarget, thirdBulletTarget;
-        public WeaponTripleShot(int iD, float powerLevel) : base(iD, powerLevel)
+        public WeaponTripleShot(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
         {
             name = "Tripleshot";
-            rateOfFire = 1.5f;
             baseDamagePerShot = 2;
+            baseFireTimer = 1500;
             SetDamagePerShot(powerLevel);
-            fireTimer = new Timer(1500);
-            
+            SetFireTimer(fireRate);
+
         }
 
         public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type, GameTime gameTime)
@@ -30,9 +30,9 @@ namespace G01_Perseus
                 thirdBulletTarget.X = (float)Math.Cos(rotation + (float)Math.PI * 1.7) + center.X;
                 thirdBulletTarget.Y = (float)Math.Sin(rotation + (float)Math.PI * 1.7) + center.Y;
 
-                EntityManager.CreateBullet(type, center, target, false, damagePerShot);
-                EntityManager.CreateBullet(type, center, secondBulletTarget, false, damagePerShot);
-                EntityManager.CreateBullet(type, center, thirdBulletTarget, false, damagePerShot);
+                EntityManager.CreateBullet(type, center, target, damagePerShot);
+                EntityManager.CreateBullet(type, center, secondBulletTarget, damagePerShot);
+                EntityManager.CreateBullet(type, center, thirdBulletTarget, damagePerShot);
                 fireTimer.Reset(gameTime);
             }
         }

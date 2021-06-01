@@ -34,7 +34,7 @@ namespace G01_Perseus
 
             this.font = font;
 
-            background = new Background();
+            background = new Background(tileWidth, tileHeight);
             
             this.tileTexture = Util.CreateRectangleTexture(tileWidth, tileHeight, Color.Cyan, Color.Transparent);    
         }
@@ -70,7 +70,7 @@ namespace G01_Perseus
             {
                 for (int x = startX; x <= endX; x++)
                 {
-                    background.Draw(spriteBatch, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight));
+                    background.Draw(spriteBatch, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), camera.CenterPosition);
                     spriteBatch.Draw(tileTexture, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.4f);
 
                     Point sectorCoords = GetSectorCoordinates(x, y);

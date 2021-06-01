@@ -42,6 +42,7 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Background.cs" />
+    <Compile Include="EnemySpawner.cs" />
     <Compile Include="EventSystem\Events\CollissionEvent.cs" />
     <Compile Include="EventSystem\Events\MissionRemovedEvent.cs" />
     <Compile Include="EventSystem\Events\MissionTurnedInEvent.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="EventSystem\Listeners\MissionTurnedInListener.cs" />
     <Compile Include="EventSystem\Listeners\MouseEnterPlanetListener.cs" />
     <Compile Include="EventSystem\Listeners\MouseExitPlanetListener.cs" />
+    <Compile Include="EventSystem\Listeners\HealthChangeListener.cs" />
     <Compile Include="ExtendedTimer.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="UI\JournalMissionButton.cs" />
@@ -98,6 +100,7 @@
     <Compile Include="Player.cs" />
     <Compile Include="Enemy.cs" />
     <Compile Include="Entity.cs" />
+    <Compile Include="UI\ShopMenu.cs" />
     <Compile Include="WeaponTripleShot.cs" />
     <Compile Include="WeaponSingleShot.cs" />
     <Compile Include="PlayerStatus.cs" />

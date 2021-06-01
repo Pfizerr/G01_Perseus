@@ -8,17 +8,17 @@ namespace G01_Perseus
     {
         public float timeToLive;
         public float damage;
-        private Vector2 direction;
+        protected Vector2 direction;
         public TypeOfBullet Type { get; private set; }
 
-        public Bullet(Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale, TypeOfBullet type, float damage, float timeToLive) 
-            : base(maxVelocity, position, scale)
+        public Bullet(Vector2 position, Vector2 targetPosition, Vector2 maxVelocity, Vector2 scale, TypeOfBullet type, float damage, float timeToLive, Texture2D texture) 
+            : base(maxVelocity, position, scale, texture)
         {
             Type = type;
+            SetTexture();
             this.damage = damage;
             this.timeToLive = timeToLive;
-            Center = position;
-            Origin = Size / 2;
+            Center = position; //This makes no sense???
             rotation = 0f;
             layerDepth = 0.8f;
             direction = Vector2.Normalize(targetPosition - position);
@@ -44,9 +44,17 @@ namespace G01_Perseus
             //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
 
-        protected override void DefaultTexture()
+        protected void SetTexture()
         {
-            texture = AssetManager.TextureAsset("projectile_green");
+            if(Type == TypeOfBullet.Player) 
+            {
+                texture = AssetManager.TextureAsset("projectile_green");
+            }
+            else
+            {
+                texture = AssetManager.TextureAsset("projectile_pink");
+            }
+            
         }
 
         public override void Destroy(Event e)

@@ -15,8 +15,12 @@ namespace G01_Perseus
         private float baseMaxHealth;
         private float baseMaxShields;
         private float basePowerLevel;
+        private float baseFireRate;
         public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
-        
+        public enum WeaponStatus { Available, NotAvailable };
+        public WeaponStatus[] weaponStatuses;
+        protected List<Weapon> weapons;
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -30,37 +34,41 @@ namespace G01_Perseus
             baseMaxHealth = health;
             baseMaxShields = shield;
             basePowerLevel = 1; //This could be an input parameter for the constructor
+            baseFireRate = 0;
+            weaponStatuses = new WeaponStatus[] { WeaponStatus.Available, WeaponStatus.NotAvailable };
+            weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, (int)baseFireRate) };
             EventManager.Register(this);
         }
 
         public override void Update(GameTime gameTime)
         {
             //These if statements should be moved perhaps?
-            if(Shields > MaxShields)
+            if (Shields > MaxShields)
             {
                 Shields = MaxShields;
             }
 
-            if(Health > MaxHealth)
+            if (Health > MaxHealth)
             {
                 Health = MaxHealth;
             }
 
             base.Update(gameTime);
 
-            ShieldRegeneration(gameTime);
+            //ShieldRegeneration(gameTime);
 
             AdjustAngleTowardsTarget(FindMousePosition());
             HandleInput(gameTime);
 
-            Movement(gameTime);
-            equipedWeapon.Update(gameTime);
+
+            Movement(gameTime); //Could be in Ships update?
+
 
             if (Status.Missions.Count > 0)
             {
                 foreach (Mission mission in Status.Missions)
                 {
-                Console.WriteLine(String.Format("ID: {0} Contractor: {1} Owner: {2}", mission.Id, mission.Contractor, mission.Owner));
+                    Console.WriteLine(String.Format("ID: {0} Contractor: {1} Owner: {2}", mission.Id, mission.Contractor, mission.Owner));
                 }
             }
 
@@ -90,20 +98,8 @@ namespace G01_Perseus
 
             direction = direction.LengthSquared() > 1 ? Vector2.Normalize(direction) : direction;
 
-            //if(KeyMouseReader.KeyPressed(Keys.K))
-            //{
-            //    this.Destroy(null);
-            //}
-
-            if(KeyMouseReader.KeyPressed(Keys.M))
+            if(KeyMouseReader.LeftHold() && !hasFocusOnPlanet)
             {
-                EventManager.Dispatch(new PushStateEvent(new Journal(Status.Missions)));
-            }
-
-            if(KeyMouseReader.LeftClick() && !hasFocusOnPlanet)
-            {
-                //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
-
                 equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, rotation, TypeOfBullet.Player, gameTime);
                 EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
@@ -111,19 +107,38 @@ namespace G01_Perseus
             ChangeWeapon();
         }
 
+        public override void HandleCollision(Entity other)
+        {
+            if (other is Enemy enemy)
+            {
+                //RecieveDamage(enemy.damage);
+            }
+            else if (other is Bullet bullet)
+            {
+                RecieveDamage(other, bullet.damage);
+                bullet.timeToLive = 0;
+            }
+            
+        }
+
         /// <summary>
         /// If you press the 1 or 2 key you will change the wepon type that you're using.
         /// </summary>
         private void ChangeWeapon()
         {
-            if (KeyMouseReader.KeyPressed(Keys.D1))
+            if (KeyMouseReader.KeyPressed(Keys.D1) && weaponStatuses[0] == WeaponStatus.Available) //KeyMouseReader.KeyPressed(Keys.None)
             {
                 equipedWeapon = weapons[0];
             }
 
-            if (KeyMouseReader.KeyPressed(Keys.D2))
+            if (KeyMouseReader.KeyPressed(Keys.D2) && weaponStatuses[1] == WeaponStatus.Available)
             {
                 equipedWeapon = weapons[1];
+            }
+
+            if (KeyMouseReader.KeyPressed(Keys.D3))
+            {
+                equipedWeapon = weapons[2];
             }
         }
 
@@ -143,17 +158,6 @@ namespace G01_Perseus
         {
             mission.SetOwner(this);
             Status.Missions.Add(mission);
-        }
-
-        protected override void DefaultTexture()
-        {
-            texture = AssetManager.TextureAsset("player_ship");
-        }
-
-        public override void Destroy(Event e)
-        {
-            EventManager.Dispatch(new PushStateEvent(new RespawnMenu(null)));
-            base.Destroy(e);
         }
 
         public PlayerStatus Status
@@ -190,12 +194,26 @@ namespace G01_Perseus
         /// <summary>
         /// Updates the power level of all the weapons the player has
         /// </summary>
-        public void UpdateWeaponPower()
+        public void UpdateWeapons()
         {
             foreach (Weapon weapon in weapons)
             {
                 weapon.SetDamagePerShot(PowerLevel);
+                weapon.SetFireTimer((int)FireRate);
             }
+        }
+
+
+        public override void RecieveDamage(Entity other, float damage)
+        {
+            base.RecieveDamage(other, damage);
+            EventManager.Dispatch(new HealthChangeEvent());
+        }
+
+        public override void ShieldRegeneration(GameTime gameTime)
+        {
+            base.ShieldRegeneration(gameTime);
+            EventManager.Dispatch(new HealthChangeEvent());
         }
 
         /// <summary>
@@ -217,6 +235,12 @@ namespace G01_Perseus
         {
             get { return basePowerLevel + Resources.SpDamage; }
             protected set => base.PowerLevel = value;
+        }
+
+        public override float FireRate
+        {
+            get { return baseFireRate + Resources.SpFireRate * 10; }
+            protected set => base.FireRate = value;
         }
     }
 }

@@ -107,6 +107,7 @@ namespace G01_Perseus
         public string Text
         {
             get;
+            set;
         }
 
         public Texture2D Texture
