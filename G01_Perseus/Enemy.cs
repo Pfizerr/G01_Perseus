@@ -24,7 +24,9 @@ namespace G01_Perseus
         {
             healthBarHeight = 10;
             this.texture = texture;
+
             SetSizeAndHitbox(this.texture);
+            Origin = Size / 2;
             healthPos = new Rectangle((int)position.X, (int)position.Y - healthBarHeight, (int)((Health / TotalHealth) * hitbox.Width), healthBarHeight);
             shieldPos = new Rectangle(healthPos.X + healthPos.Width, healthPos.Y, (int)((Shields / TotalHealth) * hitbox.Width), healthBarHeight);
             EventManager.Register(this);
@@ -43,7 +45,7 @@ namespace G01_Perseus
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-            spriteBatch.Draw(AssetManager.TextureAsset("projectile_yellow"), new Rectangle(Position.ToPoint(), Size.ToPoint()), Color.White);
+            spriteBatch.Draw(AssetManager.TextureAsset("projectile_yellow"), hitbox, Color.White); //Debugging new Rectangle(Position.ToPoint(), Size.ToPoint())
             spriteBatch.Draw(texture, hitbox, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), healthPos, null, Color.Crimson, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), shieldPos, null, Color.Cyan, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
@@ -58,7 +60,7 @@ namespace G01_Perseus
 
             Movement(gameTime);
                        
-            hitbox.Location = Center.ToPoint(); //Should this be Center.ToPoint()??
+            //hitbox.Location = Center.ToPoint(); //Should this be Center.ToPoint()??
                                  
             SetHealthPosition();
             base.Update(gameTime);

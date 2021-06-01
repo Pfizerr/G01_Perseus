@@ -31,7 +31,7 @@ namespace G01_Perseus
         {
             Health = health;
             MaxHealth = health;
-            Origin = Size / 2;
+            
             layerDepth = 0.7f;
             rotation = 0f;
             playerStatus = new PlayerStatus(health, 0f);
