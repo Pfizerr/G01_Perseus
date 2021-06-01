@@ -1,5 +1,6 @@
-﻿
-namespace G01_Perseus
+﻿using G01_Perseus.EventSystem.Listeners;
+
+namespace G01_Perseus.EventSystem.Events
 {
     public class MouseEnterPlanetEvent : Event
     {

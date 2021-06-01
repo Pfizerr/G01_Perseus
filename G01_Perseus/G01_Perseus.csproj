@@ -57,8 +57,9 @@
     <Compile Include="EventSystem\Listeners\MouseExitPlanetListener.cs" />
     <Compile Include="ExtendedTimer.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="UI\JournalMissionButton.cs" />
     <Compile Include="KeyMouseReader.cs" />
-    <Compile Include="UI\MissionUIElement.cs" />
+    <Compile Include="UI\MissionInterfaceButton.cs" />
     <Compile Include="UI\MainMenu.cs" />
     <Compile Include="MovingEntity.cs" />
     <Compile Include="Resources.cs" />
@@ -74,9 +75,6 @@
     <Compile Include="EventSystem\Events\MissionSelectedEvent.cs" />
     <Compile Include="EventSystem\Listeners\MissionSelectedListener.cs" />
     <Compile Include="UI\Journal.cs" />
-    <Compile Include="UI\NewJournal.cs" />
-    <Compile Include="UI\NewMissionButton.cs" />
-    <Compile Include="UI\NewMissionInterface.cs" />
     <Compile Include="UI\UIButton.cs" />
     <Compile Include="EventSystem\Listeners\EntityKilledListener.cs" />
     <Compile Include="EventSystem\Events\EntityKilledEvent.cs" />

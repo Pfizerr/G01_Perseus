@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using G01_Perseus.EventSystem.Events;
+using G01_Perseus.EventSystem.Listeners;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -11,14 +13,14 @@ namespace G01_Perseus
     /// <summary>
     /// This class contains the variables controlling player status. These are variables that are directly relevant and visible to the player.
     /// </summary>
-    public class PlayerStatus
+    public class PlayerStatus : MissionTurnedInListener, MissionRemovedListener
     {
         private SpriteFont font;
         public float MaxHealth { get; set;}
         public float Health { get; set;}
         public float MaxShields { get; set;}
         public float Shields { get; set;}
-        public int Resources { get; set;}
+        //public int Resources { get; set;}
 
         public List<Mission> Missions { get; set;}
 
@@ -45,23 +47,6 @@ namespace G01_Perseus
         }
 
         /// <summary>
-        /// Existing status constructor.
-        /// </summary>
-        /// <param name="maxHealth"></param>
-        /// <param name="maxShields"></param>
-        /// <param name="skillPoints"></param>
-        /// <param name="level"></param>
-        /// <param name="experience"></param>
-        /// <param name="resources"></param>
-        /// <param name="dust"></param>
-        public PlayerStatus(float maxHealth, float maxShields, int resources) : this()
-        {
-            MaxHealth = maxHealth;
-            MaxShields = maxShields;
-            Resources = resources;
-        }
-
-        /// <summary>
         /// This constructor is always called.
         /// </summary>
         public PlayerStatus()
@@ -69,6 +54,7 @@ namespace G01_Perseus
             Missions = new List<Mission>();
 
             font = AssetManager.FontAsset("default_font");
+            EventManager.Register(this);
         }
 
         public void Update()
@@ -116,6 +102,19 @@ namespace G01_Perseus
             //    spriteBatch.DrawString(font, strs[i], position, Color.White);
             //}
             #endregion
+        }
+
+        public void OnTurnIn(MissionTurnedInEvent e)
+        {
+            Resources.AddDust(e.Mission.Dust);
+            Resources.AddCurrency(e.Mission.Currency);
+            Resources.AddSkillPoint(e.Mission.SkillPoints);
+            Missions.Remove(e.Mission);
+        }
+
+        public void OnRemoved(MissionRemovedEvent e)
+        {
+            Missions.Remove(e.Mission);
         }
     }
 }

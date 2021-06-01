@@ -1,69 +1,110 @@
 ﻿using G01_Perseus.EventSystem.Events;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace G01_Perseus.UI
 {
-    /*public class Journal : GameState
+    public class Journal : GameState
     {
+        private List<JournalMissionButton> buttons;
+        private Texture2D background;
         private Rectangle bounds;
-        private Rectangle scrollableRegionBounds;
-        private bool isScrollable;
-        private int pxOnStep; // amount of pixels a single scroll-step will move missions by
-        private List<Mission> missions;
-        private List<UIButton> buttons;
-        private Texture2D backgroundTexture;
-
-        private UIButton exitButton;
+        private float Opacity;
 
         public Journal(List<Mission> missions)
         {
             this.Transparent = true;
+            this.Opacity = 1.0f;
 
-            this.bounds = new Rectangle(450,200, 250, 400);
-            this.scrollableRegionBounds = new Rectangle(bounds.X + 10, bounds.Y + 10, bounds.Width - 20, bounds.Height - 20);
-            this.backgroundTexture = Util.CreateFilledRectangleTexture(new Color(255, 255, 255, 255), 1, 1);
-            
-            this.exitButton = new UIButton(new Rectangle(bounds.X + 10, bounds.Y + 10, 50, 50), () => 
+            this.background = AssetManager.TextureAsset("journal_menu_background");
+            this.bounds = new Rectangle(Game1.camera.Viewport.Width / 2 - background.Width / 2, Game1.camera.Viewport.Height / 2 - background.Height / 2, background.Width, background.Height);
+            this.buttons = new List<JournalMissionButton>();
+
+            int bWidth = 500;
+            int bHeight = 75;
+
+            for (int i = 0; i < missions.Count; i++)
             {
-                EventManager.Dispatch(new PopStateEvent());
-            });
-
-            for(int i = 0; i < missions.Count; i++)
-            {
-                //Turn in mission
-                buttons.Add(new UIButton())
-                
-                    buttons.Add(new UIButton()) 
-            }
-        }
-
-        private void RemoveMission(Mission mission)
-        {
-            for(ion)
-        }
-
-        public override void Update(GameTime gameTime)
-        {
-            exitButton.Update(gameTime);
-
-            if(isScrollable && KeyMouseReader.mouseState.ScrollWheelValue < KeyMouseReader.oldMouseState.ScrollWheelValue)
-            {
-
+                int y = (bounds.Y + 35) + (i * bHeight) + (i * 10);
+                Rectangle bBounds = new Rectangle(bounds.Center.X - bWidth / 2, y, bWidth, bHeight);
+                buttons.Add(new JournalMissionButton(missions[i], bBounds));
             }
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
-            spriteBatch.Draw(backgroundTexture, bounds, null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 1.0f);
-            exitButton.Draw(spriteBatch, gameTime);
+
+
+            spriteBatch.Draw(background, bounds, Color.White * Opacity);
+
+            foreach (JournalMissionButton button in buttons)
+            {
+                button.Draw(spriteBatch, gameTime);
+            }
+
+            #region debug (draw hitbox)
+            //spriteBatch.Draw(Util.CreateRectangleTexture(bounds.Width, bounds.Height, Color.Blue, Color.Transparent), bounds.Location.ToVector2(), Color.White);
+            #endregion
+
             spriteBatch.End();
         }
-    }*/
+
+        public override void Update(GameTime gameTime)
+        {
+            HandleInput();
+
+            foreach (JournalMissionButton button in buttons)
+            {
+                button.Opacity = Opacity;
+                button.Update(gameTime);
+
+
+            }
+
+            for(int i = 0; i < buttons.Count; i++)
+            {
+                if(buttons[i].HasMission == false)
+                {
+                    buttons.RemoveAt(i);
+                    continue;
+                }
+
+                buttons[i].Opacity = Opacity;
+                buttons[i].Update(gameTime);
+            }
+        }
+
+        public void HandleInput()
+        {
+            if (KeyMouseReader.KeyPressed(Keys.M))
+            {
+                EventManager.Dispatch(new PopStateEvent());
+            }
+
+            if (KeyMouseReader.KeyPressed(Keys.Escape))
+            {
+                EventManager.Dispatch(new PopStateEvent());
+            }
+
+            if (KeyMouseReader.MouseScreenPosition.X < bounds.Left
+                || KeyMouseReader.MouseScreenPosition.X > bounds.Right
+                || KeyMouseReader.MouseScreenPosition.Y < bounds.Top
+                || KeyMouseReader.MouseScreenPosition.Y > bounds.Bottom)
+            {
+                Opacity = 0.5f;
+
+                if (KeyMouseReader.LeftClick() || KeyMouseReader.RightClick())
+                {
+                    EventManager.Dispatch(new PopStateEvent());
+                }
+            }
+            else
+            {
+                Opacity = 1.0f;
+            }
+        }
+    }
 }

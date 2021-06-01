@@ -18,6 +18,8 @@ namespace G01_Perseus.UI
             this.Hitbox = rectangle;
             this.Action = onClick;
 
+            this.Opacity = 1.0f;
+
             //DEBUG 
             Texture = Util.CreateRectangleTexture(rectangle.Width, rectangle.Height, Color.Black, Color.Transparent);
             HoveredTexture = Util.CreateRectangleTexture(rectangle.Width, rectangle.Height, Color.Black, Color.Cyan);
@@ -28,6 +30,8 @@ namespace G01_Perseus.UI
             this.Hitbox = rectangle;
             this.Texture = texture;
             this.Action = onClick;
+
+            this.Opacity = 1.0f;
         }
 
         public UIButton(Rectangle rectangle, Texture2D texture, string text, SpriteFont font, OnClick onClick = null)
@@ -39,6 +43,7 @@ namespace G01_Perseus.UI
             this.Font = font;
 
             this.TextLocation = new Vector2(rectangle.Center.X, rectangle.Center.Y);
+            this.Opacity = 1.0f;
         }
 
         public UIButton(Rectangle rectangle, Texture2D texture, string text, SpriteFont font, Vector2 textPositionOffset, OnClick onClick = null)
@@ -51,6 +56,7 @@ namespace G01_Perseus.UI
 
             this.Font = AssetManager.FontAsset("default_font");
             this.TextLocation = new Vector2(rectangle.Center.X + textPositionOffset.X, rectangle.Center.Y + textPositionOffset.Y);
+            this.Opacity = 1.0f;
         }
 
         public Rectangle Hitbox

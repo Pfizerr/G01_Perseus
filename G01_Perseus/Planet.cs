@@ -100,6 +100,7 @@ namespace G01_Perseus
                     missions[i].Contractor = this; //There is an error here when you close the game. Could be handles with a save and load function
                     //Though note that this error doesn't happen all the time
                     missions[i].State = Mission.EState.Offered;
+                    timer.Reset(Game1.random.Next(minMissionCooldown, maxMissionCooldown), false);
                 }
                 else
                 { /* Do nothing */}
@@ -125,7 +126,7 @@ namespace G01_Perseus
                     EventManager.Dispatch(new PlanetInteractionEvent(this));
 
                     // Open GUI
-                    EventManager.Dispatch(new PushStateEvent(new NewMissionInterface(missions, missionCooldowns)));
+                    EventManager.Dispatch(new PushStateEvent(new MissionInterface(missions, missionCooldowns)));
                     isDisplayingUI = true;
                 }
             }

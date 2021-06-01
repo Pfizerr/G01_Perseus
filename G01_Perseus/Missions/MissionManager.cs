@@ -116,11 +116,11 @@ namespace G01_Perseus
                         }
                         else if (field.StartsWith("rewards_resources="))
                         {
-                            mission.Resources = Convert.ToInt32(field.Split('=')[1]);
+                            mission.Currency = Convert.ToInt32(field.Split('=')[1]);
                         }
                         else if (field.StartsWith("rewards_dust="))
                         {
-                            mission.SkillPoints = Convert.ToInt32(field.Split('=')[1]);
+                            mission.Dust = Convert.ToInt32(field.Split('=')[1]);
                         }
                         else if (field.StartsWith("rewards_skillpoints="))
                         {

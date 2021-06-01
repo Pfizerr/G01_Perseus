@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using G01_Perseus.EventSystem.Listeners;
 
-namespace G01_Perseus
+namespace G01_Perseus.EventSystem.Events
 {
     public class PlanetInteractionEvent : Event
     {

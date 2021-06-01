@@ -3,13 +3,16 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using G01_Perseus.EventSystem.Events;
+using G01_Perseus.EventSystem.Listeners;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
+
 namespace G01_Perseus
 {
-    public class Enemy : Ship, PlayerShootListener, CollissionListener
+    public class Enemy : Ship, PlayerShootListener/*, CollissionListener*/
     {
         private Vector2 strafeVector = Vector2.Zero;
         private int healthBarHeight;

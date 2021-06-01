@@ -1,4 +1,6 @@
-﻿using Microsoft.Xna.Framework;
+﻿using G01_Perseus.EventSystem.Events;
+using G01_Perseus.EventSystem.Listeners;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Linq;

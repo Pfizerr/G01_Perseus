@@ -1,11 +1,7 @@
-﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using G01_Perseus.EventSystem.Listeners;
+using Microsoft.Xna.Framework;
 
-namespace G01_Perseus
+namespace G01_Perseus.EventSystem.Events
 {
     public class PlayerShootEvent : Event
     {

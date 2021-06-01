@@ -1,6 +1,6 @@
 id=1,name=Test1,description=this description must not include commas or equal signs.,tracker_id=1,rewards_resources=1000,rewards_dust=50,rewards_skillpoints=1,rewards_equipment=0
-id=2,name=Test2,description=this description must not include commas or equal signs.,tracker_id=1,rewards_resources=1000,rewards_dust=50,rewards_skillpoints=0,rewards_equipment=0
+id=2,name=Test2,description=this description must not include commas or equal signs.,tracker_id=1,rewards_resources=1000,rewards_dust=50,rewards_skillpoints=1,rewards_equipment=0
 id=3,name=Test3,description=this description must not include commas or equal signs.,tracker_id=1,rewards_resources=1000,rewards_dust=50,rewards_skillpoints=1,rewards_equipment=0
-id=4,name=Test4,description=this description must not include commas or equal signs.,tracker_id=1,rewards_resources=1000,rewards_dust=50,rewards_skillpoints=0,rewards_equipment=0
+id=4,name=Test4,description=this description must not include commas or equal signs.,tracker_id=1,rewards_resources=1000,rewards_dust=50,rewards_skillpoints=1,rewards_equipment=0
 id=5,name=Test5,description=this description must not include commas or equal signs.,tracker_id=1,rewards_resources=1000,rewards_dust=50,rewards_skillpoints=1,rewards_equipment=0
-id=6,name=Test6,description=this description must not include commas or equal signs.,tracker_id=1,rewards_resources=1000,rewards_dust=50,rewards_skillpoints=0,rewards_equipment=0
+id=6,name=Test6,description=this description must not include commas or equal signs.,tracker_id=1,rewards_resources=1000,rewards_dust=50,rewards_skillpoints=1,rewards_equipment=0

@@ -1,4 +1,5 @@
 using G01_Perseus.EventSystem.Events;
+using G01_Perseus.EventSystem.Listeners;
 using G01_Perseus.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -8,7 +9,7 @@ using System.Collections.Generic;
 
 namespace G01_Perseus
 {
-    public class Player : Ship, CollissionListener, PlanetInteractionListener, MouseEnterPlanetListener, MouseExitPlanetListener
+    public class Player : Ship, /*CollissionListener,*/ PlanetInteractionListener, MouseEnterPlanetListener, MouseExitPlanetListener
     {
         private bool hasFocusOnPlanet;
         private float baseMaxHealth;
@@ -89,14 +90,14 @@ namespace G01_Perseus
 
             direction = direction.LengthSquared() > 1 ? Vector2.Normalize(direction) : direction;
 
-            if(KeyMouseReader.KeyPressed(Keys.K))
-            {
-                this.Destroy(null);
-            }
+            //if(KeyMouseReader.KeyPressed(Keys.K))
+            //{
+            //    this.Destroy(null);
+            //}
 
             if(KeyMouseReader.KeyPressed(Keys.M))
             {
-                EventManager.Dispatch(new PushStateEvent(new NewJournal(Status.Missions)));
+                EventManager.Dispatch(new PushStateEvent(new Journal(Status.Missions)));
             }
 
             if(KeyMouseReader.LeftClick() && !hasFocusOnPlanet)

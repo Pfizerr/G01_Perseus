@@ -1,5 +1,5 @@
-﻿using G01_Perseus.EventSystem.Events;
-using G01_Perseus.EventSystem.Listeners;
+﻿using G01_Perseus.EventSystem.Listeners;
+using G01_Perseus.EventSystem.Events;
 using G01_Perseus.UI;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
