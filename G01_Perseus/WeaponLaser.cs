@@ -10,7 +10,7 @@ namespace G01_Perseus
     class WeaponLaser : Weapon // Currently non-functional
     {
 
-        public WeaponLaser(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
+        public WeaponLaser(int iD, float powerLevel, float fireRate, bool available) : base(iD, powerLevel, fireRate , available)
         {
             name = "Laser";
             baseDamagePerShot = 5;

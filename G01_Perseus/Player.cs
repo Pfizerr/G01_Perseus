@@ -13,10 +13,8 @@ namespace G01_Perseus
         private float baseMaxShields;
         private float basePowerLevel;
         private float baseFireRate;
-        public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
-        public enum WeaponStatus { Available, NotAvailable };
-        public WeaponStatus[] weaponStatuses;
-        protected List<Weapon> weapons;
+        //public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
+        public List<Weapon> weapons;
 
         /// <summary>
         /// Constructor
@@ -26,14 +24,14 @@ namespace G01_Perseus
         /// <param name="scale"></param>
         /// <param name="health"></param>
         /// <param name="shield"></param>
-        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield, Texture2D texture, float powerLevel, int fireRate) : base(position, velocity, scale, health, shield, texture, powerLevel, fireRate)
+        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield, Texture2D texture, float powerLevel, float fireRate) : base(position, velocity, scale, health, shield, texture, powerLevel, fireRate)
         {
             baseMaxHealth = health;
             baseMaxShields = shield;
-            basePowerLevel = powerLevel; //This could be an input parameter for the constructor
+            basePowerLevel = powerLevel;
             baseFireRate = fireRate;
-            weaponStatuses = new WeaponStatus[] { WeaponStatus.Available, WeaponStatus.NotAvailable };
-            weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, (int)baseFireRate) };
+            weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, baseFireRate, false) };
+            //UpdateWeapons(); //May be needed when you load a save file
             EventManager.Register(this);
         }
 
@@ -49,17 +47,10 @@ namespace G01_Perseus
             {
                 Health = MaxHealth;
             }
-
-            base.Update(gameTime);
-
-            //ShieldRegeneration(gameTime);
-
+            
             AdjustAngleTowardsTarget(FindMousePosition());
             HandleInput(gameTime);
-
-
-            Movement(gameTime); //Could be in Ships update?
-
+            base.Update(gameTime);
 
             if (Status.Missions.Count > 0)
             {
@@ -68,7 +59,6 @@ namespace G01_Perseus
                     Console.WriteLine(String.Format("ID: {0} Contractor: {1} Owner: {2}", mission.Id, mission.Contractor, mission.Owner));
                 }
             }
-
             Status.Update();
         }
 
@@ -76,7 +66,7 @@ namespace G01_Perseus
         {
             spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
             Status.Draw(spriteBatch);
-                    }
+        }
 
         /// <summary>
         /// This handles all the inputs the player can made with movement, change weapon, fire etc.
@@ -102,31 +92,17 @@ namespace G01_Perseus
             ChangeWeapon();
         }
 
-        public override void HandleCollision(Entity other)
-        {
-            if (other is Enemy enemy)
-            {
-                //RecieveDamage(enemy.damage);
-            }
-            else if (other is Bullet bullet)
-            {
-                RecieveDamage(other, bullet.damage);
-                bullet.timeToLive = 0;
-            }
-            
-        }
-
         /// <summary>
         /// If you press the 1 or 2 key you will change the wepon type that you're using.
         /// </summary>
         private void ChangeWeapon()
         {
-            if (KeyMouseReader.KeyPressed(Keys.D1) && weaponStatuses[0] == WeaponStatus.Available) //KeyMouseReader.KeyPressed(Keys.None)
+            if (KeyMouseReader.KeyPressed(Keys.D1) && weapons[0].available) //KeyMouseReader.KeyPressed(Keys.None)
             {
                 equipedWeapon = weapons[0];
             }
 
-            if (KeyMouseReader.KeyPressed(Keys.D2) && weaponStatuses[1] == WeaponStatus.Available)
+            if (KeyMouseReader.KeyPressed(Keys.D2) && weapons[1].available)
             {
                 equipedWeapon = weapons[1];
             }
@@ -186,6 +162,7 @@ namespace G01_Perseus
         {
             hasFocusOnPlanet = false;
         }
+
         /// <summary>
         /// Updates the power level of all the weapons the player has
         /// </summary>
@@ -194,10 +171,9 @@ namespace G01_Perseus
             foreach (Weapon weapon in weapons)
             {
                 weapon.SetDamagePerShot(PowerLevel);
-                weapon.SetFireTimer((int)FireRate);
+                weapon.SetFireTimer(FireRate);
             }
         }
-
 
         public override void RecieveDamage(Entity other, float damage)
         {
@@ -216,13 +192,13 @@ namespace G01_Perseus
         /// </summary>
         public override float MaxHealth
         {
-            get { return baseMaxHealth + Resources.SpHealth * 10; }
+            get { return baseMaxHealth + Resources.SpHealth * 15; }
             protected set => base.MaxHealth = value;
         }
 
         public override float MaxShields
         {
-            get { return baseMaxShields + Resources.SpShields * 10; }
+            get { return baseMaxShields + Resources.SpShields * 5; }
             protected set => base.MaxShields = value;
         }
 

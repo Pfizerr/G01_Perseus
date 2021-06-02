@@ -35,7 +35,7 @@ namespace G01_Perseus.UI
             optionValue = new int[] { 100, 10};
             purchased = false;
 
-            testFont = AssetManager.FontAsset("default_font");
+            testFont = AssetManager.FontAsset("main_menu_font");
             trippleShotTexture = AssetManager.TextureAsset("tripple_shot_icon");
             healthTexture = AssetManager.TextureAsset("health_icon");
             currencyTexture = AssetManager.TextureAsset("resource_currency");
@@ -52,7 +52,7 @@ namespace G01_Perseus.UI
             {
                 EventManager.Dispatch(new PopStateEvent());
             }
-            //Debugging
+            //Debugging for fast coins
             if (KeyMouseReader.KeyPressed(Keys.G))
             {
                 Resources.AddCurrency(100);
@@ -71,13 +71,13 @@ namespace G01_Perseus.UI
             spriteBatch.End();
         }
 
-        private void BuyTrippleShot() //Give an input parameter how??
+        private void BuyTrippleShot()
         {
             if (Resources.Currency >= optionValue[0] && !purchased)
             {
                 Resources.DecreaseCurrency(optionValue[0]);
                 purchased = true;
-                EntityManager.Player.weaponStatuses[1] = Player.WeaponStatus.Available; //Distaptch to the player that tripple shot is aviable
+                EntityManager.Player.weapons[1].available = true;
                 menu.Options[0].Text = "Out of stock";
                 
             }            
@@ -97,8 +97,7 @@ namespace G01_Perseus.UI
                     EntityManager.Player.Health += 10;
                 }
                 EventManager.Dispatch(new HealthChangeEvent());
-            }
-            
+            }            
         }
     }
 }

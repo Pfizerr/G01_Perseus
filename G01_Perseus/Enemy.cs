@@ -41,19 +41,15 @@ namespace G01_Perseus
         {
             spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() / 2, scale, SpriteEffects.None, 0.8f);
             spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), healthPos, null, Color.Crimson, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
-            spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), shieldPos, null, Color.Cyan, 0, Vector2.Zero, SpriteEffects.None, 0.8f);
-            
+            spriteBatch.Draw(AssetManager.TextureAsset("gradient_bar"), shieldPos, null, Color.Cyan, 0, Vector2.Zero, SpriteEffects.None, 0.8f);            
         }
 
         public override void Update(GameTime gameTime)
         {
             this.behavior.Update(gameTime);
-
-            Movement(gameTime);                       
-                                 
-            SetHealthPosition();
+                     
             base.Update(gameTime);
-
+            SetHealthPosition();           
         }
 
         public void FireWeapon(GameTime gameTime)
@@ -68,24 +64,7 @@ namespace G01_Perseus
             shieldPos.Location = hitbox.Location;
             shieldPos.X += healthPos.Width;
         }
-
-        public override void HandleCollision(Entity other)
-        {
-            if (other is Player player)
-            {
-                //RecieveDamage(10); //Replace with player.damage when this is implemented
-            }
-            else if (other is Bullet bullet)
-            {
-                RecieveDamage(other, bullet.damage);
-                bullet.timeToLive = 0;
-            }
-        }
-            
-
-        
-
-
+                   
         public override void RecieveDamage(Entity other, float damage)
         {
             base.RecieveDamage(other, damage);
@@ -94,7 +73,7 @@ namespace G01_Perseus
             Console.WriteLine("Projectile had damage: {0}.", damage);
         }
 
-        public override void ShieldRegeneration(GameTime gameTime) //This should not be made to run at every update!!!
+        public override void ShieldRegeneration(GameTime gameTime)
         {
             base.ShieldRegeneration(gameTime);
             shieldPos.Width = (int)((Shields / TotalHealth) * hitbox.Width);
@@ -104,13 +83,6 @@ namespace G01_Perseus
         {
             //System.Diagnostics.Debug.WriteLine("Player has fired at position "+e.position +" with damage: "+e.damage);
         }
-
-        //public void Collision(CollissionEvent e)
-        //{
-        //    //System.Diagnostics.Debug.WriteLine("Entity: "+e.Entity + " collided with: " + e.OtherEntity); //debug
-
-        //    HandleCollision(e.OtherEntity);
-        //}
 
     }
 }

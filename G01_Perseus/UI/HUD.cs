@@ -18,7 +18,7 @@ namespace G01_Perseus.UI
         private SpriteFont fontHUD;
         private float healthbarWidth;
         private float shieldbarWidth;
-        private float healthbarHeight;
+        private int healthbarHeight;
         private Rectangle healthbarSize, shieldbarSize, xpBarSize, xpBarOutline;        
         private Texture2D barTex, outlineTex, equipedWeaponIcon;
         private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos, btnSkillTextPos, btnShopTextPos, weaponTextPos, weaponIconPos;
@@ -93,8 +93,8 @@ namespace G01_Perseus.UI
             healthbarWidth = barTex.Width;
             shieldbarWidth = barTex.Width;
             healthbarHeight = 40;
-            healthbarSize = new Rectangle((int)healthbarHeight, window.ClientBounds.Height - 40, barTex.Width, barTex.Height / 2);
-            shieldbarSize = new Rectangle((int)healthbarHeight, window.ClientBounds.Height - 80, barTex.Width, barTex.Height / 2);
+            healthbarSize = new Rectangle(healthbarHeight, window.ClientBounds.Height - healthbarHeight, barTex.Width, barTex.Height / 2);
+            shieldbarSize = new Rectangle(healthbarHeight, window.ClientBounds.Height - healthbarHeight * 2, barTex.Width, barTex.Height / 2);
 
             //Text            
             healthNrPos = new Vector2(healthbarSize.X + barTex.Width + offsett, healthbarSize.Y);

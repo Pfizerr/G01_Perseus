@@ -9,7 +9,7 @@ namespace G01_Perseus
 {
     public class WeaponSingleShot : Weapon
     {
-        public WeaponSingleShot(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
+        public WeaponSingleShot(int iD, float powerLevel, float fireRate, bool available) : base(iD, powerLevel, fireRate, available)
         {
             name = "Singleshot";
             baseDamagePerShot = 5;
