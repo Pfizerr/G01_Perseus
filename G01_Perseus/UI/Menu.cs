@@ -81,12 +81,17 @@ namespace G01_Perseus
                     Vector2 textDim = font.MeasureString(option.Text);
                     Vector2 textPosition = new Vector2(rect.X + (rect.Width / 2) - (textDim.X / 2), rect.Y + (rect.Height / 2) - (textDim.Y / 2));
                     spriteBatch.DrawString(font, option.Text, textPosition, color);
+                    //if (option.Texture != null)
+                    //{
+                    //    Rectangle iconPosition = new Rectangle(rect.X - rect.Height - 10, (int)rect.Y + 5, rect.Height - 10, rect.Height - 10);
+                    //    spriteBatch.Draw(option.Texture, iconPosition, Color.White);
+                    //}
                 }
                 else
                 {
                     Vector2 textDim = font.MeasureString(option.Text);
                     Vector2 textPosition = new Vector2(rect.X + (rect.Width / 2) - (textDim.X / 2), rect.Y + (rect.Height / 2) - (textDim.Y / 2));
-                    Rectangle iconPosition = new Rectangle(rect.X - rect.Height - 20, (int)textPosition.Y - 5, rect.Height - 10, rect.Height - 10);
+                    Rectangle iconPosition = new Rectangle(rect.X - rect.Height, (int)rect.Y + (20/2), rect.Height - 20, rect.Height - 20);
                     spriteBatch.DrawString(font, option.Text, textPosition, color);
                     spriteBatch.Draw(option.Texture, iconPosition, Color.White);
                 }
