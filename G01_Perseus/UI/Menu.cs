@@ -72,18 +72,26 @@ namespace G01_Perseus
                 Rectangle rect = GetBounds(i);
 
                 Color color = hoveredOption == option ? Color.White : Color.Gray;
-                if(option.Texture != null)
+                if(option.Text == null)
                 {
                     spriteBatch.Draw(option.Texture, rect, Color.White);
                 }
-                else
+                else if(option.Texture == null)
                 {
                     Vector2 textDim = font.MeasureString(option.Text);
                     Vector2 textPosition = new Vector2(rect.X + (rect.Width / 2) - (textDim.X / 2), rect.Y + (rect.Height / 2) - (textDim.Y / 2));
                     spriteBatch.DrawString(font, option.Text, textPosition, color);
                 }
+                else
+                {
+                    Vector2 textDim = font.MeasureString(option.Text);
+                    Vector2 textPosition = new Vector2(rect.X + (rect.Width / 2) - (textDim.X / 2), rect.Y + (rect.Height / 2) - (textDim.Y / 2));
+                    Rectangle iconPosition = new Rectangle(rect.X - rect.Height - 20, (int)textPosition.Y - 5, rect.Height - 10, rect.Height - 10);
+                    spriteBatch.DrawString(font, option.Text, textPosition, color);
+                    spriteBatch.Draw(option.Texture, iconPosition, Color.White);
+                }
 
-                //spriteBatch.Draw(debugTexture, rect, color);
+                spriteBatch.Draw(debugTexture, rect, color);
             }
         }
     }
@@ -101,6 +109,13 @@ namespace G01_Perseus
         public MenuOption(Texture2D texture, internalAction action)
         {
             this.Texture = texture;
+            this.Action = action;
+        }
+
+        public MenuOption(Texture2D texture, string text, internalAction action)
+        {
+            this.Texture = texture;
+            this.Text = text;
             this.Action = action;
         }
 

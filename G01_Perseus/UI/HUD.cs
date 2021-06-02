@@ -11,36 +11,39 @@ namespace G01_Perseus.UI
 {
     class HUD : GameState, HealthChangeListener, GainXpListener
     {
-        private UIButton btnSkillUI, btnShopUI;
-        private SkillInterface skillInterface;
+        private UIButton btnSkillUI, btnShopUI, btnQuestsUI;
+        private SkillInterface skillMenu;
+        //private AcceptedQuestsInterface questsMenu;
         private ShopMenu shopMenu;
         private GameWindow window;
         private SpriteFont fontHUD;
         private float healthbarWidth;
         private float shieldbarWidth;
+        private int offsett;
         private int healthbarHeight;
+        private int buttonSize;
         private Rectangle healthbarSize, shieldbarSize, xpBarSize, xpBarOutline;        
         private Texture2D barTex, outlineTex, equipedWeaponIcon;
-        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos, btnSkillTextPos, btnShopTextPos, weaponTextPos, weaponIconPos;
-        private string levelText, xpText, btnSkillText, btnShopText, weaponText;
+        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos, btnSkillTextPos, btnShopTextPos, btnQuestsTextPos, weaponTextPos, weaponIconPos;
+        private string levelText, xpText, btnSkillText, btnShopText, btnQuestsText, weaponText;
 
         public HUD(GameWindow window)
         {
-            float offsett = 10;
+            offsett = 10;
             this.window = window;
             this.Transparent = true;
             this.fontHUD = AssetManager.FontAsset("default_font");
             this.equipedWeaponIcon = AssetManager.TextureAsset("projectile_green"); 
             //Buttons on UI
             SetButtons();
-            this.skillInterface = new SkillInterface(window);
+            this.skillMenu = new SkillInterface(window);
             this.shopMenu = new ShopMenu(window);
 
             //Healthbar portion
             barTex = AssetManager.TextureAsset("gradient_bar");
-            SetHealthBarPositions(offsett);
+            SetHealthBarPositions();
 
-            SetLevelAndXpBar(offsett);
+            SetLevelAndXpBar();
 
             weaponText = "Weapon in use: ";
             weaponIconPos = new Vector2(window.ClientBounds.Width / 2, window.ClientBounds.Height - equipedWeaponIcon.Height * 0.5f - offsett);
@@ -51,7 +54,7 @@ namespace G01_Perseus.UI
 
         public void OpenSkillUI()
         {
-            EventManager.Dispatch(new PushStateEvent(skillInterface));
+            EventManager.Dispatch(new PushStateEvent(skillMenu));
             Console.WriteLine("Skill menu has been opened"); //Only for testing
         }
 
@@ -59,6 +62,11 @@ namespace G01_Perseus.UI
         {
             EventManager.Dispatch(new PushStateEvent(shopMenu));
             Console.WriteLine("Shop menu has been opened"); //Only for testing
+        }
+
+        public void OpenQuestsMenu()
+        {
+            EventManager.Dispatch(new PushStateEvent(shopMenu)); //Change this to the right menu
         }
 
         public override void Update(GameTime gameTime)
@@ -72,6 +80,8 @@ namespace G01_Perseus.UI
             spriteBatch.Begin();
             btnSkillUI.Draw(spriteBatch, gameTime);
             btnShopUI.Draw(spriteBatch, gameTime);
+            btnQuestsUI.Draw(spriteBatch, gameTime);
+
             spriteBatch.Draw(barTex, healthbarSize, Color.Crimson);
             spriteBatch.Draw(barTex, shieldbarSize, Color.Cyan);
             spriteBatch.DrawString(fontHUD, EntityManager.Player.Health.ToString(), healthNrPos, Color.Crimson);
@@ -83,12 +93,13 @@ namespace G01_Perseus.UI
             spriteBatch.DrawString(fontHUD, string.Format("{0} / {1}", Resources.XP, Resources.XPToNextLevel), xpTextPos, Color.Yellow);
             spriteBatch.DrawString(fontHUD, btnShopText, btnShopTextPos, Color.LightGreen);
             spriteBatch.DrawString(fontHUD, btnSkillText, btnSkillTextPos, Color.LightBlue);
+            spriteBatch.DrawString(fontHUD, btnQuestsText, btnQuestsTextPos, Color.Orange);
             spriteBatch.DrawString(fontHUD, weaponText, weaponTextPos, Color.LimeGreen);
             spriteBatch.Draw(equipedWeaponIcon, weaponIconPos, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0.9f);
             spriteBatch.End();
         }
 
-        public void SetHealthBarPositions(float offsett)
+        public void SetHealthBarPositions()
         {
             healthbarWidth = barTex.Width;
             shieldbarWidth = barTex.Width;
@@ -101,7 +112,7 @@ namespace G01_Perseus.UI
             shieldNrPos = new Vector2(shieldbarSize.X + barTex.Width + offsett, shieldbarSize.Y);
         }
 
-        public void SetLevelAndXpBar(float offsett)
+        public void SetLevelAndXpBar()
         {
             xpBarSize = new Rectangle(window.ClientBounds.Width - barTex.Width - 40, 40, (int)((Resources.XP / Resources.XPToNextLevel) * barTex.Width), barTex.Height / 3);
             xpBarOutline = new Rectangle(xpBarSize.X, xpBarSize.Y, barTex.Width, xpBarSize.Height);
@@ -116,12 +127,17 @@ namespace G01_Perseus.UI
         {
             btnSkillText = "Skills";
             btnShopText = "Shop";
-            this.btnSkillUI = new UIButton(new Rectangle((int)(window.ClientBounds.Width - 60), (int)(window.ClientBounds.Height - 60), 50, 50), AssetManager.TextureAsset("button_blue"), OpenSkillUI);
-            this.btnShopUI = new UIButton(new Rectangle((int)(btnSkillUI.Hitbox.X - 60), (int)(btnSkillUI.Hitbox.Y), 50, 50), AssetManager.TextureAsset("button_green"), OpenShopMenu);
+            btnQuestsText = "Quests";
+            buttonSize = 50;
+            this.btnSkillUI = new UIButton(new Rectangle(window.ClientBounds.Width - buttonSize - offsett, window.ClientBounds.Height - buttonSize - offsett, buttonSize, buttonSize), AssetManager.TextureAsset("button_blue"), OpenSkillUI);
+            this.btnShopUI = new UIButton(new Rectangle(btnSkillUI.Hitbox.X - buttonSize - offsett, btnSkillUI.Hitbox.Y, buttonSize, buttonSize), AssetManager.TextureAsset("button_green"), OpenShopMenu);
+            this.btnQuestsUI = new UIButton(new Rectangle(btnShopUI.Hitbox.X - buttonSize - offsett, btnShopUI.Hitbox.Y, buttonSize, buttonSize), AssetManager.TextureAsset("button_green"), OpenQuestsMenu);
             btnSkillUI.HoveredTexture = AssetManager.TextureAsset("button_red");
             btnShopUI.HoveredTexture = AssetManager.TextureAsset("button_red");
+            btnQuestsUI.HoveredTexture = AssetManager.TextureAsset("button_red");
             btnSkillTextPos = new Vector2(btnSkillUI.Hitbox.X, btnSkillUI.Hitbox.Y - fontHUD.MeasureString(btnSkillText).Y);
             btnShopTextPos = new Vector2(btnShopUI.Hitbox.X, btnShopUI.Hitbox.Y - fontHUD.MeasureString(btnShopText).Y);
+            btnQuestsTextPos = new Vector2(btnQuestsUI.Hitbox.X, btnQuestsUI.Hitbox.Y - fontHUD.MeasureString(btnQuestsText).Y);
         }
 
         public void HealthChange(HealthChangeEvent e)
