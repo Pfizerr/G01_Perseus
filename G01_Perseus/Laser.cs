@@ -21,7 +21,7 @@ namespace G01_Perseus // Works visually, but rectangles can't be rotated. Pixel 
 
         public TypeOfLaser Type { get; private set; }
 
-        public Laser(Vector2 position, Vector2 targetPosition, Vector2 scale, TypeOfLaser type, float damage, int lifeTimer) : base(position, scale)
+        public Laser(Vector2 position, Vector2 targetPosition, Vector2 scale, TypeOfLaser type, float damage, int lifeTimer, Texture2D texture) : base(position, scale, texture)
         {
             this.targetPosition = targetPosition;
             Type = type;
@@ -31,7 +31,7 @@ namespace G01_Perseus // Works visually, but rectangles can't be rotated. Pixel 
             Vector2 dPos = targetPosition - position;
             rotation = (float)Math.Atan2(dPos.Y, dPos.X) - MathHelper.ToRadians(90);
             direction = Vector2.Normalize(targetPosition - position);
-            this.lifeTimer = new Timer(2000);
+            this.lifeTimer = new Timer(100);
             timerActivated = false;
             hitbox = new Rectangle(0, 0, 0, 0);
             IsCollidable = true;
@@ -42,7 +42,7 @@ namespace G01_Perseus // Works visually, but rectangles can't be rotated. Pixel 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
             //spriteBatch.Draw(texture, hitbox, null, Color.Green, rotation, Origin, SpriteEffects.None, 0.9f);
-            spriteBatch.Draw(texture, Center, null, Color.Green, rotation, Origin, scale, SpriteEffects.None, 0.9f);
+            spriteBatch.Draw(texture, Center, null, Color.Green, rotation, Origin, scale, SpriteEffects.None, 0.1f);
         }
 
         public override void HandleCollision(Entity other)
@@ -64,15 +64,12 @@ namespace G01_Perseus // Works visually, but rectangles can't be rotated. Pixel 
             }
         }
 
-        protected override void DefaultTexture()
-        {
-            texture = AssetManager.TextureAsset("gradient_bar");
-        }
+        
 
         public List<Vector2> FindAllReasonablePositions()
         {
             List<Vector2> output = new List<Vector2>();
-            for (int i = 0; i < 100; i++)
+            for (int i = 0; i < 1000; i++)
             {
                 output.Add(direction * i + Position);
                 

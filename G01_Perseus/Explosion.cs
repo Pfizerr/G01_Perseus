@@ -14,7 +14,7 @@ namespace G01_Perseus
         private Timer timer;
         bool activateTimer;
 
-        public Explosion(Vector2 position, Vector2 scale, int ttl) : base(position, scale)
+        public Explosion(Vector2 position, Vector2 scale, int ttl, Texture2D texture) : base(position, scale, texture)
         {
             List<Texture2D> textures = new List<Texture2D>();
             textures.Add(AssetManager.TextureAsset("smokeParticle_sprite"));
@@ -49,9 +49,6 @@ namespace G01_Perseus
             }
         }
 
-        protected override void DefaultTexture()
-        {
-            texture = AssetManager.TextureAsset("player_ship");
-        }
+        
     }
 }

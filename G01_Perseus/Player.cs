@@ -37,7 +37,7 @@ namespace G01_Perseus
             baseMaxShields = shield;
             basePowerLevel = powerLevel;
             baseFireRate = fireRate;
-            weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, baseFireRate, false) };
+            weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, baseFireRate, false), new WeaponLaser(1, basePowerLevel, baseFireRate, true) };
             //UpdateWeapons(); //May be needed when you load a save file
             EventManager.Register(this);
         }
@@ -97,7 +97,7 @@ namespace G01_Perseus
 
             if(KeyMouseReader.LeftHold() && !hasFocusOnPlanet)
             {
-                equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, rotation, TypeOfBullet.Player, gameTime);
+                equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, TypeOfBullet.Player, gameTime);
                 EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
 

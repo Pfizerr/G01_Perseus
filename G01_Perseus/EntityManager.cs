@@ -65,7 +65,7 @@ namespace G01_Perseus
 
         public static void CreateLaser(TypeOfLaser type, Vector2 start, Vector2 target, float damage)
         {
-            AddLaser(new Laser(start, target, new Vector2(0.1f, Vector2.Distance(start, target)), type, damage, 900));
+            AddLaser(new Laser(start, target, new Vector2(0.1f, Vector2.Distance(start, target)), type, damage, 900, AssetManager.TextureAsset("gradient_bar")));
             //AddBullet(new Bullet(start, target, Vector2.Zero, new Vector2(10, 0.1f/*Vector2.Distance(start, target)*/), type, damage, 1));
         }
 
@@ -88,7 +88,7 @@ namespace G01_Perseus
                     }
                     if (!(entities[i] is Explosion) && !(entities[i] is Bullet) && !(entities[i] is Laser))
                     {
-                        entities.Add(new Explosion(entities[i].Position, Vector2.Zero, 5));
+                        entities.Add(new Explosion(entities[i].Position, Vector2.Zero, 5, AssetManager.TextureAsset("smokeParticle_sprite")));
                     }
                     entities.RemoveAt(i);
                     continue;
@@ -121,8 +121,9 @@ namespace G01_Perseus
                         foreach (Vector2 vector2 in laserPositions)
                         {
 
-                            if (entities[j].HitBox.Contains(vector2))
+                            if (entities[j].HitBox.Contains(vector2) && !(entities[j] is Player)) // Temporary Bandaid
                             {
+                                //Console.WriteLine(entities[j]);
                                 targets.Add(entities[j]);
                             }
 
@@ -133,8 +134,9 @@ namespace G01_Perseus
                     List<Entity> uniqueTargets = targets.Distinct().ToList();
                     for (int l = 0; l < uniqueTargets.Count; l++)
                     {
-                        uniqueTargets[l].HandleCollision(entities[i]);
-                        EventManager.Dispatch(new CollissionEvent(entities[i], uniqueTargets[l]));
+                        //uniqueTargets[l].HandleCollision(entities[i]);
+                        Console.WriteLine(uniqueTargets[l]);
+                        EventManager.Dispatch(new CollissionEvent(uniqueTargets[l], entities[i]));
                     }
                 }
                 for (int j = 0; j < entities.Count; j++)
@@ -147,7 +149,7 @@ namespace G01_Perseus
                     if (entities[i].HitBox.Intersects(entities[j].HitBox))
                     {
                         // Collision Event
-                        Console.WriteLine(entities[i].ToString() + " collided with " + entities[j].ToString());
+                        //Console.WriteLine(entities[i].ToString() + " collided with " + entities[j].ToString());
                         EventManager.Dispatch(new CollissionEvent(entities[i], entities[j]));
                         //HandleCollisions(entities[i], entities[y]);
                     }

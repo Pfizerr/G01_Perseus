@@ -52,13 +52,8 @@ namespace G01_Perseus
             this.behavior.Update(gameTime);
             //this.behavior.Update(gameTime);
 
-            Movement(gameTime);
                        
-            hitbox.Location = Center.ToPoint();
-            if(Shields < MaxShields)
-            {
-                ShieldRegeneration(gameTime);
-            }                       
+            hitbox.Location = Center.ToPoint();                                  
             SetHealthPosition();
             base.Update(gameTime);
             SetHealthPosition();           
@@ -75,29 +70,7 @@ namespace G01_Perseus
             healthPos.Y -= healthBarHeight;
             shieldPos.Location = hitbox.Location;
             shieldPos.X += healthPos.Width;
-        }
-                   
-
-        public override void HandleCollision(Entity other)
-        {
-            if (other is Player player)
-            {
-                //RecieveDamage(10); //Replace with player.damage when this is implemented
-            }
-            else if (other is Bullet bullet)
-            {
-                RecieveDamage(other, bullet.damage);
-                bullet.timeToLive = 0;
-            }
-            else if (other is Laser laser)
-            {
-                RecieveDamage(other, laser.damage);
-            }
-        }
-            
-
-        
-
+        }                  
 
         public override void RecieveDamage(Entity other, float damage)
         {

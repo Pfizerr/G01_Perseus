@@ -20,7 +20,7 @@ namespace G01_Perseus
         public Weapon(int iD, float powerLevel, float fireRate, bool available) : base(iD)
         {
             this.powerLevel = powerLevel;
-            this.fireTimer = new Timer(baseFireTimer);
+            this.fireTimer = new Timer((int)baseFireTimer);
             this.available = available;
         }  
         

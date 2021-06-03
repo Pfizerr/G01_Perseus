@@ -15,7 +15,7 @@ namespace G01_Perseus
         
         {
             name = "Laser";
-            baseDamagePerShot = 5;
+            baseDamagePerShot = 0.1f;
             SetDamagePerShot(powerLevel);
             this.fireTimer = new Timer(100);
         }
