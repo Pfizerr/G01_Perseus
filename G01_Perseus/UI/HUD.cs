@@ -9,7 +9,7 @@ using G01_Perseus.EventSystem.Events;
 
 namespace G01_Perseus.UI
 {
-    class HUD : GameState, HealthChangeListener, GainXpListener
+    class HUD : GameState, HealthChangeListener, GainXpListener, ChangeIconListener
     {
         private UIButton btnSkillUI, btnShopUI, btnQuestsUI;
         private SkillInterface skillMenu;
@@ -22,10 +22,11 @@ namespace G01_Perseus.UI
         private int offsett;
         private int healthbarHeight;
         private int buttonSize;
-        private Rectangle healthbarSize, shieldbarSize, xpBarSize, xpBarOutline;        
+        private Rectangle healthbarSize, shieldbarSize, xpBarSize, xpBarOutline, weaponIconPos;        
         private Texture2D barTex, outlineTex, equipedWeaponIcon;
-        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos, btnSkillTextPos, btnShopTextPos, btnQuestsTextPos, weaponTextPos, weaponIconPos;
+        private Vector2 shieldNrPos, healthNrPos, levelTextPos, xpTextPos, btnSkillTextPos, btnShopTextPos, btnQuestsTextPos, weaponTextPos;
         private string levelText, xpText, btnSkillText, btnShopText, btnQuestsText, weaponText;
+        private Texture2D[] weaponIcons;
 
         public HUD(GameWindow window)
         {
@@ -33,7 +34,8 @@ namespace G01_Perseus.UI
             this.window = window;
             this.Transparent = true;
             this.fontHUD = AssetManager.FontAsset("default_font");
-            this.equipedWeaponIcon = AssetManager.TextureAsset("projectile_green"); 
+            weaponIcons = new Texture2D[] { AssetManager.TextureAsset("projectile_green"), AssetManager.TextureAsset("tripple_shot_icon"), AssetManager.TextureAsset("beam") };
+            this.equipedWeaponIcon = weaponIcons[0]; 
             //Buttons on UI
             SetButtons();
             this.skillMenu = new SkillInterface(window);
@@ -47,7 +49,7 @@ namespace G01_Perseus.UI
             SetLevelAndXpBar();
 
             weaponText = "Weapon in use: ";
-            weaponIconPos = new Vector2(window.ClientBounds.Width / 2, window.ClientBounds.Height - equipedWeaponIcon.Height * 0.5f - offsett);
+            weaponIconPos = new Rectangle(window.ClientBounds.Width / 2, (int)(window.ClientBounds.Height - equipedWeaponIcon.Height * 0.5f - offsett), (int)(weaponIcons[0].Width * 0.5f), (int)(weaponIcons[0].Height * 0.5f)); //Change to a rectangle
             weaponTextPos = new Vector2(weaponIconPos.X - fontHUD.MeasureString(weaponText).X - offsett, weaponIconPos.Y + (equipedWeaponIcon.Height * 0.5f) / 2 - fontHUD.MeasureString(weaponText).Y / 2);
             
             EventManager.Register(this);
@@ -97,7 +99,7 @@ namespace G01_Perseus.UI
             spriteBatch.DrawString(fontHUD, btnSkillText, btnSkillTextPos, Color.LightBlue);
             spriteBatch.DrawString(fontHUD, btnQuestsText, btnQuestsTextPos, Color.Orange);
             spriteBatch.DrawString(fontHUD, weaponText, weaponTextPos, Color.LimeGreen);
-            spriteBatch.Draw(equipedWeaponIcon, weaponIconPos, null, Color.White, 0f, Vector2.Zero, 0.5f, SpriteEffects.None, 0.9f);
+            spriteBatch.Draw(equipedWeaponIcon, weaponIconPos, Color.White);
             spriteBatch.End();
         }
 
@@ -152,6 +154,11 @@ namespace G01_Perseus.UI
         public void XpChange(GainXpEvent e)
         {
             xpBarSize.Width = (int)((Resources.XP / Resources.XPToNextLevel) * barTex.Width);
+        }
+
+        public void ChangeIcon(ChangeIconEvent e)
+        {
+            equipedWeaponIcon = weaponIcons[e.Index];
         }
     }
 }

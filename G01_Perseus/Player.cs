@@ -112,16 +112,19 @@ namespace G01_Perseus
             if (KeyMouseReader.KeyPressed(Keys.D1) && weapons[0].available) //KeyMouseReader.KeyPressed(Keys.None)
             {
                 equipedWeapon = weapons[0];
+                EventManager.Dispatch(new ChangeIconEvent(0));
             }
 
             if (KeyMouseReader.KeyPressed(Keys.D2) && weapons[1].available)
             {
                 equipedWeapon = weapons[1];
+                EventManager.Dispatch(new ChangeIconEvent(1));
             }
 
             if (KeyMouseReader.KeyPressed(Keys.D3) && weapons[2].available)
             {
                 equipedWeapon = weapons[2];
+                EventManager.Dispatch(new ChangeIconEvent(2));
             }
         }
 

@@ -43,12 +43,14 @@
   <ItemGroup>
     <Compile Include="Background.cs" />
     <Compile Include="EnemySpawner.cs" />
+    <Compile Include="EventSystem\Events\ChangeIconEvent.cs" />
     <Compile Include="EventSystem\Events\CollissionEvent.cs" />
     <Compile Include="EventSystem\Events\GainXpEvent.cs" />
     <Compile Include="EventSystem\Events\HealthChangeEvent.cs" />
     <Compile Include="EventSystem\Events\MissionRemovedEvent.cs" />
     <Compile Include="EventSystem\Events\MissionTurnedInEvent.cs" />
     <Compile Include="EventSystem\Events\RespawnPlayerEvent.cs" />
+    <Compile Include="EventSystem\Listeners\ChangeIconListener.cs" />
     <Compile Include="EventSystem\Listeners\GainXpListener.cs" />
     <Compile Include="EventSystem\Listeners\GameOverListener.cs" />
     <Compile Include="EventSystem\Listeners\CollissionListener.cs" />
