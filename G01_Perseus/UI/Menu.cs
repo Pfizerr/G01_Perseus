@@ -96,7 +96,7 @@ namespace G01_Perseus
                     spriteBatch.Draw(option.Texture, iconPosition, Color.White);
                 }
 
-                spriteBatch.Draw(debugTexture, rect, color);
+                //spriteBatch.Draw(debugTexture, rect, color);
             }
         }
     }
