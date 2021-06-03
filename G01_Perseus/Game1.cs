@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace G01_Perseus
 {
-    public class Game1 : Game, PushStateListener, PopStateListener
+    public class Game1 : Game, PushStateListener, PopStateListener, PlayerDeathListener
     {
         //test
         private GraphicsDeviceManager graphics;
@@ -143,6 +143,11 @@ namespace G01_Perseus
         {
             stateStack.Push(e.State);
             Console.WriteLine("Pushed State: " + e.State);
+        }
+
+        public void PlayerDeath(PlayerDeathEvent e)
+        {
+            stateStack.Push(new GameOver(Window, stateStack));
         }
     }
 }

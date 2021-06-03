@@ -21,7 +21,7 @@ namespace G01_Perseus
             
         }
 
-        public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type, GameTime gameTime)
+        public override void Fire(Vector2 center, Vector2 target, TypeOfBullet type, GameTime gameTime)
         {
             if (fireTimer.IsDone(gameTime))
             {

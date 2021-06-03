@@ -39,13 +39,14 @@ namespace G01_Perseus
         {
             EntityManager.Update(gameTime);
             camera.Update();
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, null, null, null, null, camera.Translation);
             level.Draw(spriteBatch, camera);
-            EntityManager.Draw(spriteBatch);
+            EntityManager.Draw(spriteBatch);           
             spriteBatch.End();
         }
 
