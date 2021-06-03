@@ -11,7 +11,7 @@ namespace G01_Perseus
     {
 
         public override string Name => "Laser";
-        public WeaponLaser(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
+        public WeaponLaser(int iD, float powerLevel, float fireRate, bool available) : base(iD, powerLevel, fireRate , available)
         {
             name = "Laser";
             baseDamagePerShot = 5;

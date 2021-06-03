@@ -13,7 +13,7 @@ namespace G01_Perseus
 
         public override string Name => "TripleShot";
 
-        public WeaponTripleShot(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
+        public WeaponTripleShot(int iD, float powerLevel, float fireRate , bool available) : base(iD, powerLevel, fireRate, available)
         {
             name = "Tripleshot";
             baseDamagePerShot = 2;

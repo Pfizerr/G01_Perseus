@@ -17,13 +17,12 @@ namespace G01_Perseus
         protected Vector2 acceleration;
         protected Vector2 velocity;
         protected Weapon equipedWeapon;
-        //Can use wapon dependinng on the type of enemy
         protected double hitTimer, hitTimerInterval;                
+        protected PlayerStatus playerStatus;
 
-        //Components
-        public PlayerStatus playerStatus;
-        public float Shields { get; set; }
-        public float Health { get; set; } //Removed the protected set here :/ To make the shop able to give the player health. Should use the event system
+        //Properites
+        public float Shields { get; protected set; }
+        public float Health { get; set; }
         public float TotalHealth { get; protected set; }
         public virtual float MaxHealth { get; protected set; }
         public virtual float MaxShields { get; protected set; }
@@ -32,7 +31,7 @@ namespace G01_Perseus
 
         public Weapon EquipedWeapon => equipedWeapon;
 
-        public Ship(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, Texture2D texture) : base(maxVelocity, position, scale, texture)
+        public Ship(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, Texture2D texture, float powerLevel, float fireRate) : base(maxVelocity, position, scale, texture)
         {
             Health = health;
             MaxHealth = health;
@@ -40,7 +39,7 @@ namespace G01_Perseus
             layerDepth = 0.7f;
             rotation = 0f;
             playerStatus = new PlayerStatus(health, 0f);
-            equipedWeapon = new WeaponSingleShot(1, 1, 0); //Make the power lvl a input parameter
+            equipedWeapon = new WeaponSingleShot(1, powerLevel, fireRate, true); 
             Shields = shield;
             MaxShields = Shields;
             TotalHealth = health + shield;
@@ -52,6 +51,10 @@ namespace G01_Perseus
             #endregion 
         }
 
+        /// <summary>
+        /// Update loop for all ships in the game
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -59,8 +62,13 @@ namespace G01_Perseus
             {
                 ShieldRegeneration(gameTime);
             }
+            Movement(gameTime);
         }
 
+        /// <summary>
+        /// HAndles the movement of the ships with respective velocity and direction that it has
+        /// </summary>
+        /// <param name="gameTime"></param>
         public virtual void Movement(GameTime gameTime)
         {
             if (velocity.Length() < 3f && velocity.Length() > -3f)
@@ -72,6 +80,10 @@ namespace G01_Perseus
             hitbox.Location = Position.ToPoint();
         }
 
+        /// <summary>
+        /// Sets the direction towards a target
+        /// </summary>
+        /// <param name="targetPos">Position of the target which can be the mouse or another player depending on the type of ship</param>
         public virtual void AdjustAngleTowardsTarget(Vector2 targetPos)
         {
             Vector2 dPos = (Center) - targetPos;
@@ -107,12 +119,17 @@ namespace G01_Perseus
                 if(this is Enemy)
                 {
                     Resources.AddXP(1100);
+                    Resources.AddCurrency(10);
                     EventManager.Dispatch(new GainXpEvent());
                 }
             }
             
         }
 
+        /// <summary>
+        /// HAndles the regeneration of the shield when the ships hit timer reaches 0 or if not counts down the timer
+        /// </summary>
+        /// <param name="gameTime">Elapsed time of the game</param>
         public virtual void ShieldRegeneration(GameTime gameTime)
         {
             if (hitTimer > 0)
@@ -129,22 +146,29 @@ namespace G01_Perseus
             }
         }
 
+        /// <summary>
+        /// Check that the other entity was a bullet and assignes damage to this ship
+        /// </summary>
+        /// <param name="other">Entity that this entity has collided with</param>
         public override void HandleCollision(Entity other)
         {
             if (other is Bullet bullet)
             {
                 RecieveDamage(other, bullet.damage);
                 bullet.timeToLive = 0;
-            }
-            
+            }            
         }
 
+        /// <summary>
+        /// Collission event for the listener
+        /// </summary>
+        /// <param name="e"></param>
         public void Collision(CollissionEvent e)
         {
             HandleCollision(e.OtherEntity);
         }
 
-        public void Destroy()
+        public void Destroy() //Can be removed
         {
             //Code to execute when destroyed..
 
