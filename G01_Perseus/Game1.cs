@@ -9,7 +9,7 @@ using System.Collections.Generic;
 
 namespace G01_Perseus
 {
-    public class Game1 : Game, PushStateListener, PopStateListener
+    public class Game1 : Game, PushStateListener, PopStateListener, PlayerDeathListener
     {
         //test
         private GraphicsDeviceManager graphics;
@@ -59,13 +59,10 @@ namespace G01_Perseus
             AssetManager.LoadAssets(Content);
             MissionManager.LoadMissions();
 
-            EntityManager.AddFaction(new Faction("test faction one", AssetManager.SpriteAsset("planet1"), AssetManager.SpriteAsset("planet_highlight_outline2_green")));
-            EntityManager.AddFaction(new Faction("test faction two", AssetManager.SpriteAsset("planet2"), AssetManager.SpriteAsset("planet_highlight_outline2_blue")));
-            EntityManager.factions[0].CreatePlanet("planet name one", new Vector2(0, 0), 3);
-            EntityManager.factions[1].CreatePlanet("planet name two", new Vector2(5900, 40), 1);
-            EntityManager.CreatePlayer();
-            
-            Resources.Initialize(0, 0, 0, 0, 0, 0, 0, 0, 1);
+
+            EntityManager.ReInit();
+            Resources.Initialize(0, 0, 10, 0, 0, 0, 0, 0, 1);
+
             //EntityManager.CreateEnemyOrbital(new Vector2(250, 250));
             //EntityManager.CreateEnemyRaptor(new Vector2(500, 500));
             //EntityManager.CreateEnemyPursuer(new Vector2(1000, 1000));
@@ -116,6 +113,16 @@ namespace G01_Perseus
             }
 
             KeyMouseReader.Update();
+
+            if (KeyMouseReader.KeyPressed(Keys.Back))
+            {
+                Serializer.LoadGame();
+            }
+            if (KeyMouseReader.KeyPressed(Keys.Enter))
+            {
+                Serializer.SaveGame();
+            }
+
             stateStack.Update(gameTime);
         }
 
@@ -136,6 +143,11 @@ namespace G01_Perseus
         {
             stateStack.Push(e.State);
             Console.WriteLine("Pushed State: " + e.State);
+        }
+
+        public void PlayerDeath(PlayerDeathEvent e)
+        {
+            stateStack.Push(new GameOver(Window, stateStack));
         }
     }
 }

@@ -44,6 +44,7 @@ namespace G01_Perseus
         public PlayerStatus()
         {
             Missions = new List<Mission>();
+            CompletedMissions = new List<Mission>();
 
             font = AssetManager.FontAsset("default_font");
             EventManager.Register(this);

@@ -9,28 +9,30 @@ namespace G01_Perseus
 {
     class WeaponLaser : Weapon // Currently non-functional
     {
-
-        public WeaponLaser(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
+        private TypeOfLaser laserType;
+        public override string Name => "Laser";
+        public WeaponLaser(int iD, float powerLevel, float fireRate, bool available) : base(iD, powerLevel, fireRate , available)
+        
         {
             name = "Laser";
-            baseDamagePerShot = 5;
+            baseDamagePerShot = 0.1f;
             SetDamagePerShot(powerLevel);
             this.fireTimer = new Timer(100);
         }
 
-        public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type, GameTime gameTime)
+        public override void Fire(Vector2 center, Vector2 target, TypeOfBullet type, GameTime gameTime)
         {
-            //if (fireTimer.IsDone(gameTime))
-            //{
-            //    if (type == TypeOfBullet.Enemy)
-            //        laserType = TypeOfLaser.Enemy;
-            //    else
-            //        laserType = TypeOfLaser.Player;
+            if (fireTimer.IsDone(gameTime))
+            {
+                if (type == TypeOfBullet.Enemy)
+                    laserType = TypeOfLaser.Enemy;
+                else
+                    laserType = TypeOfLaser.Player;
 
-            //    EntityManager.CreateLaser(laserType, center, target, damagePerShot);
+                EntityManager.CreateLaser(laserType, center, target, damagePerShot);
 
-            //    fireTimer.Reset(gameTime);
-            //}
+                fireTimer.Reset(gameTime);
+            }
         }
     }
 }

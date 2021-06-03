@@ -18,14 +18,15 @@ namespace G01_Perseus.UI
         private UIButton[] buttonsArray;
         private List<Rectangle> skillBarPos, skillBarPosOutline, skillIconPos;
         private Rectangle bounds;
+        private SpriteFont fontSkillUI;
         //private Action[] actions; //This is just for an automated system of the "add" buttons. It is not used currently
         private float skillBarMaxWidth;
-        private string[] statLables;
         private string btnExitText, btnResetText, skillPointsText;
         private Vector2 btnExitTextPos, btnResetTextPos, skillPointsTextPos;        
 
         public SkillInterface(GameWindow window)
         {
+            this.fontSkillUI = AssetManager.FontAsset("default_font");
             this.Transparent = true;
             this.buttonTex = AssetManager.TextureAsset("skill_button_blue");
             this.buttonHoveredTex = AssetManager.TextureAsset("skill_button_red");
@@ -40,15 +41,19 @@ namespace G01_Perseus.UI
             btnResetText = "Reset skill points";
             skillPointsText = string.Format("Skill Points: {0}", Resources.SkillPoints);
             btnExitTextPos = new Vector2(exit.Hitbox.X + exit.Hitbox.Width + 5, exit.Hitbox.Y);
-            btnResetTextPos = new Vector2(resetSP.Hitbox.X + resetSP.Hitbox.Width + 5, resetSP.Hitbox.Y);
-            skillPointsTextPos = new Vector2(btnResetTextPos.X - 200, btnResetTextPos.Y);
+            btnResetTextPos = new Vector2(resetSP.Hitbox.X + resetSP.Hitbox.Width + 5, resetSP.Hitbox.Y + resetSP.Hitbox.Height / 2 - fontSkillUI.MeasureString(btnResetText).Y / 2);
+            skillPointsTextPos = new Vector2(btnResetTextPos.X - 250, btnResetTextPos.Y);
         }        
 
         public override void Update(GameTime gameTime)
         {
             exit.Update(gameTime);
             resetSP.Update(gameTime);
-            foreach(UIButton button in buttonsArray)
+            CalculateBarWidth(0, Resources.SpDamage);
+            CalculateBarWidth(1, Resources.SpHealth);
+            CalculateBarWidth(2, Resources.SpShields);
+            CalculateBarWidth(3, Resources.SpFireRate);
+            foreach (UIButton button in buttonsArray)
             {
                 button.Update(gameTime);
             }
@@ -73,9 +78,9 @@ namespace G01_Perseus.UI
                 spriteBatch.Draw(skillIcons[i], skillIconPos[i], Color.White);
             }
 
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnExitText, btnExitTextPos, Color.Red);
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), btnResetText, btnResetTextPos, Color.Red);
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("Skill points: {0}", Resources.SkillPoints), skillPointsTextPos, Color.Yellow);
+            spriteBatch.DrawString(fontSkillUI, btnExitText, btnExitTextPos, Color.Red);
+            spriteBatch.DrawString(fontSkillUI, btnResetText, btnResetTextPos, Color.Red);
+            spriteBatch.DrawString(fontSkillUI, string.Format("Skill points: {0}", Resources.SkillPoints), skillPointsTextPos, Color.Yellow);
             spriteBatch.End();
         }
 

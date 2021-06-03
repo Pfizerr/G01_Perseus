@@ -9,7 +9,9 @@ namespace G01_Perseus
 {
     public class WeaponSingleShot : Weapon
     {
-        public WeaponSingleShot(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
+
+        public override string Name => "SingleShot";
+        public WeaponSingleShot(int iD, float powerLevel, float fireRate, bool available) : base(iD, powerLevel, fireRate, available)
         {
             name = "Singleshot";
             baseDamagePerShot = 5;
@@ -19,7 +21,7 @@ namespace G01_Perseus
             
         }
 
-        public override void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet type, GameTime gameTime)
+        public override void Fire(Vector2 center, Vector2 target, TypeOfBullet type, GameTime gameTime)
         {
             if (fireTimer.IsDone(gameTime))
             {

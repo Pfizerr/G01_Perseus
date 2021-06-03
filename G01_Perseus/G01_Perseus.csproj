@@ -43,14 +43,17 @@
   <ItemGroup>
     <Compile Include="Background.cs" />
     <Compile Include="EnemySpawner.cs" />
+    <Compile Include="EventSystem\Events\ChangeIconEvent.cs" />
     <Compile Include="EventSystem\Events\CollissionEvent.cs" />
     <Compile Include="EventSystem\Events\GainXpEvent.cs" />
     <Compile Include="EventSystem\Events\HealthChangeEvent.cs" />
     <Compile Include="EventSystem\Events\MissionRemovedEvent.cs" />
     <Compile Include="EventSystem\Events\MissionTurnedInEvent.cs" />
     <Compile Include="EventSystem\Events\RespawnPlayerEvent.cs" />
+    <Compile Include="EventSystem\Listeners\ChangeIconListener.cs" />
     <Compile Include="EventSystem\Listeners\GainXpListener.cs" />
     <Compile Include="EventSystem\Listeners\GameOverListener.cs" />
+    <Compile Include="EventSystem\Events\PlayerDeathEvent.cs" />
     <Compile Include="EventSystem\Listeners\CollissionListener.cs" />
     <Compile Include="EnemyBehavior.cs" />
     <Compile Include="Bullet.cs" />
@@ -60,6 +63,8 @@
     <Compile Include="EventSystem\Listeners\MouseEnterPlanetListener.cs" />
     <Compile Include="EventSystem\Listeners\MouseExitPlanetListener.cs" />
     <Compile Include="EventSystem\Listeners\HealthChangeListener.cs" />
+    <Compile Include="EventSystem\Listeners\PlayerDeathListener.cs" />
+    <Compile Include="Explosion.cs" />
     <Compile Include="ExtendedTimer.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="EventSystem\Events\SectorEnteredEvent.cs" />
@@ -67,18 +72,23 @@
     <Compile Include="Missions\Trackers\SurviveMissionTracker.cs" />
     <Compile Include="Missions\Trackers\TravelMissionTracker.cs" />
     <Compile Include="RaptorEnemyBehavior.cs" />
+    <Compile Include="Serializer.cs" />
     <Compile Include="UI\JournalMissionButton.cs" />
     <Compile Include="KeyMouseReader.cs" />
     <Compile Include="UI\MissionInterfaceButton.cs" />
     <Compile Include="UI\MainMenu.cs" />
-    <Compile Include="MovingEntity.cs" />
+    <Compile Include="Particle.cs" />
+    <Compile Include="ParticleEngine.cs" />
     <Compile Include="Resources.cs" />
+    <Compile Include="Laser.cs" />
+    <Compile Include="MovingEntity.cs" />
     <Compile Include="Ship.cs" />
     <Compile Include="EventSystem\Events\MissionAcceptedClickEvent.cs" />
     <Compile Include="EventSystem\Listeners\MissionAcceptedClickListener.cs" />
     <Compile Include="EventSystem\Listeners\MissionDeniedClickListener.cs" />
     <Compile Include="EventSystem\Events\MissionDeniedClickEvent.cs" />
     <Compile Include="UI\HUD.cs" />
+    <Compile Include="UI\GameOver.cs" />
     <Compile Include="UI\Menu.cs" />
     <Compile Include="UI\MissionInterface.cs" />
     <Compile Include="EventSystem\Events\MissionSelectedEvent.cs" />
@@ -148,6 +158,7 @@
   </ItemGroup>
   <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.
   <Target Name="BeforeBuild">

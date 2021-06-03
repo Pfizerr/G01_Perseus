@@ -22,10 +22,11 @@ namespace G01_Perseus
         private float baseMaxShields;
         private float basePowerLevel;
         private float baseFireRate;
-        public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
-        public enum WeaponStatus { Available, NotAvailable };
-        public WeaponStatus[] weaponStatuses;
-        protected List<Weapon> weapons;
+        //public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
+        public List<Weapon> weapons;
+
+
+        public List<Weapon> Weapons => weapons;
 
         /// <summary>
         /// Constructor
@@ -35,14 +36,15 @@ namespace G01_Perseus
         /// <param name="scale"></param>
         /// <param name="health"></param>
         /// <param name="shield"></param>
-        public Player(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, Texture2D texture) : base(position, maxVelocity, scale, health, shield, texture)
+
+        public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield, Texture2D texture, float powerLevel, float fireRate) : base(position, velocity, scale, health, shield, texture, powerLevel, fireRate)
         {
             baseMaxHealth = health;
             baseMaxShields = shield;
-            basePowerLevel = 1; //This could be an input parameter for the constructor
-            baseFireRate = 0;
-            weaponStatuses = new WeaponStatus[] { WeaponStatus.Available, WeaponStatus.NotAvailable };
-            weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, (int)baseFireRate) };
+            basePowerLevel = powerLevel;
+            baseFireRate = fireRate;
+            weapons = new List<Weapon>() { equipedWeapon, new WeaponTripleShot(1, basePowerLevel, baseFireRate, false), new WeaponLaser(1, basePowerLevel, baseFireRate, true) };
+            //UpdateWeapons(); //May be needed when you load a save file
             EventManager.Register(this);
         }
 
@@ -58,17 +60,10 @@ namespace G01_Perseus
             {
                 Health = MaxHealth;
             }
-
-            base.Update(gameTime);
-
-            //ShieldRegeneration(gameTime);
-
+            
             AdjustAngleTowardsTarget(FindMousePosition());
             HandleInput(gameTime);
-
-
-            Movement(gameTime); //Could be in Ships update?
-
+            base.Update(gameTime);
 
             if (Status.Missions.Count > 0)
             {
@@ -77,15 +72,13 @@ namespace G01_Perseus
                     Console.WriteLine(String.Format("ID: {0} Contractor: {1} Owner: {2}", mission.Id, mission.Contractor, mission.Owner));
                 }
             }
-
             Status.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
-
             spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
-            //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
+            Status.Draw(spriteBatch);
         }
 
         /// <summary>
@@ -103,32 +96,18 @@ namespace G01_Perseus
 
             direction = direction.LengthSquared() > 1 ? Vector2.Normalize(direction) : direction;
 
-            if(KeyMouseReader.KeyHold(Keys.J))
+            if(KeyMouseReader.KeyPressed(Keys.J))
             {
                 EventManager.Dispatch(new PushStateEvent(new Journal(Status.Missions)));
             }
 
             if(KeyMouseReader.LeftHold() && !hasFocusOnPlanet)
             {
-                equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, rotation, TypeOfBullet.Player, gameTime);
+                equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, TypeOfBullet.Player, gameTime);
                 EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
 
             ChangeWeapon();
-        }
-
-        public override void HandleCollision(Entity other)
-        {
-            if (other is Enemy enemy)
-            {
-                //RecieveDamage(enemy.damage);
-            }
-            else if (other is Bullet bullet)
-            {
-                RecieveDamage(other, bullet.damage);
-                bullet.timeToLive = 0;
-            }
-            
         }
 
         /// <summary>
@@ -136,19 +115,22 @@ namespace G01_Perseus
         /// </summary>
         private void ChangeWeapon()
         {
-            if (KeyMouseReader.KeyPressed(Keys.D1) && weaponStatuses[0] == WeaponStatus.Available) //KeyMouseReader.KeyPressed(Keys.None)
+            if (KeyMouseReader.KeyPressed(Keys.D1) && weapons[0].available) //KeyMouseReader.KeyPressed(Keys.None)
             {
                 equipedWeapon = weapons[0];
+                EventManager.Dispatch(new ChangeIconEvent(0));
             }
 
-            if (KeyMouseReader.KeyPressed(Keys.D2) && weaponStatuses[1] == WeaponStatus.Available)
+            if (KeyMouseReader.KeyPressed(Keys.D2) && weapons[1].available)
             {
                 equipedWeapon = weapons[1];
+                EventManager.Dispatch(new ChangeIconEvent(1));
             }
 
-            if (KeyMouseReader.KeyPressed(Keys.D3))
+            if (KeyMouseReader.KeyPressed(Keys.D3) && weapons[2].available)
             {
                 equipedWeapon = weapons[2];
+                EventManager.Dispatch(new ChangeIconEvent(2));
             }
         }
 
@@ -201,6 +183,7 @@ namespace G01_Perseus
         {
             hasFocusOnPlanet = false;
         }
+
         /// <summary>
         /// Updates the power level of all the weapons the player has
         /// </summary>
@@ -209,7 +192,7 @@ namespace G01_Perseus
             foreach (Weapon weapon in weapons)
             {
                 weapon.SetDamagePerShot(PowerLevel);
-                weapon.SetFireTimer((int)FireRate);
+                weapon.SetFireTimer(FireRate);
             }
         }
 
@@ -230,13 +213,13 @@ namespace G01_Perseus
         /// </summary>
         public override float MaxHealth
         {
-            get { return baseMaxHealth + Resources.SpHealth * 10; }
+            get { return baseMaxHealth + Resources.SpHealth * 15; }
             protected set => base.MaxHealth = value;
         }
 
         public override float MaxShields
         {
-            get { return baseMaxShields + Resources.SpShields * 10; }
+            get { return baseMaxShields + Resources.SpShields * 5; }
             protected set => base.MaxShields = value;
         }
 

@@ -18,12 +18,16 @@ namespace G01_Perseus
             SetTexture();
             this.damage = damage;
             this.timeToLive = timeToLive;
-            Center = position; //This makes no sense???
+            Center = position;
             rotation = 0f;
             layerDepth = 0.8f;
             direction = Vector2.Normalize(targetPosition - position);
         }
 
+        /// <summary>
+        /// Draw update loop
+        /// </summary>
+        /// <param name="gameTime"></param>
         public override void Update(GameTime gameTime)
         {
             base.Update(gameTime);
@@ -41,9 +45,11 @@ namespace G01_Perseus
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
             spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
-            //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
 
+        /// <summary>
+        /// Sets the projektile texture depending on who fired it
+        /// </summary>
         protected void SetTexture()
         {
             if(Type == TypeOfBullet.Player) 
@@ -53,11 +59,10 @@ namespace G01_Perseus
             else
             {
                 texture = AssetManager.TextureAsset("projectile_pink");
-            }
-            
+            }            
         }
 
-        public override void Destroy(Event e)
+        public override void Destroy(Event e) //Can be removed?
         {
             base.Destroy(e);
             //Code to execute when destroyed..
@@ -66,7 +71,7 @@ namespace G01_Perseus
             return;
         }
 
-        public override void HandleCollision(Entity other)
+        public override void HandleCollision(Entity other) //Think this can be removed since the IsAlive is handles in update with timeToLive?
         {
             IsAlive = false;
         }

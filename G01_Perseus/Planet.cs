@@ -73,7 +73,12 @@ namespace G01_Perseus
 
             for (int i = 0; i < missions.Length; i++)
             {
-                missions[i] = MissionManager.LoadMission(MissionManager.GetRandomMissionId());
+                int rand = MissionManager.GetRandomMissionId();
+                missions[i] = MissionManager.LoadMission(rand);
+                if(missions[i] == null)
+                {
+                    continue;
+                }
                 missions[i].Contractor = this;
                 missions[i].State = Mission.EState.Offered;
             }

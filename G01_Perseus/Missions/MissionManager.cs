@@ -16,6 +16,11 @@ namespace G01_Perseus
 
         public static int GetRandomMissionId() => Game1.random.Next(1, (loadedMissions.Count() * 1000) / 1000);
 
+        public static int LoadedMissionsCount()
+        {
+            return loadedMissions.Count;
+        }
+
         public static string LoadMissionDataFromId(int id)
         {
             foreach(string line in trackerData)
