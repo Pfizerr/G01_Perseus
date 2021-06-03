@@ -4,10 +4,10 @@ namespace G01_Perseus
 {
     public class Timer
     {
-        private float interval;
+        private int interval;
         private double start;
 
-        public Timer(float interval)
+        public Timer(int interval)
         {
             this.interval = interval;
         }

@@ -12,7 +12,7 @@ namespace G01_Perseus
 {
     public class InGameState : GameState
     {
-
+        
         private Camera camera;
         private Level level;
 
@@ -24,20 +24,22 @@ namespace G01_Perseus
             int tileHeight = 1080;
             level = new Level(10, 10, tileWidth, tileHeight, AssetManager.FontAsset("sector_font"));
 
-            camera.FollowTarget = EntityManager.Player;            
+            camera.FollowTarget = EntityManager.Player;
+            
         }
 
         public override void Update(GameTime gameTime)
         {
             EntityManager.Update(gameTime);
             camera.Update();
+            
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin(SpriteSortMode.FrontToBack, BlendState.NonPremultiplied, null, null, null, null, camera.Translation);
             level.Draw(spriteBatch, camera);
-            EntityManager.Draw(spriteBatch);
+            EntityManager.Draw(spriteBatch);           
             spriteBatch.End();
         }
         

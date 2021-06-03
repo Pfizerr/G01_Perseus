@@ -14,6 +14,10 @@ namespace G01_Perseus
 
         public CollissionEvent(Entity entity, Entity otherEntity)
         {
+            if (entity is Explosion || otherEntity is Explosion)
+            {
+                return;
+            }
             if (!entity.IsCollidable || !otherEntity.IsCollidable || !entity.IsAlive || !otherEntity.IsAlive)
             {
                 return;
@@ -59,17 +63,17 @@ namespace G01_Perseus
                     return true;
                 }               
             }
-            //if (entity is Laser laser)
-            //{
-            //    if (laser.Type == TypeOfLaser.Player && otherEntity is Player)
-            //    {
-            //        return true;
-            //    }
-            //    else if (laser.Type == TypeOfLaser.Enemy && otherEntity is Enemy)
-            //    {
-            //        return true;
-            //    }
-            //}
+            if (entity is Laser laser)
+            {
+                if (laser.Type == TypeOfLaser.Player && otherEntity is Player)
+                {
+                    return true;
+                }
+                else if (laser.Type == TypeOfLaser.Enemy && otherEntity is Enemy)
+                {
+                    return true;
+                }
+            }
 
             return false;
         }

@@ -40,7 +40,7 @@ namespace G01_Perseus
             rotation = 0f;
             playerStatus = new PlayerStatus(health, 0f);
             weapons = new List<Weapon>() { trippleShot, singleShot, laser };
-            equipedWeapon = weapons[1];
+            equipedWeapon = weapons[0];
             Shields = shield;
             MaxShields = Shields;
             TotalHealth = health + shield;

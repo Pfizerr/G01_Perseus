@@ -43,16 +43,21 @@
   <ItemGroup>
     <Compile Include="Background.cs" />
     <Compile Include="EventSystem\Events\CollissionEvent.cs" />
+    <Compile Include="EventSystem\Events\PlayerDeathEvent.cs" />
     <Compile Include="EventSystem\Listeners\CollissionListener.cs" />
     <Compile Include="EnemyBehavior.cs" />
     <Compile Include="Bullet.cs" />
     <Compile Include="EventSystem\EventManager.cs" />
     <Compile Include="EventSystem\Listeners\MouseEnterPlanetListener.cs" />
     <Compile Include="EventSystem\Listeners\MouseExitPlanetListener.cs" />
+    <Compile Include="EventSystem\Listeners\PlayerDeathListener.cs" />
+    <Compile Include="Explosion.cs" />
     <Compile Include="ExtendedTimer.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="KeyMouseReader.cs" />
     <Compile Include="MainMenu.cs" />
+    <Compile Include="Particle.cs" />
+    <Compile Include="ParticleEngine.cs" />
     <Compile Include="Resources.cs" />
     <Compile Include="Laser.cs" />
     <Compile Include="MovingEntity.cs" />
@@ -63,6 +68,7 @@
     <Compile Include="EventSystem\Listeners\MissionAcceptedClickListener.cs" />
     <Compile Include="EventSystem\Listeners\MissionDeniedClickListener.cs" />
     <Compile Include="EventSystem\Events\MissionDeniedClickEvent.cs" />
+    <Compile Include="UI\GameOver.cs" />
     <Compile Include="UI\Menu.cs" />
     <Compile Include="UI\MissionInterface.cs" />
     <Compile Include="EventSystem\Events\MissionSelectedEvent.cs" />

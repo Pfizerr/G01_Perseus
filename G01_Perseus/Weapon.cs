@@ -29,7 +29,7 @@ namespace G01_Perseus
         }
             
 
-        public abstract void Fire(Vector2 center, Vector2 target, float rotation, TypeOfBullet typeOfBullet, GameTime gameTime);
+        public abstract void Fire(Vector2 origin, Vector2 target, TypeOfBullet typeOfBullet, GameTime gameTime);
         
     }
 }

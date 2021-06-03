@@ -12,8 +12,8 @@ namespace G01_Perseus
         private float baseMaxHealth;
         private float baseMaxShields;
         private float basePowerLevel;
-        public enum Addons { Disruptor, LifeSteal, Piercing, Freeze}
-        
+        public enum Addons { Disruptor, LifeSteal, Piercing, Freeze }
+
         /// <summary>
         /// Constructor
         /// </summary>
@@ -24,8 +24,8 @@ namespace G01_Perseus
         /// <param name="shield"></param>
         public Player(Vector2 position, Vector2 velocity, Vector2 scale, float health, float shield) : base(position, velocity, scale, health, shield)
         {
-            baseMaxHealth = health;
-            baseMaxShields = shield;
+            baseMaxHealth = /*health*/1;
+            baseMaxShields = /*shield*/1;
             basePowerLevel = 1; //This could be an input parameter for the constructor
             EventManager.Register(this);
         }
@@ -33,12 +33,12 @@ namespace G01_Perseus
         public override void Update(GameTime gameTime)
         {
             //These if statements should be moved perhaps?
-            if(Shields > MaxShields)
+            if (Shields > MaxShields)
             {
                 Shields = MaxShields;
             }
 
-            if(Health > MaxHealth)
+            if (Health > MaxHealth)
             {
                 Health = MaxHealth;
             }
@@ -56,7 +56,7 @@ namespace G01_Perseus
             {
                 foreach (Mission mission in Status.Missions)
                 {
-                Console.WriteLine(String.Format("ID: {0} Contractor: {1} Owner: {2}", mission.Id, mission.Contractor, mission.Owner));
+                    Console.WriteLine(String.Format("ID: {0} Contractor: {1} Owner: {2}", mission.Id, mission.Contractor, mission.Owner));
                 }
             }
 
@@ -67,7 +67,7 @@ namespace G01_Perseus
         {
             spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
             Status.Draw(spriteBatch);
-            
+
             //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
 
@@ -86,11 +86,11 @@ namespace G01_Perseus
 
             direction = direction.LengthSquared() > 1 ? Vector2.Normalize(direction) : direction;
 
-            if(KeyMouseReader.LeftClick() && !hasFocusOnPlanet)
+            if (KeyMouseReader.LeftClick() && !hasFocusOnPlanet)
             {
                 //EntityManager.CreateBullet(this, Center, Input.MouseWorldPosition);
 
-                equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, rotation, TypeOfBullet.Player, gameTime);
+                equipedWeapon.Fire(Center, KeyMouseReader.MouseWorldPosition, TypeOfBullet.Player, gameTime);
                 EventManager.Dispatch(new PlayerShootEvent(Position, 1337));
             }
 
@@ -108,7 +108,11 @@ namespace G01_Perseus
                 RecieveDamage(other, bullet.damage);
                 bullet.timeToLive = 0;
             }
-            
+            else if (other is Laser laser)
+            {
+                RecieveDamage(other, laser.damage);
+            }
+
         }
 
         /// <summary>
@@ -217,5 +221,6 @@ namespace G01_Perseus
             get { return basePowerLevel + Resources.SpDamage; }
             protected set => base.PowerLevel = value;
         }
+
     }
 }

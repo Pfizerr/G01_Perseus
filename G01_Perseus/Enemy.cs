@@ -50,7 +50,7 @@ namespace G01_Perseus
 
         public override void Update(GameTime gameTime)
         {
-            this.behavior.Update(gameTime);
+            //this.behavior.Update(gameTime);
 
             Movement(gameTime);
                        
@@ -66,7 +66,7 @@ namespace G01_Perseus
 
         public void FireWeapon(GameTime gameTime)
         {
-            equipedWeapon.Fire(Center, EntityManager.Player.Center, rotation, TypeOfBullet.Enemy, gameTime);
+            equipedWeapon.Fire(Center, EntityManager.Player.Center, TypeOfBullet.Enemy, gameTime);
         }
 
         private void SetHealthPosition() //This is a bit clunky
@@ -87,6 +87,10 @@ namespace G01_Perseus
             {
                 RecieveDamage(other, bullet.damage);
                 bullet.timeToLive = 0;
+            }
+            else if (other is Laser laser)
+            {
+                RecieveDamage(other, laser.damage);
             }
         }
             
