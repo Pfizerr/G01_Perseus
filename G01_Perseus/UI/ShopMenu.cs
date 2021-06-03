@@ -21,18 +21,18 @@ namespace G01_Perseus.UI
         //private string currencyAmount;
         private Vector2 currencyAmountPos, panelTexturePos;
         private Rectangle currencyTexPos;
-        private SpriteFont testFont;
+        private SpriteFont shopFont;
 
         public ShopMenu(GameWindow window)
         {
-            testFont = AssetManager.FontAsset("main_menu_font");
+            shopFont = AssetManager.FontAsset("main_menu_font");
             this.window = window;
             this.Transparent = true;
             this.panelTexture = AssetManager.TextureAsset("shop_menu_background_UI");
             this.panelTexturePos = new Vector2(window.ClientBounds.Width / 2 - ((panelTexture.Width * 1.5f) / 2), window.ClientBounds.Height * 0.3f);
             currencyTexture = AssetManager.TextureAsset("resource_currency");
             currencyTexPos = new Rectangle((int)panelTexturePos.X + 100, (int)(panelTexturePos.Y + 80 * 4.5f), (int)(currencyTexture.Width * 0.4f), (int)(currencyTexture.Height * 0.4f));
-            currencyAmountPos = new Vector2(currencyTexPos.X + currencyTexPos.Width + 10, currencyTexPos.Y + currencyTexPos.Height / 2 - testFont.MeasureString("10").Y / 2);
+            currencyAmountPos = new Vector2(currencyTexPos.X + currencyTexPos.Width + 10, currencyTexPos.Y + currencyTexPos.Height / 2 - shopFont.MeasureString("10").Y / 2);
             optionValue = new int[] { 100, 10, 1000 };
             menu = new Menu(new Rectangle((int)(window.ClientBounds.Width / 2 - ((panelTexture.Width) / 2)) , (int)(window.ClientBounds.Height * 0.3f) + 50, (int)(panelTexture.Width * 1.5f) - 200, (int)(panelTexture.Height *1.5f) - 150 - currencyTexPos.Height), AssetManager.FontAsset("main_menu_font"));
             menu.Options.Add(new MenuOption(AssetManager.TextureAsset("tripple_shot_icon"), string.Format("Buy tripple shot, amount {0}", optionValue[0]), BuyTrippleShot));
@@ -61,7 +61,7 @@ namespace G01_Perseus.UI
             spriteBatch.Begin();
             spriteBatch.Draw(panelTexture, panelTexturePos, null, Color.White, 0.0f, Vector2.Zero, 1.5f, SpriteEffects.None, 0.5f);
             menu.Draw(spriteBatch, gameTime);
-            spriteBatch.DrawString(AssetManager.FontAsset("default_font"), string.Format("{0}", Resources.Currency), currencyAmountPos, Color.Black);
+            spriteBatch.DrawString(shopFont, string.Format("{0}", Resources.Currency), currencyAmountPos, Color.Black);
             spriteBatch.Draw(currencyTexture, currencyTexPos, Color.White);
             spriteBatch.End();
         }
