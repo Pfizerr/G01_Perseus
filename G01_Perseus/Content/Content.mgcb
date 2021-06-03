@@ -77,7 +77,7 @@
 /processorParam:TextureFormat=Color
 /build:textures/ButtonBackgroundAvailable.png
 
-#begin textures/ButtonBackgroundAvailableTransparent.png
+#begin textures/ButtonBackgroundSelected.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -87,31 +87,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/ButtonBackgroundAvailableTransparent.png
-
-#begin textures/ButtonBackgroundHovered.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/ButtonBackgroundHovered.png
-
-#begin textures/ButtonBackgroundHoveredTransparent.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/ButtonBackgroundHoveredTransparent.png
+/build:textures/ButtonBackgroundSelected.png
 
 #begin textures/ButtonBackgroundUnavailable.png
 /importer:TextureImporter
@@ -124,18 +100,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/ButtonBackgroundUnavailable.png
-
-#begin textures/ButtonBackgroundUnavailableTransparent.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/ButtonBackgroundUnavailableTransparent.png
 
 #begin textures/ButtonBlue.png
 /importer:TextureImporter
@@ -557,7 +521,7 @@
 /processorParam:TextureFormat=Color
 /build:textures/PlayerShip2.png
 
-#begin textures/projektileBlue.png
+#begin textures/ProjektileBlue.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -567,9 +531,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/projektileBlue.png
+/build:textures/ProjektileBlue.png
 
-#begin textures/projektileGreen.png
+#begin textures/ProjektileGreen.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -579,9 +543,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/projektileGreen.png
+/build:textures/ProjektileGreen.png
 
-#begin textures/projektilePink.png
+#begin textures/ProjektilePink.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -591,7 +555,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/projektilePink.png
+/build:textures/ProjektilePink.png
 
 #begin textures/ProjektilesSpritesheet.png
 /importer:TextureImporter
@@ -605,7 +569,7 @@
 /processorParam:TextureFormat=Color
 /build:textures/ProjektilesSpritesheet.png
 
-#begin textures/projektileYellow.png
+#begin textures/ProjektileYellow.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -615,7 +579,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/projektileYellow.png
+/build:textures/ProjektileYellow.png
 
 #begin textures/QuestMenuBackground.png
 /importer:TextureImporter

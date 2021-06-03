@@ -21,19 +21,12 @@ namespace G01_Perseus
         public float MaxShields { get; set;}
         public float Shields { get; set;}
 
+        public int maxMissionCount;
+
         public List<Mission> Missions { get; set;}
 
         public List<Mission> CompletedMissions { get; set;}
 
-        /*private float maxShields;
-        private float shields;
-        
-        private int skillPoints;
-        private int level;
-        private int experience;
-        private int resources;
-        private int dust;*/
-        
         /// <summary>
         /// New status constructor.
         /// </summary>
@@ -64,28 +57,28 @@ namespace G01_Perseus
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
+        //public void Draw(SpriteBatch spriteBatch)
+        //{
             #region Debug output
-            Rectangle viewport = Game1.camera.Viewport;
-            Vector2 playerPosition = EntityManager.Player.Center;
-            Vector2 position;
-            Vector2 size;
-
-            for (int i = 0; i < Missions.Count; i++)
-            {
-                string str = String.Format("name: {0} <{1}> | owner: {2} | contractor: {3} | {4} / {5}", 
-                    Missions[i].Name,
-                    Missions[i].Id,
-                    Missions[i].Owner,
-                    Missions[i].Contractor,
-                    Missions[i].Tracker.TasksCompleted.ToString(),
-                    Missions[i].Tracker.TasksToComplete.ToString());
-
-                size = font.MeasureString(str);
-                position = new Vector2(playerPosition.X - viewport.Width * 0.5f + 15, playerPosition.Y - viewport.Height * 0.5f + size.Y * i + 5);
-                spriteBatch.DrawString(font, str, position, Color.White);
-            }
+            //Rectangle viewport = Game1.camera.Viewport;
+            //Vector2 playerPosition = EntityManager.Player.Center;
+            //Vector2 position;
+            //Vector2 size;
+            //
+            //for (int i = 0; i < Missions.Count; i++)
+            //{
+            //    string str = String.Format("name: {0} <{1}> | owner: {2} | contractor: {3} | {4} / {5}", 
+            //        Missions[i].Name,
+            //        Missions[i].Id,
+            //        Missions[i].Owner,
+            //        Missions[i].Contractor,
+            //        Missions[i].Tracker.TasksCompleted.ToString(),
+            //        Missions[i].Tracker.TasksToComplete.ToString());
+            //
+            //    size = font.MeasureString(str);
+            //    position = new Vector2(playerPosition.X - viewport.Width * 0.5f + 15, playerPosition.Y - viewport.Height * 0.5f + size.Y * i + 5);
+            //    spriteBatch.DrawString(font, str, position, Color.White);
+            //}
 
             //string[] strs = new string[]
             //{
@@ -101,13 +94,13 @@ namespace G01_Perseus
             //    spriteBatch.DrawString(font, strs[i], position, Color.White);
             //}
             #endregion
-        }
+        //}
 
         public void OnTurnIn(MissionTurnedInEvent e)
         {
             Resources.AddDust(e.Mission.Dust);
             Resources.AddCurrency(e.Mission.Currency);
-            Resources.AddXP(e.Mission.SkillPoints);
+            Resources.AddXP(e.Mission.Experience);
             Missions.Remove(e.Mission);
         }
 

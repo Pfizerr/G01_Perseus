@@ -23,7 +23,7 @@ namespace G01_Perseus
         public Entity Owner { get; private set; }
         public int Currency { get; set; }
         public int Dust { get; set; }
-        public int SkillPoints { get; set; }
+        public int Experience { get; set; }
         public Equipment Equipment { get; set; }
 
         public Mission()
@@ -53,8 +53,10 @@ namespace G01_Perseus
             StringBuilder sb = new StringBuilder();
             sb.Append("Name: " + Name);
             sb.Append("\nDescription: " + Description + "\n");
-            
-            if(Currency > 0)
+            sb.Append("<sector: " + Tracker.Sector + ">\n");
+
+
+            if (Currency > 0)
             {
                 sb.Append(string.Format("Resources: {0},  ", Currency));
             }
@@ -64,9 +66,9 @@ namespace G01_Perseus
                 sb.Append(string.Format("Dust: {0},  ", Dust));
             }
 
-            if(SkillPoints > 0)
+            if(Experience > 0)
             {
-                sb.Append(string.Format("SkillPoints: {0},  ", SkillPoints));
+                sb.Append(string.Format("SkillPoints: {0},  ", Experience));
             }
 
             sb.Append(string.Format("\nProgress: {0} / {1}", Tracker.TasksCompleted, Tracker.TasksToComplete));
@@ -74,7 +76,7 @@ namespace G01_Perseus
             return sb.ToString();
         }
 
-        public void Update()
+        public void Update() // MOVE TO TRACKER?
         {
             switch(State)
             {

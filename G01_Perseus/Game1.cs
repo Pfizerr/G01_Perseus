@@ -60,7 +60,9 @@ namespace G01_Perseus
             MissionManager.LoadMissions();
 
             EntityManager.AddFaction(new Faction("test faction one", AssetManager.SpriteAsset("planet1"), AssetManager.SpriteAsset("planet_highlight_outline2_green")));
+            EntityManager.AddFaction(new Faction("test faction two", AssetManager.SpriteAsset("planet2"), AssetManager.SpriteAsset("planet_highlight_outline2_blue")));
             EntityManager.factions[0].CreatePlanet("planet name one", new Vector2(0, 0), 3);
+            EntityManager.factions[1].CreatePlanet("planet name two", new Vector2(5900, 40), 1);
             EntityManager.CreatePlayer();
             
             Resources.Initialize(0, 0, 0, 0, 0, 0, 0, 0, 1);

@@ -12,6 +12,8 @@ namespace G01_Perseus
         public static List<Faction> factions = new List<Faction>();
         public static Player Player;
 
+        public static Level Level = null;
+
         public static void CreatePlayer()
         {
             Player = new Player(new Vector2(250, 250), new Vector2(500, 500), new Vector2(0.2f, 0.2f), 100, 100, AssetManager.TextureAsset("player_ship"));
@@ -78,6 +80,15 @@ namespace G01_Perseus
             for (int i = 0; i < factions.Count; i++)
             {
                 factions[i].Update(gameTime);
+            }
+
+            int x = (int)Player.Position.X / Level.tileWidth;
+            int y = (int)Player.Position.Y / Level.tileHeight;
+
+            if(Player.Sector != Level.GetSectorCoordinates(x, y))
+            {
+                Player.Sector = Level.GetSectorCoordinates(x, y);
+                EventManager.Dispatch(new SectorEnteredEvent(Player, Player.Sector));
             }
 
             CheckEntityCollisions();

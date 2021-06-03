@@ -32,7 +32,7 @@ namespace G01_Perseus.UI
 
             Texture2D backgroundAvailable = AssetManager.TextureAsset("button_background_available");
             Texture2D backgroundUnavailable = AssetManager.TextureAsset("button_background_unavailable");
-            Texture2D backgroundSelected = AssetManager.TextureAsset("button_background_hovered");
+            Texture2D backgroundSelected = AssetManager.TextureAsset("button_background_selected");
 
             //Remove-Button bounds
             Texture2D removeBackground = AssetManager.TextureAsset("button_red");
@@ -121,6 +121,24 @@ namespace G01_Perseus.UI
             #region debug (draw hitbox)
             //spriteBatch.Draw(Util.CreateRectangleTexture(bounds.Width, bounds.Height, Color.Blue, Color.Transparent), bounds.Location.ToVector2(), null, Color.White, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 1.0f);
             #endregion
+        }
+
+        public void OffsetAlongY(int offset, bool lerpToTarget)
+        {
+            // bounds.Y += offset;
+            //bounds.Location.
+        }
+
+        public int Y
+        {
+            get
+            {
+                return this.bounds.Y;
+            }
+            set
+            {
+                this.bounds.Y = value;
+            }
         }
 
         public void TurnInMission()

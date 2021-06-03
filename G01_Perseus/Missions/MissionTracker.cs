@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,6 +9,13 @@ namespace G01_Perseus
 {
     public abstract class MissionTracker
     {
+        public MissionTracker(int tasksToComplete)
+        {
+            this.TasksToComplete = tasksToComplete;
+
+            this.IsCompleted = false;
+        }
+
         public virtual Entity Owner
         {
             get;
@@ -26,25 +34,23 @@ namespace G01_Perseus
             protected set;
         }
 
-        public virtual bool IsActive
-        {
-            get;
-            set;
-        }
-
         public bool IsCompleted
         {
             get;
             protected set;
         }
 
-        public MissionTracker(int tasksToComplete)
+        public virtual bool IsActive
         {
-            this.TasksToComplete = tasksToComplete;
-
-            this.IsCompleted = false;
+            get;
+            set;
         }
-              
+
+        public virtual Point Sector
+        {
+            get;
+            set;
+        }
 
         protected virtual void TaskComplete()
         {

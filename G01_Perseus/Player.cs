@@ -11,6 +11,12 @@ namespace G01_Perseus
 {
     public class Player : Ship, /*CollissionListener,*/ PlanetInteractionListener, MouseEnterPlanetListener, MouseExitPlanetListener
     {
+        public Point Sector
+        {
+            get;
+            set;
+        }
+
         private bool hasFocusOnPlanet;
         private float baseMaxHealth;
         private float baseMaxShields;
@@ -78,8 +84,7 @@ namespace G01_Perseus
         public override void Draw(SpriteBatch spriteBatch, int tileX, int tileY, int ix, int iy, int tileWidth, int tileHeight)
         {
 
-            spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f); Status.Draw(spriteBatch);
-            
+            spriteBatch.Draw(texture, Center, null, Color.White, rotation, texture.Bounds.Size.ToVector2() * 0.5f, scale, SpriteEffects.None, 0.9f);
             //spriteBatch.Draw(Util.CreateFilledRectangleTexture(Color.Blue, hitbox.Width, hitbox.Height), hitbox, null, Color.White, 0f, new Vector2(0, 0), SpriteEffects.None, 0.7f); // Draw hitbox at hitbox. (debug)
         }
 
@@ -173,7 +178,7 @@ namespace G01_Perseus
 
         public void OnMouseClick(PlanetInteractionEvent e)
         {
-            List<Mission> completedMissions = new List<Mission>();
+            /*List<Mission> completedMissions = new List<Mission>();
             for (int i = 0; i < Status.Missions.Count; i++)
             {
                 if (Status.Missions[i].State == Mission.EState.Completed)
@@ -182,7 +187,7 @@ namespace G01_Perseus
                     Status.Missions.RemoveAt(i);
                     i--;
                 }
-            }
+            }*/
 
             e.Planet.Customer = this;
         }

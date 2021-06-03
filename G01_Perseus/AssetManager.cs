@@ -70,10 +70,10 @@ namespace G01_Perseus
             loadedTextures.Add("enemy_ship", content.Load<Texture2D>(@"textures\EShip"));
             loadedTextures.Add("enemy_ship2", content.Load<Texture2D>(@"textures\EnemyShip"));
             loadedTextures.Add("enemy_ship3", content.Load<Texture2D>(@"textures\EnemyShip3"));
-            loadedTextures.Add("projectile_green", content.Load<Texture2D>(@"textures\projektileGreen"));
-            loadedTextures.Add("projectile_pink", content.Load<Texture2D>(@"textures\projektilePink"));
-            loadedTextures.Add("projectile_blue", content.Load<Texture2D>(@"textures\projektileBlue"));
-            loadedTextures.Add("projectile_yellow", content.Load<Texture2D>(@"textures\projektileYellow"));
+            loadedTextures.Add("projectile_green", content.Load<Texture2D>(@"textures\ProjektileGreen"));
+            loadedTextures.Add("projectile_pink", content.Load<Texture2D>(@"textures\ProjektilePink"));
+            loadedTextures.Add("projectile_blue", content.Load<Texture2D>(@"textures\ProjektileBlue"));
+            loadedTextures.Add("projectile_yellow", content.Load<Texture2D>(@"textures\ProjektileYellow"));
             loadedTextures.Add("beam", content.Load<Texture2D>(@"textures\Beam"));
             loadedTextures.Add("planet1", content.Load<Texture2D>(@"textures\planet1"));
             loadedTextures.Add("planet2", content.Load<Texture2D>(@"textures\planet2"));
@@ -90,10 +90,7 @@ namespace G01_Perseus
             loadedTextures.Add("monitor_not_focused", content.Load<Texture2D>(@"textures\MonitorNotFocused"));
             loadedTextures.Add("button_background_available", content.Load <Texture2D>(@"textures\ButtonBackgroundAvailable"));
             loadedTextures.Add("button_background_unavailable", content.Load <Texture2D>(@"textures\ButtonBackgroundUnavailable"));
-            loadedTextures.Add("button_background_hovered", content.Load<Texture2D>(@"textures\ButtonBackgroundHovered"));
-            loadedTextures.Add("button_background_available_transparent", content.Load<Texture2D>(@"textures\ButtonBackgroundAvailableTransparent"));
-            loadedTextures.Add("button_background_unavailable_transparent", content.Load<Texture2D>(@"textures\ButtonBackgroundUnavailableTransparent"));
-            loadedTextures.Add("button_background_hovered_transparent", content.Load<Texture2D>(@"textures\ButtonBackgroundHoveredTransparent"));
+            loadedTextures.Add("button_background_selected", content.Load<Texture2D>(@"textures\ButtonBackgroundSelected"));
 
             loadedTextures.Add("button_green", content.Load<Texture2D>(@"textures\ButtonGreen"));
             loadedTextures.Add("damage_icon", content.Load<Texture2D>(@"textures\DamageIconSmall"));

@@ -35,11 +35,6 @@ namespace G01_Perseus.UI
             }
         }
 
-        public void OffsetAlongY(int offset, bool lerpToTarget)
-        {
-            bounds.Y += offset;
-        }
-
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)
         {
             spriteBatch.Begin();
@@ -89,7 +84,8 @@ namespace G01_Perseus.UI
             int emptySlots = 0;
             for(int i = 0; i < buttons.Count; i++)
             {
-                //buttons[i].Bounds.Location.Y = (bounds.Y + 35) + (i - emptySlots * buttonHeight) + ((i - emptySlots) * 10);
+                Rectangle bounds = buttons[i].Bounds;
+                buttons[i].Y = (bounds.Y + 35) + (i - emptySlots * buttonHeight) + ((i - emptySlots) * 10);
             }
         }
 

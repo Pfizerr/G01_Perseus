@@ -1,4 +1,6 @@
-﻿using G01_Perseus.UI;
+﻿using G01_Perseus.Missions.Trackers;
+using G01_Perseus.UI;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -12,7 +14,7 @@ namespace G01_Perseus
         private static string[] missionData;
         private static string[] trackerData;
 
-        public static int GetRandomMissionId() => Game1.random.Next(1, loadedMissions.Count() * 1000) / 1000;
+        public static int GetRandomMissionId() => Game1.random.Next(1, (loadedMissions.Count() * 1000) / 1000);
 
         public static string LoadMissionDataFromId(int id)
         {
@@ -26,11 +28,12 @@ namespace G01_Perseus
             return null;
         }
 
-        public static MissionTracker LoadMissionTrackerFromFile(int id)
+        public static MissionTracker LoadMissionTracker(int id)
         {
             string line = LoadMissionDataFromId(id);
             string trackerTypeStr = "";
             int tasksToComplete = 0;
+            Point sector = new Point();
             List<string> optionalParams = new List<string>();
 
             string[] data = line.Split(',');
@@ -40,8 +43,11 @@ namespace G01_Perseus
                 string fieldName = field.Split('=')[0];
                 string fieldValue = field.Split('=')[1];
                 
-
-                if (fieldName == "tracker_type")
+                if(fieldName == "id")
+                {
+                    continue;
+                }
+                else if (fieldName == "tracker_type")
                 {
                     trackerTypeStr = fieldValue;
                 }
@@ -53,8 +59,13 @@ namespace G01_Perseus
                 {
                     optionalParams.Add(field);
                 }
+                if (fieldName == "sector")
+                {
+                    int x = Convert.ToInt32(fieldValue.Split('.')[0]);
+                    int y = Convert.ToInt32(fieldValue.Split('.')[1]);
+                    sector = new Point(x, y);
+                }
 
-                
             }
 
             // UPDATE THESE AS NEW TRACKERS ARE ADDED
@@ -72,13 +83,27 @@ namespace G01_Perseus
                             typeOfSubject = Type.GetType(fieldValue);
                         }
                     }
-                    return new KillsMissionTracker(typeOfSubject, tasksToComplete);
-                case "COLLECT_TRACKER":
-                    break;
-                case "DELIVER_TRACKER":
-                    break;
+                    return new KillsMissionTracker(typeOfSubject, sector, tasksToComplete);
+                case "TRAVEL_TRACKER":
+                    for (int i = 0; i < optionalParams.Count; i++)
+                    {
+                        string fieldName = optionalParams[i].Split('=')[0];
+                        string fieldValue = optionalParams[i].Split('=')[1];
+                    }
+                    return new TravelMissionTracker(sector, tasksToComplete);
                 case "SURVIVE_TRACKER":
-                    break;
+                    int timeToSurvive = 0;
+                    for (int i = 0; i < optionalParams.Count; i++)
+                    {
+                        string fieldName = optionalParams[i].Split('=')[0];
+                        string fieldValue = optionalParams[i].Split('=')[1];
+
+                        if(fieldName == "timeToSurvive")
+                        {
+                            timeToSurvive = Convert.ToInt32(fieldValue);
+                        }
+                    }
+                    return new SurviveMissionTracker(sector, timeToSurvive, tasksToComplete);
             }
 
             return null;
@@ -102,7 +127,7 @@ namespace G01_Perseus
 
                     foreach(string field in data)
                     {
-                        if(field.StartsWith("name="))
+                        if (field.StartsWith("name="))
                         {
                             mission.Name = field.Split('=')[1];
                         }
@@ -112,7 +137,7 @@ namespace G01_Perseus
                         }
                         else if (field.StartsWith("tracker_id="))
                         {
-                            mission.Tracker = LoadMissionTrackerFromFile(Convert.ToInt32(field.Split('=')[1]));
+                            mission.Tracker = LoadMissionTracker(Convert.ToInt32(field.Split('=')[1]));
                         }
                         else if (field.StartsWith("rewards_resources="))
                         {
@@ -124,7 +149,7 @@ namespace G01_Perseus
                         }
                         else if (field.StartsWith("rewards_skillpoints="))
                         {
-                            mission.SkillPoints = Convert.ToInt32(field.Split('=')[1]);
+                            mission.Experience = Convert.ToInt32(field.Split('=')[1]);
                         }
                         else if (field.StartsWith("rewards_equipment"))
                         {
@@ -142,10 +167,10 @@ namespace G01_Perseus
         {
             loadedMissions.Add(LoadMission(1));
             loadedMissions.Add(LoadMission(2));
-            loadedMissions.Add(LoadMission(3));
-            loadedMissions.Add(LoadMission(4));
-            loadedMissions.Add(LoadMission(5));
-            loadedMissions.Add(LoadMission(6));
+            //loadedMissions.Add(LoadMission(3));
+            //loadedMissions.Add(LoadMission(4));
+           //loadedMissions.Add(LoadMission(5));
+            //loadedMissions.Add(LoadMission(6));
         }
 
         public static void LoadData()

@@ -10,11 +10,13 @@ namespace G01_Perseus
 {
     public class Level
     {
+        public static int Width;
+        public static int Height;
 
-        private int width;
-        private int height;
-        private int tileWidth;
-        private int tileHeight;
+        public int width;
+        public int height;
+        public int tileWidth;
+        public int tileHeight;
 
         private SpriteFont font;
 
@@ -36,9 +38,9 @@ namespace G01_Perseus
 
             background = new Background(tileWidth, tileHeight);
             
-            this.tileTexture = Util.CreateRectangleTexture(tileWidth, tileHeight, Color.Cyan, Color.Transparent);    
+            this.tileTexture = Util.CreateRectangleTexture(tileWidth, tileHeight, Color.Cyan, Color.Transparent);
         }
-        
+
         public Point GetSectorCoordinates(int x, int y)
         {
             int ix = x % width >= 0 ? x % width : (x % width) + width;
@@ -73,7 +75,7 @@ namespace G01_Perseus
                     background.Draw(spriteBatch, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), camera.CenterPosition);
                     spriteBatch.Draw(tileTexture, new Rectangle(x * tileWidth, y * tileHeight, tileWidth, tileHeight), null, Color.White, 0.0f, Vector2.Zero, SpriteEffects.None, 0.4f);
 
-                    Point sectorCoords = GetSectorCoordinates(x, y);
+                    Point sectorCoords = this.GetSectorCoordinates(x, y);
                     string text = GetSectorString(sectorCoords.X, sectorCoords.Y);
                     Vector2 textDim = font.MeasureString(text);
                     spriteBatch.DrawString(font, text, new Vector2(x * tileWidth + 5, y * tileHeight + 5), Color.Cyan, 0.0f, Vector2.Zero, 1.0f, SpriteEffects.None, 0.4f);

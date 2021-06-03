@@ -92,7 +92,7 @@ namespace G01_Perseus.UI
         private void CreateButtons(Mission[] missions, ExtendedTimer[] timer)
         {
             Texture2D bgAvailable = AssetManager.TextureAsset("button_background_available");
-            Texture2D bgSelected = AssetManager.TextureAsset("button_background_hovered");
+            Texture2D bgSelected = AssetManager.TextureAsset("button_background_selected");
             Texture2D bgUnavailable = AssetManager.TextureAsset("button_background_unavailable");
 
             buttons = new List<MissionInterfaceButton>();
