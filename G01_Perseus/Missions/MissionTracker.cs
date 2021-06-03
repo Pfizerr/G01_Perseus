@@ -23,7 +23,7 @@ namespace G01_Perseus
         public virtual int TasksCompleted
         {
             get;
-            protected set;
+            set;
         }
 
         public virtual bool IsActive

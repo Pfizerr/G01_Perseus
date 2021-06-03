@@ -9,6 +9,8 @@ namespace G01_Perseus
 {
     public class WeaponSingleShot : Weapon
     {
+
+        public override string Name => "SingleShot";
         public WeaponSingleShot(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
         {
             name = "Singleshot";

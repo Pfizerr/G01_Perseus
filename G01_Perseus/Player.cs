@@ -21,6 +21,9 @@ namespace G01_Perseus
         public WeaponStatus[] weaponStatuses;
         protected List<Weapon> weapons;
 
+
+        public List<Weapon> Weapons => weapons;
+
         /// <summary>
         /// Constructor
         /// </summary>

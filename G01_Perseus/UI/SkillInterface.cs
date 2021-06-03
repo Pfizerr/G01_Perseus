@@ -48,7 +48,11 @@ namespace G01_Perseus.UI
         {
             exit.Update(gameTime);
             resetSP.Update(gameTime);
-            foreach(UIButton button in buttonsArray)
+            CalculateBarWidth(0, Resources.SpDamage);
+            CalculateBarWidth(1, Resources.SpHealth);
+            CalculateBarWidth(2, Resources.SpShields);
+            CalculateBarWidth(3, Resources.SpFireRate);
+            foreach (UIButton button in buttonsArray)
             {
                 button.Update(gameTime);
             }

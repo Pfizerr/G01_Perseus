@@ -12,6 +12,17 @@ namespace G01_Perseus
         public static List<Faction> factions = new List<Faction>();
         public static Player Player;
 
+        public static void ReInit()
+        {
+            entities.Clear();
+            factions.Clear();
+            Player = null;
+
+            AddFaction(new Faction("test faction one", AssetManager.SpriteAsset("planet1"), AssetManager.SpriteAsset("planet_highlight_outline2_green")));
+            factions[0].CreatePlanet("planet name one", new Vector2(0, 0), 3);
+            CreatePlayer();
+        }
+
         public static void CreatePlayer()
         {
             Player = new Player(new Vector2(250, 250), new Vector2(500, 500), new Vector2(0.2f, 0.2f), 100, 100, AssetManager.TextureAsset("player_ship"));

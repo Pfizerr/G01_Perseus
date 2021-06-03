@@ -13,20 +13,26 @@ namespace G01_Perseus
     public class InGameState : GameState, GameOverListener
     {
 
-        private Camera camera;
+        private static Camera camera;
         private Level level;
 
         public InGameState(Camera camera)
         {
-            this.camera = camera;
+            InGameState.camera = camera;
 
             int tileWidth = 1180;
             int tileHeight = 1080;
             level = new Level(10, 10, tileWidth, tileHeight, AssetManager.FontAsset("sector_font"));
 
-            camera.FollowTarget = EntityManager.Player;
+            
 
-            EntityManager.CreateEnemySpawner(new Vector2(200, 200), EnemySpawner.Type.Raptor, 1000);
+            InitGame();
+        }
+
+        public static void InitGame()
+        {
+            EntityManager.CreateEnemySpawner(new Vector2(200, 200), EnemySpawner.Type.Raptor, 10000);
+            camera.FollowTarget = EntityManager.Player;
         }
 
         public override void Update(GameTime gameTime)

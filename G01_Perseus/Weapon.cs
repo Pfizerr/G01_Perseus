@@ -14,6 +14,8 @@ namespace G01_Perseus
         protected Timer fireTimer;
         protected int baseFireTimer;
 
+        public virtual string Name => "NONAME";
+
         public Weapon(int iD, float powerLevel, int fireRate) : base(iD)
         {
             this.powerLevel = powerLevel;

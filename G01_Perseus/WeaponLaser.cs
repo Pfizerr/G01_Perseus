@@ -10,6 +10,7 @@ namespace G01_Perseus
     class WeaponLaser : Weapon // Currently non-functional
     {
 
+        public override string Name => "Laser";
         public WeaponLaser(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
         {
             name = "Laser";

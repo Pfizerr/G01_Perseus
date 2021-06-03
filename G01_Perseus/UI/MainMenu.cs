@@ -26,7 +26,7 @@ namespace G01_Perseus
 
             menu = new Menu(new Rectangle((int)(window.ClientBounds.Width / 2 - ((panelTexture.Width * 1.5f) / 2)) + 50, (int)(window.ClientBounds.Height * 0.3f) + 50, (int)(panelTexture.Width * 1.5f) - 100, (int)(panelTexture.Height * 1.5f) - 100), AssetManager.FontAsset("main_menu_font"));
             menu.Options.Add(new MenuOption("New Game", StartGame));
-            menu.Options.Add(new MenuOption("Load Game", () => { Console.WriteLine("Test2"); }));
+            menu.Options.Add(new MenuOption("Load Game", () => { StartGame(); Serializer.LoadGame(); }));
             menu.Options.Add(new MenuOption("Credits", () => { Console.WriteLine("Test3"); }));
             menu.Options.Add(new MenuOption("Quit", Game1.Shutdown));
            

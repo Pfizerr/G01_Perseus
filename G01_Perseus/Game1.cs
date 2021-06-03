@@ -59,11 +59,10 @@ namespace G01_Perseus
             AssetManager.LoadAssets(Content);
             MissionManager.LoadMissions();
 
-            EntityManager.AddFaction(new Faction("test faction one", AssetManager.SpriteAsset("planet1"), AssetManager.SpriteAsset("planet_highlight_outline2_green")));
-            EntityManager.factions[0].CreatePlanet("planet name one", new Vector2(0, 0), 3);
-            EntityManager.CreatePlayer();
-            
-            Resources.Initialize(0, 0, 0, 0, 0, 0, 0, 0, 1);
+
+            EntityManager.ReInit();
+            Resources.Initialize(0, 0, 10, 0, 0, 0, 0, 0, 1);
+
             //EntityManager.CreateEnemyOrbital(new Vector2(250, 250));
             //EntityManager.CreateEnemyRaptor(new Vector2(500, 500));
             //EntityManager.CreateEnemyPursuer(new Vector2(1000, 1000));
@@ -114,6 +113,16 @@ namespace G01_Perseus
             }
 
             KeyMouseReader.Update();
+
+            if (KeyMouseReader.KeyPressed(Keys.Back))
+            {
+                Serializer.LoadGame();
+            }
+            if (KeyMouseReader.KeyPressed(Keys.Enter))
+            {
+                Serializer.SaveGame();
+            }
+
             stateStack.Update(gameTime);
         }
 

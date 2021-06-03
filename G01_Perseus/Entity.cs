@@ -64,7 +64,7 @@ namespace G01_Perseus
         public virtual bool IsCollidable { get; protected set; }
         public virtual bool IsAlive { get; protected set; } //Maybe move this to the MovingEntity class???
         public virtual Vector2 Size { get; protected set; }
-        public virtual Vector2 Position { get; protected set; }
+        public virtual Vector2 Position { get; set; }
         public virtual Vector2 Origin { get; protected set; }
 
         public virtual Rectangle HitBox

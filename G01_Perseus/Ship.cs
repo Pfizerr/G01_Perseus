@@ -21,14 +21,16 @@ namespace G01_Perseus
         protected double hitTimer, hitTimerInterval;                
 
         //Components
-        protected PlayerStatus playerStatus;
-        public float Shields { get; protected set; }
+        public PlayerStatus playerStatus;
+        public float Shields { get; set; }
         public float Health { get; set; } //Removed the protected set here :/ To make the shop able to give the player health. Should use the event system
         public float TotalHealth { get; protected set; }
         public virtual float MaxHealth { get; protected set; }
         public virtual float MaxShields { get; protected set; }
         public virtual float PowerLevel { get; protected set; }
         public virtual float FireRate { get; protected set; }
+
+        public Weapon EquipedWeapon => equipedWeapon;
 
         public Ship(Vector2 position, Vector2 maxVelocity, Vector2 scale, float health, float shield, Texture2D texture) : base(maxVelocity, position, scale, texture)
         {

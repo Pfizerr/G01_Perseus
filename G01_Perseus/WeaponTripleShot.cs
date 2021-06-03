@@ -10,6 +10,9 @@ namespace G01_Perseus
     class WeaponTripleShot : Weapon
     {
         private Vector2 secondBulletTarget, thirdBulletTarget;
+
+        public override string Name => "TripleShot";
+
         public WeaponTripleShot(int iD, float powerLevel, int fireRate) : base(iD, powerLevel, fireRate)
         {
             name = "Tripleshot";
