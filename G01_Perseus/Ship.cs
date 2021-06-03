@@ -18,10 +18,10 @@ namespace G01_Perseus
         protected Vector2 velocity;
         protected Weapon equipedWeapon;
         protected double hitTimer, hitTimerInterval;                
-        protected PlayerStatus playerStatus;
+        public PlayerStatus playerStatus;
 
         //Properites
-        public float Shields { get; protected set; }
+        public float Shields { get; set; }
         public float Health { get; set; }
         public float TotalHealth { get; protected set; }
         public virtual float MaxHealth { get; protected set; }

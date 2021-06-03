@@ -13,7 +13,7 @@ namespace G01_Perseus.UI
     {
         private UIButton btnSkillUI, btnShopUI, btnQuestsUI;
         private SkillInterface skillMenu;
-        //private AcceptedQuestsInterface questsMenu;
+        private Journal journal;
         private ShopMenu shopMenu;
         private GameWindow window;
         private SpriteFont fontHUD;
@@ -38,6 +38,7 @@ namespace G01_Perseus.UI
             SetButtons();
             this.skillMenu = new SkillInterface(window);
             this.shopMenu = new ShopMenu(window);
+            //this.journal = new Journal(EntityManager.Player.Status.Missions);
 
             //Healthbar portion
             barTex = AssetManager.TextureAsset("gradient_bar");
@@ -66,13 +67,14 @@ namespace G01_Perseus.UI
 
         public void OpenQuestsMenu()
         {
-            EventManager.Dispatch(new PushStateEvent(shopMenu)); //Change this to the right menu
+            EventManager.Dispatch(new PushStateEvent(new Journal(EntityManager.Player.Status.Missions)));
         }
 
         public override void Update(GameTime gameTime)
         {
             btnSkillUI.Update(gameTime);
             btnShopUI.Update(gameTime);
+            btnQuestsUI.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch, GameTime gameTime)

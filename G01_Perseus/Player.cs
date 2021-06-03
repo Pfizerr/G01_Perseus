@@ -90,7 +90,7 @@ namespace G01_Perseus
 
             direction = direction.LengthSquared() > 1 ? Vector2.Normalize(direction) : direction;
 
-            if(KeyMouseReader.KeyHold(Keys.J))
+            if(KeyMouseReader.KeyPressed(Keys.J))
             {
                 EventManager.Dispatch(new PushStateEvent(new Journal(Status.Missions)));
             }
