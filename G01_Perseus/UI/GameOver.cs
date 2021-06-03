@@ -28,7 +28,7 @@ namespace G01_Perseus.UI
         public GameOver(GameWindow window, StateStack stateStack)
         {
             this.stateStack = stateStack;
-            restartTimer = new Timer(100);
+            restartTimer = new Timer(10000);
             this.window = window;
             Transparent = true;
             mainTextString = "GAME OVER";
