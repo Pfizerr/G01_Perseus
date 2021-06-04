@@ -1,6 +1,2 @@
 # G01_Perseus
-
-
-# halloj
-sometext
-Detta är Marcus Skölds kommentar
+https://github.com/Pfizerr/G01_Perseus
