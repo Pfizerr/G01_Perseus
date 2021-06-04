@@ -70,6 +70,7 @@ namespace G01_Perseus
             healthPos.Y -= healthBarHeight;
             shieldPos.Location = hitbox.Location;
             shieldPos.X += healthPos.Width;
+            shieldPos.Y -= healthBarHeight;
         }                  
 
         public override void RecieveDamage(Entity other, float damage)

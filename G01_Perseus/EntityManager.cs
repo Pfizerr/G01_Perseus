@@ -32,7 +32,7 @@ namespace G01_Perseus
 
         public static Enemy CreateEnemyOrbital(Vector2 position)
         {
-            Enemy enemy = new Enemy(position, new Vector2(0, 0), new Vector2(0.2f, 0.2f), 10, 0, new DefaultEnemyBehavior(), 1000, AssetManager.TextureAsset("enemy_ship"), 4, 1, 1);
+            Enemy enemy = new Enemy(position, new Vector2(0, 0), new Vector2(0.2f, 0.2f), 10, 5, new DefaultEnemyBehavior(), 1000, AssetManager.TextureAsset("enemy_ship"), 4, 1, 0);
             entities.Add(enemy);
             return enemy;
             
@@ -40,7 +40,7 @@ namespace G01_Perseus
 
         public static Enemy CreateEnemyRaptor(Vector2 position)
         {
-            Enemy enemy = new Enemy(position, new Vector2(0, 0), new Vector2(0.3f, 0.3f), 20, 0, new RaptorEnemyBehavior(), 3000, AssetManager.TextureAsset("enemy_ship2"), 10, 1, 1);
+            Enemy enemy = new Enemy(position, new Vector2(0, 0), new Vector2(0.3f, 0.3f), 15, 5, new RaptorEnemyBehavior(), 3000, AssetManager.TextureAsset("enemy_ship2"), 10, 1, 30);
             entities.Add(enemy);
             return enemy;
             
@@ -48,7 +48,7 @@ namespace G01_Perseus
 
         public static Enemy CreateEnemyPursuer(Vector2 position)
         {
-            Enemy enemy = new Enemy(position, new Vector2(0, 0), new Vector2(0.4f, 0.4f), 40, 0, new DefaultEnemyBehavior(), 10000, AssetManager.TextureAsset("enemy_ship3"), 5, 1, 1);
+            Enemy enemy = new Enemy(position, new Vector2(0, 0), new Vector2(0.4f, 0.4f), 10, 30, new DefaultEnemyBehavior(), 10000, AssetManager.TextureAsset("enemy_ship3"), 5, 2, 10);
             entities.Add(enemy);
             return enemy;
         }
