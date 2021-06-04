@@ -34,7 +34,11 @@ namespace G01_Perseus
         {
             if(IsActive)
             {
-                if (/*Owner*/TypeOfBullet.Player == (e.AttackerEntity as Bullet).Type /* <-- kan hanteras bättre */ && typeOfSubject == e.SubjectEntity.GetType())
+                if(TypeOfLaser.Player == (e.AttackerEntity as Laser).Type && typeOfSubject == e.SubjectEntity.GetType())
+                {
+                    TaskComplete();
+                }
+                else if (/*Owner*/TypeOfBullet.Player == (e.AttackerEntity as Bullet).Type /* <-- kan hanteras bättre */ && typeOfSubject == e.SubjectEntity.GetType())
                 {
                     TaskComplete();
                 }
