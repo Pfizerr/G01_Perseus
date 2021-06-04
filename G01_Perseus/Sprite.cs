@@ -76,13 +76,5 @@ namespace G01_Perseus
             Rectangle sourceRectangle = new Rectangle(spriteStart, spriteSize);
             spriteBatch.Draw(texture, position, sourceRectangle, Color.White, rotation, origin, scale, SpriteEffects.None, layerDepth);
         }
-
-
-        public virtual void Draw(SpriteBatch spriteBatch, Rectangle hitbox, Rectangle? source, Color color, float rotation, Vector2 origin, Vector2 scale, SpriteEffects spriteEffects, float layerDepth)
-        {
-            Point spriteStart = new Point(start.X + (spriteSize.X * XIndex) + (offset * XIndex), start.Y + (spriteSize.Y * YIndex) + (offset * YIndex));
-            Rectangle sourceRectangle = new Rectangle(spriteStart, spriteSize);
-            spriteBatch.Draw(texture, hitbox, sourceRectangle, color, rotation, origin, spriteEffects, layerDepth);
-        }
     }
 }

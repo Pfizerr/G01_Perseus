@@ -19,6 +19,7 @@ namespace G01_Perseus
 
         public static Camera camera;
         public static Random random = new Random(1);
+        public static Random rand = new Random();
         private static StateStack stateStack;
 
         private static bool shouldQuit;
@@ -36,6 +37,7 @@ namespace G01_Perseus
             graphics.PreparingDeviceSettings += Graphics_PreparingDeviceSettings;
             graphics.ApplyChanges();
 
+            MissionManager.device = graphics.GraphicsDevice;
             EventManager.Register(this);
         }
 

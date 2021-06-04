@@ -101,10 +101,12 @@ namespace G01_Perseus.UI
                 EventManager.Dispatch(new PopStateEvent());
             }
 
-            if (KeyMouseReader.MouseScreenPosition.X < bounds.Left
-                || KeyMouseReader.MouseScreenPosition.X > bounds.Right
-                || KeyMouseReader.MouseScreenPosition.Y < bounds.Top
-                || KeyMouseReader.MouseScreenPosition.Y > bounds.Bottom)
+            int buttonMargin = 130;
+
+            if (KeyMouseReader.MouseScreenPosition.X < bounds.Left - buttonMargin
+                || KeyMouseReader.MouseScreenPosition.X > bounds.Right + buttonMargin
+                || KeyMouseReader.MouseScreenPosition.Y < bounds.Top - buttonMargin
+                || KeyMouseReader.MouseScreenPosition.Y > bounds.Bottom + buttonMargin)
             {
                 Opacity = 0.5f;
 

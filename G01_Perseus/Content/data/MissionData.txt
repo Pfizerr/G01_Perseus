@@ -1,0 +1,5 @@
+id=1,name=Destroy enemy ships.,description=Travel to designated sector and kill some enemy ships.,tracker_id=1,rewards_resources=2000,rewards_dust=1,rewards_experience=500
+id=2,name=Surive attack.,description=Travel to the designated sector and withstand an enemy attack for five minutes.,tracker_id=3,rewards_resources=5000,rewards_dust=50,rewards_experience=2000
+id=3,name=Meet the locals 1.,description=Travel to the designated location to see what's what.,tracker_id=2, rewards_resources=500,rewards_dust_0,rewards_xp=1000
+id=4,name=Meet the locals 2.,description=Travel to the designated location to see what's what.,tracker_id=2, rewards_resources=500,rewards_dust_0,rewards_xp=1000
+id=5,name=Meet the locals 3.,description=Travel to the designated location to see what's what.,tracker_id=2, rewards_resources=500,rewards_dust_0,rewards_xp=1000

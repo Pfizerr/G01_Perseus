@@ -66,7 +66,7 @@ namespace G01_Perseus
         }
 
         /// <summary>
-        /// HAndles the movement of the ships with respective velocity and direction that it has
+        /// Handles the movement of the ships with respective velocity and direction that it has
         /// </summary>
         /// <param name="gameTime"></param>
         public virtual void Movement(GameTime gameTime)

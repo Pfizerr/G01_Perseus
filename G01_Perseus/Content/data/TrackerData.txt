@@ -1,0 +1,5 @@
+id=1,tracker_type=KILLS_TRACKER,sector=2.1,tracker_tasks=2,type_of_subject=G01_Perseus.Enemy
+id=2,tracker_type=TRAVEL_TRACKER,sector=5.0,tracker_tasks=1
+id=3,tracker_type=TRAVEL_TRACKER,sector=0.2,tracker_tasks=1
+id=4,tracker_type=TRAVEL_TRACKER,sector=9.1,tracker_tasks=1
+id=5,tracker_type=SURVIVE_TRACKER,sector=2.3,time_to_survive=5,tracker_tasks=5

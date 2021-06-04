@@ -98,9 +98,11 @@ namespace G01_Perseus
                 }
                 else if (timer.IsDoneCounting)
                 {
-                    while(missions[i] == null)
+                    int rand = MissionManager.GetRandomMissionId();
+                    missions[i] = MissionManager.LoadMission(rand);
+                    if(missions[i] == null)
                     {
-                        missions[i] = MissionManager.LoadMission(MissionManager.GetRandomMissionId());
+                        continue;
                     }
                     missions[i].Contractor = this; //There is an error here when you close the game. Could be handles with a save and load function
                     //Though note that this error doesn't happen all the time

@@ -27,7 +27,9 @@ namespace G01_Perseus.UI
             this.mission = mission;
             this.bounds = bounds;
 
-            this.missionText = mission.ToString();
+            //this.missionText = mission.ToString();
+
+            this.missionText = mission.Text();
             this.font = AssetManager.FontAsset("default_font_small");
 
             Texture2D backgroundAvailable = AssetManager.TextureAsset("button_background_available");
@@ -36,7 +38,7 @@ namespace G01_Perseus.UI
 
             //Remove-Button bounds
             Texture2D removeBackground = AssetManager.TextureAsset("button_red");
-            int removeX = bounds.X + bounds.Width - (removeBackground.Width - 5);
+            int removeX = bounds.X + bounds.Width + (removeBackground.Width - 5);
             int removeY = bounds.Y + bounds.Height / 2 - (removeBackground.Height / 2);
 
             Rectangle removeMissionButtonHitbox = new Rectangle(removeX, removeY, removeBackground.Width, removeBackground.Height);
@@ -47,7 +49,7 @@ namespace G01_Perseus.UI
 
             //Turn-In-Button bounds
             Texture2D turnInBackground = AssetManager.TextureAsset("button_green");
-            int turnInX = bounds.X + bounds.Width - (turnInBackground.Width + 50);
+            int turnInX = bounds.X + bounds.Width + (turnInBackground.Width + 50);
             int turnInY = bounds.Y + bounds.Height / 2 - (turnInBackground.Height / 2);
 
             Rectangle acceptMissionButtonHitbox = new Rectangle(turnInX, turnInY, turnInBackground.Width, turnInBackground.Height);
@@ -114,8 +116,7 @@ namespace G01_Perseus.UI
             removeMissionButton.Draw(spriteBatch, gameTime);
 
             Vector2 missionTextSize = font.MeasureString(missionText);
-            Vector2 missionTextPosition = new Vector2(bounds.Center.X - missionTextSize.X / 2 - 60, bounds.Center.Y - missionTextSize.Y / 2);
-
+            Vector2 missionTextPosition = new Vector2(bounds.X, bounds.Center.Y - missionTextSize.Y / 2);
             spriteBatch.DrawString(font, missionText, missionTextPosition, Color.White * Opacity, 0.0f, Vector2.Zero, Vector2.One, SpriteEffects.None, 1f);
 
             #region debug (draw hitbox)

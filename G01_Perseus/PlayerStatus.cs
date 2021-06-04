@@ -58,28 +58,29 @@ namespace G01_Perseus
             }
         }
 
-        //public void Draw(SpriteBatch spriteBatch)
-        //{
+        public void Draw(SpriteBatch spriteBatch)
+        {
             #region Debug output
-            //Rectangle viewport = Game1.camera.Viewport;
-            //Vector2 playerPosition = EntityManager.Player.Center;
-            //Vector2 position;
-            //Vector2 size;
-            //
-            //for (int i = 0; i < Missions.Count; i++)
-            //{
-            //    string str = String.Format("name: {0} <{1}> | owner: {2} | contractor: {3} | {4} / {5}", 
-            //        Missions[i].Name,
-            //        Missions[i].Id,
-            //        Missions[i].Owner,
-            //        Missions[i].Contractor,
-            //        Missions[i].Tracker.TasksCompleted.ToString(),
-            //        Missions[i].Tracker.TasksToComplete.ToString());
-            //
-            //    size = font.MeasureString(str);
-            //    position = new Vector2(playerPosition.X - viewport.Width * 0.5f + 15, playerPosition.Y - viewport.Height * 0.5f + size.Y * i + 5);
-            //    spriteBatch.DrawString(font, str, position, Color.White);
-            //}
+            Rectangle viewport = Game1.camera.Viewport;
+            Vector2 playerPosition = EntityManager.Player.Center;
+            Vector2 position;
+            Vector2 size;
+            for (int i = 0; i < Missions.Count; i++)
+            {/*| owner: {2} | contractor: {3} |"*/
+                string sector = EntityManager.Level.GetSectorString(Missions[i].Tracker.Sector.X, Missions[i].Tracker.Sector.Y);
+                string str = String.Format("name: {0} <{1}> | {2} | {3} / {4}", 
+                    Missions[i].Name,
+                    Missions[i].Id,
+                    sector,
+                    //Missions[i].Owner,
+                    //Missions[i].Contractor,
+                    Missions[i].Tracker.TasksCompleted.ToString(),
+                    Missions[i].Tracker.TasksToComplete.ToString());
+            
+                size = font.MeasureString(str);
+                position = new Vector2(playerPosition.X - viewport.Width * 0.5f + 15, playerPosition.Y - viewport.Height * 0.5f + size.Y * i + 5);
+                spriteBatch.DrawString(font, str, position, Color.White);
+            }
 
             //string[] strs = new string[]
             //{
@@ -95,7 +96,7 @@ namespace G01_Perseus
             //    spriteBatch.DrawString(font, strs[i], position, Color.White);
             //}
             #endregion
-        //}
+        }
 
         public void OnTurnIn(MissionTurnedInEvent e)
         {

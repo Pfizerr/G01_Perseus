@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin data/MissionData.txt
+/copy:data/MissionData.txt
+
+#begin data/TrackerData.txt
+/copy:data/TrackerData.txt
+
 #begin fonts/default_font.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

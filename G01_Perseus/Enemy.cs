@@ -31,7 +31,7 @@ namespace G01_Perseus
             shieldPos = new Rectangle(healthPos.X + healthPos.Width, healthPos.Y, (int)((Shields / TotalHealth) * hitbox.Width), healthBarHeight);
             EventManager.Register(this);
             startingPosition = position;
-            //friction = new Vector2(0.97f, 0.97f);
+            friction = new Vector2(0.97f, 0.97f);
             this.acceleration = new Vector2(acceleration, acceleration);
 
             this.behavior = behavior;

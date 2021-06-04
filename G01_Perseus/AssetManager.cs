@@ -75,9 +75,9 @@ namespace G01_Perseus
             loadedTextures.Add("projectile_blue", content.Load<Texture2D>(@"textures\ProjektileBlue"));
             loadedTextures.Add("projectile_yellow", content.Load<Texture2D>(@"textures\ProjektileYellow"));
             loadedTextures.Add("beam", content.Load<Texture2D>(@"textures\Beam"));
-            loadedTextures.Add("planet1", content.Load<Texture2D>(@"textures\planet1"));
-            loadedTextures.Add("planet2", content.Load<Texture2D>(@"textures\planet2"));
-            loadedTextures.Add("planet3", content.Load<Texture2D>(@"textures\planet3"));
+            loadedTextures.Add("planet1", content.Load<Texture2D>(@"textures\Planet1"));
+            loadedTextures.Add("planet2", content.Load<Texture2D>(@"textures\Planet2"));
+            loadedTextures.Add("planet3", content.Load<Texture2D>(@"textures\Planet3"));
             loadedTextures.Add("resource_currency", content.Load<Texture2D>(@"textures\Currency"));
             loadedTextures.Add("gradient_bar", content.Load<Texture2D>(@"textures\GradientBar"));
             loadedTextures.Add("skill_UI", content.Load<Texture2D>(@"textures\SkillMonitorBackground"));

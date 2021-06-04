@@ -33,9 +33,11 @@ namespace G01_Perseus.Missions.Trackers
         {
             if(IsActive)
             {
-                int x = (int)Owner.Position.X;
-                int y = (int)Owner.Position.Y;
-                if (/*Owner*/TypeOfBullet.Player == (e.AttackerEntity as Bullet).Type && typeOfSubject == e.SubjectEntity.GetType() && EntityManager.Level.GetSectorCoordinates(x, y) == Sector)
+                if(e.AttackerEntity is Laser && TypeOfLaser.Player == (e.AttackerEntity as Laser).Type && typeOfSubject == e.SubjectEntity.GetType() && (Owner as Player).Sector == Sector)
+                {
+                    TaskComplete();
+                }
+                else if (/*Owner*/TypeOfBullet.Player == (e.AttackerEntity as Bullet).Type && typeOfSubject == e.SubjectEntity.GetType() && (Owner as Player).Sector == Sector)
                 {
                     TaskComplete();
                 }

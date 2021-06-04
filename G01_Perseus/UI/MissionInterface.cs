@@ -112,7 +112,7 @@ namespace G01_Perseus.UI
                     missionText = missions[i].Text();
                 }
 
-                buttons.Add(new MissionInterfaceButton(new Rectangle(bounds.X + 125, bounds.Y + 65 + (85 * i), 550, 80), bgAvailable, bgSelected, bgUnavailable, missions[i], timer[i], missions[i].Text(), AssetManager.FontAsset("default_font")));
+                buttons.Add(new MissionInterfaceButton(new Rectangle(bounds.X + 125, bounds.Y + 65 + (85 * i), 550, 80), bgAvailable, bgSelected, bgUnavailable, missions[i], timer[i], missions[i].Text(), AssetManager.FontAsset("default_font_small")));
             }
 
             acceptMissionButton = new UIButton(new Rectangle(bounds.X + 499, bounds.Y + 481, 60, 59), () =>

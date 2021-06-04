@@ -1,6 +1,7 @@
 ﻿using G01_Perseus.Missions.Trackers;
 using G01_Perseus.UI;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,8 +14,13 @@ namespace G01_Perseus
         private static List<Mission> loadedMissions = new List<Mission>();
         private static string[] missionData;
         private static string[] trackerData;
+        public static GraphicsDevice device
+        {
+            get;
+            set;
+        }
 
-        public static int GetRandomMissionId() => Game1.random.Next(1, (loadedMissions.Count() * 1000) / 1000);
+        public static int GetRandomMissionId() => Game1.rand.Next(1, (loadedMissions.Count() * 1000) / 1000);
 
         public static int LoadedMissionsCount()
         {
@@ -172,16 +178,15 @@ namespace G01_Perseus
         {
             loadedMissions.Add(LoadMission(1));
             loadedMissions.Add(LoadMission(2));
-            //loadedMissions.Add(LoadMission(3));
-            //loadedMissions.Add(LoadMission(4));
-           //loadedMissions.Add(LoadMission(5));
-            //loadedMissions.Add(LoadMission(6));
+            loadedMissions.Add(LoadMission(3));
+            loadedMissions.Add(LoadMission(4));
+            loadedMissions.Add(LoadMission(5));
         }
 
         public static void LoadData()
         {
-            missionData = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\..\..\..\..\data\missiondata.txt");
-            trackerData = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\..\..\..\..\data\trackerdata.txt");
+            missionData = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\..\..\..\..\Content\data\MissionData.txt");
+            trackerData = File.ReadAllLines(Directory.GetCurrentDirectory() + @"\..\..\..\..\Content\data\TrackerData.txt");
         }
     }
 }

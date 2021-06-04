@@ -1,3 +1,0 @@
-id=1,name=Test1,description=Travel to designated sector and kill some enemeis.,tracker_id=1,rewards_resources=2000,sector=1|1,rewards_dust=50,rewards_skillpoints=1,rewards_equipment=0
-id=2,name=Test1,description=Travel to designated sector and kill some enemeis.,tracker_id=1,rewards_resources=2000,sector=1|1,rewards_dust=50,rewards_skillpoints=1,rewards_equipment=0
-id=3,name=Test1,description=Travel to designated sector and kill some enemeis.,tracker_id=1,rewards_resources=2000,sector=1|1,rewards_dust=50,rewards_skillpoints=1,rewards_equipment=0

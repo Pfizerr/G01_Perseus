@@ -44,16 +44,20 @@ namespace G01_Perseus
         }
 
 
-        public string Text() => string.Format("Name: {0}\nDescription: {1}\nRewards: {2}", Name, Description, Currency.ToString());
-
-        public string ProgressText() => string.Format("{0}\nProgress: {1} / {2}", Text(), Tracker.TasksCompleted, Tracker.TasksToComplete);
+        public string Text()
+        {
+            return string.Format("Name: {0}\nDescription: {1}\nRewards: {2}", Name, Description, Currency.ToString());
+        }
 
         public override string ToString()
         {
             StringBuilder sb = new StringBuilder();
             sb.Append("Name: " + Name);
-            sb.Append("\nDescription: " + Description + "\n");
-            sb.Append("<sector: " + Tracker.Sector + ">\n");
+
+
+
+            sb.Append("\nDescription: \n" + Description + "\n");
+            sb.Append(EntityManager.Level.GetSectorString(Tracker.Sector.X, Tracker.Sector.Y) + "\n");
 
 
             if (Currency > 0)

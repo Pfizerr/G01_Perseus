@@ -23,11 +23,10 @@ namespace G01_Perseus
             AddFaction(new Faction("test faction one", AssetManager.SpriteAsset("planet1"), AssetManager.SpriteAsset("planet_highlight_outline2_green")));
             AddFaction(new Faction("test faction two", AssetManager.SpriteAsset("planet2"), AssetManager.SpriteAsset("planet_highlight_outline2_blue")));
             AddFaction(new Faction("test faction three", AssetManager.SpriteAsset("planet3"), AssetManager.SpriteAsset("planet_highlight_outline2_red")));
-            AddFaction(new Faction("test faction four", AssetManager.SpriteAsset("planet4"), AssetManager.SpriteAsset("planet_highlight_outline2_orange")));
             factions[0].CreatePlanet("planet name one", new Vector2(0, 0), 1);
-            factions[0].CreatePlanet("planet name two", new Vector2(1000, 1000), 2);
-            factions[0].CreatePlanet("planet name three", new Vector2(1000, 0), 3);
-            factions[0].CreatePlanet("planet name four", new Vector2(0, 1000), 4);
+            factions[1].CreatePlanet("planet name two", new Vector2(1000, 3000), 2);
+            factions[2].CreatePlanet("planet name three", new Vector2(-2000, 1750), 3);
+
             CreatePlayer();
         }
 

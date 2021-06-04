@@ -39,6 +39,13 @@ namespace G01_Perseus
             background = new Background(tileWidth, tileHeight);
             
             this.tileTexture = Util.CreateRectangleTexture(tileWidth, tileHeight, Color.Cyan, Color.Transparent);
+
+            Point p1 = new Point();
+            Point p2 = new Point();
+            p1 = (GetSectorCoordinates(1000 / tileWidth, 3000 / tileHeight));
+            p2 = (GetSectorCoordinates(-2000 / tileWidth, 1750 / tileHeight));
+            Console.WriteLine(GetSectorString(p1.X, p1.Y));
+            Console.WriteLine(GetSectorString(p2.X, p2.Y));
         }
 
         public Point GetSectorCoordinates(int x, int y)
@@ -48,7 +55,7 @@ namespace G01_Perseus
             return new Point(ix, iy);
         }
 
-        private string GetSectorString(int x, int y)
+        public string GetSectorString(int x, int y)
         {
             char c = Convert.ToChar('A' + x);
             string n = "" + y;
