@@ -34,7 +34,7 @@ namespace G01_Perseus
         {
             if(IsActive)
             {
-                if(TypeOfLaser.Player == (e.AttackerEntity as Laser).Type && typeOfSubject == e.SubjectEntity.GetType())
+                if((e.AttackerEntity is Laser) && TypeOfLaser.Player == (e.AttackerEntity as Laser).Type && typeOfSubject == e.SubjectEntity.GetType())
                 {
                     TaskComplete();
                 }
